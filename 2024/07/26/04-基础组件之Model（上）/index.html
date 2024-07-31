@@ -16,16 +16,16 @@
   <meta name="author" content="Jiang Cara">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本篇补充了transformers的背景知识，给出了现在预训练语言模型三种不同的堆叠方式及相关代表模型，介绍了model的基本使用方式及相关参数。">
+    <meta name="description" content="本篇补充了transformers的背景知识，给出了现在预训练语言模型三种不同的堆叠方式及相关代表模型，介绍了model的相关参数及model head。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HuggingFace Transformers 基础组件之Model（上）">
 <meta property="og:url" content="http://example.com/2024/07/26/04-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BModel%EF%BC%88%E4%B8%8A%EF%BC%89/index.html">
 <meta property="og:site_name" content="卷卷">
-<meta property="og:description" content="本篇补充了transformers的背景知识，给出了现在预训练语言模型三种不同的堆叠方式及相关代表模型，介绍了model的基本使用方式及相关参数。">
+<meta property="og:description" content="本篇补充了transformers的背景知识，给出了现在预训练语言模型三种不同的堆叠方式及相关代表模型，介绍了model的相关参数及model head。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/04-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BModel%EF%BC%88%E4%B8%8A%EF%BC%89/1720798745650-0160aab1-9de4-4411-afb6-747525fedf81.png">
 <meta property="article:published_time" content="2024-07-26T12:40:34.000Z">
-<meta property="article:modified_time" content="2024-07-26T13:35:56.497Z">
+<meta property="article:modified_time" content="2024-07-31T14:23:22.265Z">
 <meta property="article:author" content="Jiang Cara">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/images/04-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BModel%EF%BC%88%E4%B8%8A%EF%BC%89/1720798745650-0160aab1-9de4-4411-afb6-747525fedf81.png">
@@ -281,6 +281,14 @@
     
 
     
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
     
   </div>
 
