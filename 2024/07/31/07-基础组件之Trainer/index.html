@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/juan.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/JiangCara/JiangCara.github.io/img/fluid.png">
+  <link rel="icon" href="/JiangCara/JiangCara.github.io/img/juan.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,16 +19,16 @@
     <meta name="description" content="Trainer内部封装了完整的训练以及评估逻辑，搭配TrainingArguments可以对训练过程中的各项参数进行配置。对文本分类示例代码进行了部分优化。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HuggingFace Transformers 基础组件之Trainer">
-<meta property="og:url" content="http://example.com/2024/07/31/07-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BTrainer/index.html">
+<meta property="og:url" content="https://github.com/JiangCara/JiangCara.github.io/2024/07/31/07-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BTrainer/index.html">
 <meta property="og:site_name" content="卷卷">
 <meta property="og:description" content="Trainer内部封装了完整的训练以及评估逻辑，搭配TrainingArguments可以对训练过程中的各项参数进行配置。对文本分类示例代码进行了部分优化。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/07-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BTrainer/1722348733581-7783604e-b768-498c-98b1-2783f4095287.png">
+<meta property="og:image" content="https://github.com/JiangCara/JiangCara.github.io/images/07-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BTrainer/1722348733581-7783604e-b768-498c-98b1-2783f4095287.png">
 <meta property="article:published_time" content="2024-07-31T15:02:03.000Z">
 <meta property="article:modified_time" content="2024-07-31T15:02:13.231Z">
 <meta property="article:author" content="Jiang Cara">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/images/07-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BTrainer/1722348733581-7783604e-b768-498c-98b1-2783f4095287.png">
+<meta name="twitter:image" content="https://github.com/JiangCara/JiangCara.github.io/images/07-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BTrainer/1722348733581-7783604e-b768-498c-98b1-2783f4095287.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -58,12 +58,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/JiangCara/JiangCara.github.io/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/JiangCara/JiangCara.github.io/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/JiangCara/JiangCara.github.io/css/highlight-dark.css" />
   
 
 
@@ -72,15 +72,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"github.com","root":"/JiangCara/JiangCara.github.io/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/JiangCara/JiangCara.github.io/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/JiangCara/JiangCara.github.io/js/utils.js" ></script>
+  <script  src="/JiangCara/JiangCara.github.io/js/color-schema.js" ></script>
   
 
   
@@ -126,7 +126,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/JiangCara/JiangCara.github.io/">
       <strong>卷卷</strong>
     </a>
 
@@ -145,7 +145,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
+              <a class="nav-link" href="/JiangCara/JiangCara.github.io/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -157,7 +157,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
+              <a class="nav-link" href="/JiangCara/JiangCara.github.io/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -169,7 +169,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
+              <a class="nav-link" href="/JiangCara/JiangCara.github.io/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -181,7 +181,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
+              <a class="nav-link" href="/JiangCara/JiangCara.github.io/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -193,7 +193,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
+              <a class="nav-link" href="/JiangCara/JiangCara.github.io/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -205,7 +205,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/links/" target="_self">
+              <a class="nav-link" href="/JiangCara/JiangCara.github.io/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
                 <span>友链</span>
               </a>
@@ -235,7 +235,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/wallhaven-weger7.png') no-repeat center center; background-size: cover;">
+     style="background: url('/JiangCara/JiangCara.github.io/img/wallhaven-weger7.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -330,7 +330,7 @@
 Transformers-入门篇】基础组件之Trainer</a>，<a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/main_classes/trainer">Trainer-Huggingface官方说明文档</a></p>
 </blockquote>
 <p>Trainer内部封装了完整的训练以及评估逻辑，搭配TrainingArguments可以对训练过程中的各项参数进行配置。Trainer的参数非常多，<a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/main_classes/trainer">Trainer-Huggingface官方说明文档</a>提供了详细的参数说明。
-<img src="/images/07-基础组件之Trainer/1722348733581-7783604e-b768-498c-98b1-2783f4095287.png" srcset="/img/loading.gif" lazyload>
+<img src="/images/07-基础组件之Trainer/1722348733581-7783604e-b768-498c-98b1-2783f4095287.png" srcset="/JiangCara/JiangCara.github.io/img/loading.gif" lazyload>
 Trainer对模型的输入输出是有限制的，要求模型返回一定是元组，或者是ModelOutput的一个子类。输入如果包含labels，Trainer要求模型能返回loss的结果，如果是元组，要求loss应该是元组的第一个值。</p>
 <p><strong>因此，并非所有的自定义模型都能用Trainer。</strong></p>
 <h1 id="创建评估函数">创建评估函数</h1>
@@ -348,18 +348,18 @@ Trainer对模型的输入输出是有限制的，要求模型返回一定是元�
 <li><code>load_best_model_at_end</code>若设为True，会在使用模型时加载整个训练过程中表现最好的模型，而非最后一次训练的模型。</li>
 </ul>
 <p>此外，模型训练的日志会保存到tensorboard，在checkpoints的目录下执行命令行<code>tensorboard --logdir runs</code>，可以得到可视化的日志。</p>
-<p><img src="/images/07-基础组件之Trainer/1722352584967-0a04bc6c-d0c2-469c-89d9-5d4ebee62f3c.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/07-基础组件之Trainer/1722352584967-0a04bc6c-d0c2-469c-89d9-5d4ebee62f3c.png" srcset="/JiangCara/JiangCara.github.io/img/loading.gif" lazyload></p>
 <p>Vscode里内置了tensorboard，<code>ctrl+shift+p</code>搜索tensorboard即可在vscode内查看。（我的没加载出来，还把我跑的模型中断了……可能是版本问题，以后有时间再细究)</p>
-<p><img src="/images/07-基础组件之Trainer/1722352667284-56397fda-9074-4319-bb85-1dbd12f0a279.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/07-基础组件之Trainer/1722352667284-56397fda-9074-4319-bb85-1dbd12f0a279.png" srcset="/JiangCara/JiangCara.github.io/img/loading.gif" lazyload></p>
 <h1 id="创建trainer">创建Trainer</h1>
 <p>通过<code>args</code>将TrainingArguments指定的参数传入Trainer，<code>compute_metrics</code>将前面创建好的评估函数传入Trainer。还要通过<code>data_collator</code>指定dataloader，使用DataCollatorWithPadding进行数据堆叠。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">trainer = Trainer(model=model, <br>                  args=train_args, <br>                  train_dataset=tokenized_datasets[<span class="hljs-string">&quot;train&quot;</span>], <br>                  eval_dataset=tokenized_datasets[<span class="hljs-string">&quot;test&quot;</span>], <br>                  data_collator=DataCollatorWithPadding(tokenizer=tokenizer),<br>                  compute_metrics=eval_metric)<br></code></pre></td></tr></table></figure>
 Trainer如果不重新加载，<code>trainer.train()</code>的时候会在之前训练好的基础上继续做训练。</p>
 <h1 id="基于transformers的nlp解决方案">基于Transformers的nlp解决方案</h1>
-<p>up的ppt上已经总结好了，详见<a target="_blank" rel="noopener" href="https://github.com/zyds">up的github主页</a>。 <img src="/images/07-基础组件之Trainer/1722418214362-07b8f7e6-d8a7-41f9-96ef-84e6268cb2d4.png" srcset="/img/loading.gif" lazyload></p>
+<p>up的ppt上已经总结好了，详见<a href="https://github.com/zyds">up的github主页</a>。 <img src="/images/07-基础组件之Trainer/1722418214362-07b8f7e6-d8a7-41f9-96ef-84e6268cb2d4.png" srcset="/JiangCara/JiangCara.github.io/img/loading.gif" lazyload></p>
 <h1 id="文本分类代码优化">【文本分类代码优化】</h1>
 <p>与上一章的代码相比，不需要引入dataloader、optimizer，且Trainer里会自动判定能不能用cuda，所以不需要在代码中做额外的判断。
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments<br><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> load_dataset<br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> DataCollatorWithPadding<br><span class="hljs-keyword">import</span> evaluate<br><br><span class="hljs-comment"># 1. 读取数据 + 简单清洗数据</span><br>dataset = load_dataset(<span class="hljs-string">&quot;csv&quot;</span>, data_files=<span class="hljs-string">&quot;D:\\transformers_test\\01 Getting Started\\07 trainer\ChnSentiCorp_htl_all.csv&quot;</span>, split=<span class="hljs-string">&quot;train&quot;</span>)<br>dataset = dataset.<span class="hljs-built_in">filter</span>(<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-string">&quot;review&quot;</span>] <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>)<br><br><span class="hljs-comment"># 2. 划分数据集</span><br>datasets = dataset.train_test_split(test_size=<span class="hljs-number">0.1</span>)<br><br><span class="hljs-comment"># 3. 数据集预处理</span><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;hfl/rbt3&quot;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_function</span>(<span class="hljs-params">examples</span>):<br>    tokenized_examples = tokenizer(examples[<span class="hljs-string">&quot;review&quot;</span>], max_length=<span class="hljs-number">128</span>, truncation=<span class="hljs-literal">True</span>)<br>    tokenized_examples[<span class="hljs-string">&quot;labels&quot;</span>] = examples[<span class="hljs-string">&quot;label&quot;</span>]<br>    <span class="hljs-keyword">return</span> tokenized_examples<br><br>tokenized_datasets = datasets.<span class="hljs-built_in">map</span>(process_function, batched=<span class="hljs-literal">True</span>, remove_columns=datasets[<span class="hljs-string">&quot;train&quot;</span>].column_names)<br><br><span class="hljs-comment"># 4. 创建模型</span><br>model = AutoModelForSequenceClassification.from_pretrained(<span class="hljs-string">&quot;hfl/rbt3&quot;</span>)<br><br><span class="hljs-comment"># 5. 创建评估函数</span><br>acc_metric = evaluate.load(<span class="hljs-string">&quot;accuracy&quot;</span>)<br>f1_metric = evaluate.load(<span class="hljs-string">&quot;f1&quot;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">eval_metric</span>(<span class="hljs-params">eval_predict</span>):<br>    predictions, labels = eval_predict<br>    predictions = predictions.argmax(axis=-<span class="hljs-number">1</span>)<br>    acc = acc_metric.compute(predictions=predictions, references=labels)<br>    f1 = f1_metric.compute(predictions=predictions, references=labels)<br>    acc.update(f1)<br>    <span class="hljs-keyword">return</span> acc<br><br><span class="hljs-comment"># 6. 创建TrainingArguments</span><br>train_args = TrainingArguments(output_dir=<span class="hljs-string">&quot;./checkpoints&quot;</span>,      <span class="hljs-comment"># 输出文件夹</span><br>                               per_device_train_batch_size=<span class="hljs-number">64</span>,  <span class="hljs-comment"># 训练时的batch_size</span><br>                               per_device_eval_batch_size=<span class="hljs-number">128</span>,  <span class="hljs-comment"># 验证时的batch_size</span><br>                               logging_steps=<span class="hljs-number">10</span>,                <span class="hljs-comment"># log 打印的频率</span><br>                               evaluation_strategy=<span class="hljs-string">&quot;epoch&quot;</span>,     <span class="hljs-comment"># 评估策略</span><br>                               save_strategy=<span class="hljs-string">&quot;epoch&quot;</span>,           <span class="hljs-comment"># 保存策略</span><br>                               save_total_limit=<span class="hljs-number">3</span>,              <span class="hljs-comment"># 最大保存数</span><br>                               learning_rate=<span class="hljs-number">2e-5</span>,              <span class="hljs-comment"># 学习率</span><br>                               weight_decay=<span class="hljs-number">0.01</span>,               <span class="hljs-comment"># weight_decay</span><br>                               metric_for_best_model=<span class="hljs-string">&quot;f1&quot;</span>,      <span class="hljs-comment"># 设定评估指标</span><br>                               load_best_model_at_end=<span class="hljs-literal">True</span>)     <span class="hljs-comment"># 训练完成后加载最优模型</span><br><br><span class="hljs-comment"># 7. 创建Trainer</span><br>trainer = Trainer(model=model, <br>                  args=train_args, <br>                  train_dataset=tokenized_datasets[<span class="hljs-string">&quot;train&quot;</span>], <br>                  eval_dataset=tokenized_datasets[<span class="hljs-string">&quot;test&quot;</span>], <br>                  data_collator=DataCollatorWithPadding(tokenizer=tokenizer),<br>                  compute_metrics=eval_metric)<br><br><span class="hljs-comment"># 8. 模型训练</span><br>trainer.train()<br><br><span class="hljs-comment"># 9. 模型评估</span><br>trainer.evaluate(tokenized_datasets[<span class="hljs-string">&quot;test&quot;</span>])<br><br><span class="hljs-comment"># 10. 模型对测试集 test 进行预测</span><br>trainer.predict(tokenized_datasets[<span class="hljs-string">&quot;test&quot;</span>])<br></code></pre></td></tr></table></figure> <img src="/images/07-基础组件之Trainer/1722390692877-2f22aef0-a9f3-4ed8-8c09-dfd2789a2325.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments<br><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> load_dataset<br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> DataCollatorWithPadding<br><span class="hljs-keyword">import</span> evaluate<br><br><span class="hljs-comment"># 1. 读取数据 + 简单清洗数据</span><br>dataset = load_dataset(<span class="hljs-string">&quot;csv&quot;</span>, data_files=<span class="hljs-string">&quot;D:\\transformers_test\\01 Getting Started\\07 trainer\ChnSentiCorp_htl_all.csv&quot;</span>, split=<span class="hljs-string">&quot;train&quot;</span>)<br>dataset = dataset.<span class="hljs-built_in">filter</span>(<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-string">&quot;review&quot;</span>] <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>)<br><br><span class="hljs-comment"># 2. 划分数据集</span><br>datasets = dataset.train_test_split(test_size=<span class="hljs-number">0.1</span>)<br><br><span class="hljs-comment"># 3. 数据集预处理</span><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;hfl/rbt3&quot;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_function</span>(<span class="hljs-params">examples</span>):<br>    tokenized_examples = tokenizer(examples[<span class="hljs-string">&quot;review&quot;</span>], max_length=<span class="hljs-number">128</span>, truncation=<span class="hljs-literal">True</span>)<br>    tokenized_examples[<span class="hljs-string">&quot;labels&quot;</span>] = examples[<span class="hljs-string">&quot;label&quot;</span>]<br>    <span class="hljs-keyword">return</span> tokenized_examples<br><br>tokenized_datasets = datasets.<span class="hljs-built_in">map</span>(process_function, batched=<span class="hljs-literal">True</span>, remove_columns=datasets[<span class="hljs-string">&quot;train&quot;</span>].column_names)<br><br><span class="hljs-comment"># 4. 创建模型</span><br>model = AutoModelForSequenceClassification.from_pretrained(<span class="hljs-string">&quot;hfl/rbt3&quot;</span>)<br><br><span class="hljs-comment"># 5. 创建评估函数</span><br>acc_metric = evaluate.load(<span class="hljs-string">&quot;accuracy&quot;</span>)<br>f1_metric = evaluate.load(<span class="hljs-string">&quot;f1&quot;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">eval_metric</span>(<span class="hljs-params">eval_predict</span>):<br>    predictions, labels = eval_predict<br>    predictions = predictions.argmax(axis=-<span class="hljs-number">1</span>)<br>    acc = acc_metric.compute(predictions=predictions, references=labels)<br>    f1 = f1_metric.compute(predictions=predictions, references=labels)<br>    acc.update(f1)<br>    <span class="hljs-keyword">return</span> acc<br><br><span class="hljs-comment"># 6. 创建TrainingArguments</span><br>train_args = TrainingArguments(output_dir=<span class="hljs-string">&quot;./checkpoints&quot;</span>,      <span class="hljs-comment"># 输出文件夹</span><br>                               per_device_train_batch_size=<span class="hljs-number">64</span>,  <span class="hljs-comment"># 训练时的batch_size</span><br>                               per_device_eval_batch_size=<span class="hljs-number">128</span>,  <span class="hljs-comment"># 验证时的batch_size</span><br>                               logging_steps=<span class="hljs-number">10</span>,                <span class="hljs-comment"># log 打印的频率</span><br>                               evaluation_strategy=<span class="hljs-string">&quot;epoch&quot;</span>,     <span class="hljs-comment"># 评估策略</span><br>                               save_strategy=<span class="hljs-string">&quot;epoch&quot;</span>,           <span class="hljs-comment"># 保存策略</span><br>                               save_total_limit=<span class="hljs-number">3</span>,              <span class="hljs-comment"># 最大保存数</span><br>                               learning_rate=<span class="hljs-number">2e-5</span>,              <span class="hljs-comment"># 学习率</span><br>                               weight_decay=<span class="hljs-number">0.01</span>,               <span class="hljs-comment"># weight_decay</span><br>                               metric_for_best_model=<span class="hljs-string">&quot;f1&quot;</span>,      <span class="hljs-comment"># 设定评估指标</span><br>                               load_best_model_at_end=<span class="hljs-literal">True</span>)     <span class="hljs-comment"># 训练完成后加载最优模型</span><br><br><span class="hljs-comment"># 7. 创建Trainer</span><br>trainer = Trainer(model=model, <br>                  args=train_args, <br>                  train_dataset=tokenized_datasets[<span class="hljs-string">&quot;train&quot;</span>], <br>                  eval_dataset=tokenized_datasets[<span class="hljs-string">&quot;test&quot;</span>], <br>                  data_collator=DataCollatorWithPadding(tokenizer=tokenizer),<br>                  compute_metrics=eval_metric)<br><br><span class="hljs-comment"># 8. 模型训练</span><br>trainer.train()<br><br><span class="hljs-comment"># 9. 模型评估</span><br>trainer.evaluate(tokenized_datasets[<span class="hljs-string">&quot;test&quot;</span>])<br><br><span class="hljs-comment"># 10. 模型对测试集 test 进行预测</span><br>trainer.predict(tokenized_datasets[<span class="hljs-string">&quot;test&quot;</span>])<br></code></pre></td></tr></table></figure> <img src="/images/07-基础组件之Trainer/1722390692877-2f22aef0-a9f3-4ed8-8c09-dfd2789a2325.png" srcset="/JiangCara/JiangCara.github.io/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -378,7 +378,7 @@ Trainer如果不重新加载，<code>trainer.train()</code>的时候会在之前
     
       <span class="category-chain">
         
-  <a href="/categories/Huggingface-Transformers-%E5%85%A5%E9%97%A8%E7%AF%87/" class="category-chain-item">Huggingface Transformers-入门篇</a>
+  <a href="/JiangCara/JiangCara.github.io/categories/Huggingface-Transformers-%E5%85%A5%E9%97%A8%E7%AF%87/" class="category-chain-item">Huggingface Transformers-入门篇</a>
   
   
 
@@ -399,7 +399,7 @@ Trainer如果不重新加载，<code>trainer.train()</code>的时候会在之前
   <div class="license-box my-3">
     <div class="license-title">
       <div>HuggingFace Transformers 基础组件之Trainer</div>
-      <div>http://example.com/2024/07/31/07-基础组件之Trainer/</div>
+      <div>https://github.com/JiangCara/JiangCara.github.io/2024/07/31/07-基础组件之Trainer/</div>
     </div>
     <div class="license-meta">
       
@@ -443,7 +443,7 @@ Trainer如果不重新加载，<code>trainer.train()</code>的时候会在之前
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/31/%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86/" title="Python nlp 简单的数据处理">
+                      <a href="/JiangCara/JiangCara.github.io/2024/07/31/%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86/" title="Python nlp 简单的数据处理">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Python nlp 简单的数据处理</span>
                         <span class="visible-mobile">上一篇</span>
@@ -453,7 +453,7 @@ Trainer如果不重新加载，<code>trainer.train()</code>的时候会在之前
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/31/06-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BEvaluate/" title="HuggingFace Transformers 基础组件之Evaluate">
+                      <a href="/JiangCara/JiangCara.github.io/2024/07/31/06-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BEvaluate/" title="HuggingFace Transformers 基础组件之Evaluate">
                         <span class="hidden-mobile">HuggingFace Transformers 基础组件之Evaluate</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -644,8 +644,8 @@ Trainer如果不重新加载，<code>trainer.train()</code>的时候会在之前
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/JiangCara/JiangCara.github.io/js/events.js" ></script>
+<script  src="/JiangCara/JiangCara.github.io/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -667,7 +667,7 @@ Trainer如果不重新加载，<code>trainer.train()</code>的时候会在之前
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/JiangCara/JiangCara.github.io/js/img-lazyload.js" ></script>
   
 
 
@@ -809,9 +809,9 @@ Trainer如果不重新加载，<code>trainer.train()</code>的时候会在之前
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script defer src="/js/leancloud.js" ></script>
+  <script defer src="/JiangCara/JiangCara.github.io/js/leancloud.js" ></script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/JiangCara/JiangCara.github.io/js/local-search.js" ></script>
 
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
@@ -821,7 +821,7 @@ Trainer如果不重新加载，<code>trainer.train()</code>的时候会在之前
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/JiangCara/JiangCara.github.io/js/boot.js" ></script>
 
 
   
