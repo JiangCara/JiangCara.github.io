@@ -1,0 +1,926 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/juan.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jiang Cara">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本篇涉及Huggingface Transformers的基本环境配置，并给出了两个实例代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HuggingFace Transformers 基础知识与环境安装">
+<meta property="og:url" content="https://jiangcara.github.io/posts/31beefe2/">
+<meta property="og:site_name" content="卷卷">
+<meta property="og:description" content="本篇涉及Huggingface Transformers的基本环境配置，并给出了两个实例代码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiangcara.github.io/images/01-Transformers%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/1719761236687-9b19f056-008a-4832-b34c-ed4e0cbc32d7.png">
+<meta property="article:published_time" content="2024-07-24T12:04:35.000Z">
+<meta property="article:modified_time" content="2024-09-29T14:34:12.355Z">
+<meta property="article:author" content="Jiang Cara">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jiangcara.github.io/images/01-Transformers%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/1719761236687-9b19f056-008a-4832-b34c-ed4e0cbc32d7.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>HuggingFace Transformers 基础知识与环境安装 - 卷卷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>卷卷</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/wallhaven-weger7.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HuggingFace Transformers 基础知识与环境安装"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-24 20:04" pubdate>
+          2024年7月24日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HuggingFace Transformers 基础知识与环境安装</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>参考视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ma4y1g791/">【HuggingFace
+Transformers-入门篇】基础知识与环境安装</a></p>
+</blockquote>
+<h1 id="创建虚拟环境">创建虚拟环境</h1>
+<p>直接去官网安装anaconda，打开Anaconda Prompt。</p>
+<p><img src="/images/01-Transformers环境安装/image-20240724195342704.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用conda命令新建一个虚拟环境transformers，中间的y/n输入y就行。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">conda</span> create -n transformers_cpu python=<span class="hljs-number">3</span>.<span class="hljs-number">9</span><br></code></pre></td></tr></table></figure>
+<p><img src="/images/01-Transformers环境安装/1719733109005-5c71a950-a482-4052-8f71-6c5a535bbad1.png" srcset="/img/loading.gif" lazyload></p>
+<p>安装好了之后激活环境，括号里的字变成创建的环境名则成功激活。</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">conda <span class="hljs-built_in">activate</span> transformers_cpu<br></code></pre></td></tr></table></figure>
+<p><img src="/images/01-Transformers环境安装/1719750679098-1be20f9a-72a5-46c5-865c-28e91b63248a.png" srcset="/img/loading.gif" lazyload></p>
+<p>推荐换一下默认源，换成清华的pypi镜像，下载速度会快很多。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim">pip config <span class="hljs-keyword">set</span> <span class="hljs-keyword">global</span>.<span class="hljs-built_in">index</span>-url https://pypi.tuna.tsinghua.edu.<span class="hljs-keyword">cn</span>/simple <br></code></pre></td></tr></table></figure>
+<h1 id="安装pytorch">安装pytorch</h1>
+<p><img src="/images/01-Transformers环境安装/1719732799604-879be6ef-77d5-401f-bba2-5f28d2dca703.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="正常步骤">正常步骤</h2>
+<p>安装pytorch，鼠标右键选择NVIDIA控制面板，点击系统信息-&gt;组件查看NVIDIA
+cuda版本。</p>
+<p><img src="/images/01-Transformers环境安装/1719732410123-f746d55e-893a-451a-b719-564399bc195c.png" srcset="/img/loading.gif" lazyload></p>
+<p>到<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">pytorch官网</a>按照自己的cuda版本，安装比cuda低版本的pytorch版本，推荐使用pip进行安装。</p>
+<p><img src="/images/01-Transformers环境安装/1719749802692-01bd15e9-d119-4905-a709-0dc0ce5d0fd5.png" srcset="/img/loading.gif" lazyload></p>
+<p>如果想装pytorch以前的版本在这：<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/previous-versions/">https://pytorch.org/get-started/previous-versions/</a>，找对应版本的命令。</p>
+<p>我电脑驱动太老了，直接装的cpu版本。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip3 <span class="hljs-keyword">install</span> torch torchvision torchaudio<br></code></pre></td></tr></table></figure>
+<p>安装完成后，依次输入以下命令，返回True则安装成功：</p>
+<ol type="1">
+<li><code>import torch</code></li>
+<li><code>torch.cuda.is_available()</code></li>
+<li><code>print(torch.__version__)</code></li>
+</ol>
+<p>因为我装的是cpu版本，所以返回的是False。</p>
+<p><img src="/images/01-Transformers环境安装/1719751363725-1bd79a84-53dd-47c2-b8c7-329824fc22db.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="踩坑未解决">踩坑【未解决】</h2>
+<p>因为我的cuda是9.1，最开始想安装的是cu9.0版本的，对应版本是torch-0.4.1，但这个版本太老了踩了很多坑！！！记录一下装torch-0.4.1的全过程。</p>
+<p>安装网址：<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/previous-versions/">https://pytorch.org/get-started/previous-versions/</a>，下载对应文件到本地。</p>
+<p><img src="/images/01-Transformers环境安装/1719738388692-55821673-fba0-4454-8e05-5c33cbc69984.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后pip install+下载路径，会提示error，说没有whl。</p>
+<p><img src="/images/01-Transformers环境安装/1719737592714-93671e26-4dd8-4a4c-a9d3-d8b89ef6bde6.png" srcset="/img/loading.gif" lazyload></p>
+<p>找了很久，看到<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44832009/article/details/129351554">这篇博客</a>，按照里面的方法解决了这个报错。总结如下：</p>
+<ol type="1">
+<li>进入下载目录，我这里下载路径是C:；</li>
+<li>输入命令<code>pip debug --verbose</code>；</li>
+</ol>
+<p><img src="/images/01-Transformers环境安装/1719738279838-124fdf86-d13e-4360-81f3-31685f33c8ef.png" srcset="/img/loading.gif" lazyload></p>
+<ol type="1">
+<li>我原本下载文件的名字是torch-0.4.1-cp35-cp35m-win_amd64，那么找到对应的将文件名修改为torch-0.4.1-cp35-abi3-win_amd64a。</li>
+<li><code>pip install torch-0.4.1-cp35-abi3-win_amd64.whl</code>，安装成功。</li>
+</ol>
+<p><img src="/images/01-Transformers环境安装/1719738423004-e487aace-3592-4bf7-832b-9a2e6f6d8337.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719749879421-9b2a4436-5433-440b-84e6-06e8a25f7e97.png" srcset="/img/loading.gif" lazyload></p>
+<p>结果到<code>import torch</code>的时候直接找不到torch，没找到解决办法......</p>
+<p><img src="/images/01-Transformers环境安装/1719750144030-a4c3cf76-f9a7-46cf-913f-9c8330f76c9c.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="安装vscode">安装vscode</h1>
+<p>pycharm只有专业版才能写jupyter notebook，所以这里选择vscode。</p>
+<p>官网安装vscode，下载一些必要插件：Python、Remote-ssh(远程连服务器)、Chinese
+Language Pack(汉化包)、Jupyter等。</p>
+<p><img src="/images/01-Transformers环境安装/1719736179242-4eb0867f-e6b6-425d-a56d-79af30889a2c.png" srcset="/img/loading.gif" lazyload></p>
+<p>设置终端，vscode默认终端是powershell，改成cmd更方便。调出终端的快捷键是
+ctrl+` 。</p>
+<p><img src="/images/01-Transformers环境安装/1719736429065-a6e0c9e9-aa63-41a2-9a2d-230f22188e41.png" srcset="/img/loading.gif" lazyload></p>
+<p>重新打开vscode后配置生效。</p>
+<p><img src="/images/01-Transformers环境安装/1719736455650-021a06e6-18c4-40fb-8c11-a92f53075987.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="安装transformers">安装transformers</h1>
+<p>安装transfomers的基本库。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip <span class="hljs-keyword">install</span> transformers datasets evaluate peft accelerate gradio optimum sentencepiece<br></code></pre></td></tr></table></figure>
+<p><img src="/images/01-Transformers环境安装/1719751494054-577f6692-1b44-41ad-9822-9250c938629a.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">pip <span class="hljs-keyword">install </span><span class="hljs-keyword">jupyterlab </span><span class="hljs-keyword">scikit-learn </span>pandas matplotlib tensorboard nltk rouge<br></code></pre></td></tr></table></figure>
+<p><img src="/images/01-Transformers环境安装/1719751853333-3aeb5bdf-7a8a-48c1-ac71-70774c1d51eb.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>Transformers：核心库，模型加载，模型训练，流水线等</li>
+<li>Tokenizer：分词器，对数据进行预处理，文本到token序列的互相转换</li>
+<li>Datasets：数据集库，提供了数据集的加载，处理等方法</li>
+<li>Evaluate：评估函数，提供各种评价指标的计算函数</li>
+<li>PEFT：高效微调模型的库，提供了几种高效微调的方法，小参数量撬动大模型</li>
+<li>Accelerate：分布式训练，提供了分布式训练解决方案，包括大模型的加载与推理解决方案</li>
+<li>Optimum：优化加速库，支持多种后端，如onnxruntime,openvino等</li>
+<li>Gradio：可视化部署库，几行代码快速实现基于web交互的算法演示系统</li>
+</ul>
+<p>修改hosts文件，避免下载模型时可能出现的问题，文件路径<code>C:\Windows\System32\drivers\etc\hosts</code>。</p>
+<p><img src="/images/01-Transformers环境安装/1719736841100-5285f6d6-6df3-4a07-9900-f9f44773f0a1.png" srcset="/img/loading.gif" lazyload></p>
+<p>拷贝以下内容到hosts文件中，保存。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain">185.199.108.133 raw.githubusercontent.com<br>185.199.109.133 raw.githubusercontent.com<br>185.199.110.133 raw.githubusercontent.com<br>185.199.111.133 raw.githubusercontent.com<br>2606:50c0:8000::154 raw.githubusercontent.com<br>2606:50c0:8001::154 raw.githubusercontent.com<br>2606:50c0:8002::154 raw.githubusercontent.com<br>2606:50c0:8003::154 raw.githubusercontent.com<br></code></pre></td></tr></table></figure>
+<p><img src="/images/01-Transformers环境安装/1719751252792-155eea3c-9453-46dc-b845-f51c4f3c46a4.png" srcset="/img/loading.gif" lazyload></p>
+<p>环境配置完成。</p>
+<p>进入vscode，创建一个juoyter demo，检查环境。</p>
+<p><img src="/images/01-Transformers环境安装/1719752386257-b4aced34-9c37-42ab-8760-74e2fec9eee9.png" srcset="/img/loading.gif" lazyload></p>
+<p>选择刚刚配置好的transformers_cpu的环境。</p>
+<p><img src="/images/01-Transformers环境安装/1719752441413-46ec7bcb-1435-43eb-9964-3392d3908eaa.png" srcset="/img/loading.gif" lazyload></p>
+<p>运行示例代码<code>from transformers import *</code>。</p>
+<p>第一次运行时有报错，提示版本不兼容，大概率是scipy和numpy库的版本不兼容，scipy的版本兼容numpy版本在
+1.16.5 到 1.23.0 之间，我的numpy版本可以看到是2.0.0。</p>
+<p><img src="/images/01-Transformers环境安装/1719753402908-83079dc2-238f-4c5d-aedf-44c4157d5bda.png" srcset="/img/loading.gif" lazyload></p>
+<p>这时可以选择升级scipy或者降级numpy。我选的是前者，因为降级numpy报了一大堆错误orz。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pip</span> install --upgrade scipy`或`pip install numpy==<span class="hljs-number">1</span>.<span class="hljs-number">16</span>.<span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
+<p>成功解决，环境配置完成！</p>
+<p><img src="/images/01-Transformers环境安装/1719753117739-6c4a7437-01e0-4ed9-b8af-0a25052cfe31.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="简单实例">简单实例</h1>
+<p>先配置好python解释器的环境，选择transformers_cpu。</p>
+<p><img src="/images/01-Transformers环境安装/1719753600848-53df9d07-c154-4b51-9532-cb13ac129b1f.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="文本分类">文本分类</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入gradio</span><br><span class="hljs-keyword">import</span> gradio <span class="hljs-keyword">as</span> gr<br><span class="hljs-comment"># 导入transformers相关包</span><br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> *<br><span class="hljs-comment"># 通过Interface加载pipeline并启动文本分类服务</span><br>gr.Interface.from_pipeline(pipeline(<span class="hljs-string">&quot;text-classification&quot;</span>, model=<span class="hljs-string">&quot;uer/roberta-base-finetuned-dianping-chinese&quot;</span>)).launch()<br></code></pre></td></tr></table></figure>
+<p>运行代码，可以看到在下载对应的模型，默认下载路径<code>C:\Users\Administrator\.cache\huggingface\hub\</code>。</p>
+<p><img src="/images/01-Transformers环境安装/1719753795221-2fe914db-5ce8-4d2c-9c95-26cb42d32a94.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以在调用from_pretrained函数时使用cache_dir入参，指定缓存文件夹名。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">AutoModel.from_pretrained(<span class="hljs-string">&#x27;bert-base-chinese&#x27;</span>, <span class="hljs-attribute">cache_dir</span>=<span class="hljs-string">&#x27;./&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>下载完成后，点击这个连接，访问文本分类模型。</p>
+<p><img src="/images/01-Transformers环境安装/1719757014381-1d67a062-a9d4-4361-9911-e963813d57fa.png" srcset="/img/loading.gif" lazyload></p>
+<p>但是有报错，查了一下应该还是numpy版本的问题，还是太高了，所以需要降级numpy。</p>
+<p><img src="/images/01-Transformers环境安装/1719758136956-e7765538-acdc-4f1c-96cb-67d87ea8b92a.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719758091420-4568e1bc-0c72-4482-9131-9ad0b584e598.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>pip install -U numpy==1.16.5</code>，报了一大堆错……</p>
+<p><img src="/images/01-Transformers环境安装/1719758337219-1c8a9777-5af9-4bc3-96fd-8bae85e3a202.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>pip install -U numpy==1.20.3</code>，查了下python3.9对应的numpy版本时1.20.3，试了一下，这次装成功了，但还是报错。</p>
+<p><img src="/images/01-Transformers环境安装/1719760719065-a93df1ff-f823-461f-a500-fcda037055ac.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719760079764-1022b772-f4a6-49ac-b486-d78abd9f212a.png" srcset="/img/loading.gif" lazyload></p>
+<p>matplotlib 3.9.0需要numpy&gt;=1.23，pandas
+2.2.2需要numpy&gt;=1.22.4，scipy
+1.13.1需要2.3&gt;numpy&gt;=1.22.4。尝试安装1.23.0，<code>pip install -U numpy==1.23.0</code>，没报错！</p>
+<p><img src="/images/01-Transformers环境安装/1719761348042-04e72a51-c095-42e4-8ab0-6358c94574aa.png" srcset="/img/loading.gif" lazyload></p>
+<p>重新运行代码，成功了！！！！</p>
+<p><img src="/images/01-Transformers环境安装/1719761236687-9b19f056-008a-4832-b34c-ed4e0cbc32d7.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="阅读理解">阅读理解</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入gradio</span><br><span class="hljs-keyword">import</span> gradio <span class="hljs-keyword">as</span> gr<br><span class="hljs-comment"># 导入transformers相关包</span><br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> pipeline<br><br><span class="hljs-comment"># 通过Interface加载pipeline并启动阅读理解服务</span><br><span class="hljs-comment"># 如果无法通过这种方式加载，可以采用离线加载的方式</span><br>gr.Interface.from_pipeline(pipeline(<span class="hljs-string">&quot;question-answering&quot;</span>, model=<span class="hljs-string">&quot;uer/roberta-base-chinese-extractive-qa&quot;</span>)).launch()<br></code></pre></td></tr></table></figure>
+<p>有了之前的经验，第二个实例就很顺利了！</p>
+<p><img src="/images/01-Transformers环境安装/1719812400053-bca4f9bf-4c17-4092-af2c-7b8e7f42da40.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719812470403-d4848f3c-252a-4598-bdd8-e0a13b021822.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Huggingface-Transformers-%E5%85%A5%E9%97%A8%E7%AF%87/" class="category-chain-item">Huggingface Transformers-入门篇</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HuggingFace Transformers 基础知识与环境安装</div>
+      <div>https://jiangcara.github.io/posts/31beefe2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jiang Cara</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/c96e5647/" title="HuggingFace Transformers 基础组件之Pipeline">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HuggingFace Transformers 基础组件之Pipeline</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/bda47da5/" title="Transformer学习笔记">
+                        <span class="hidden-mobile">Transformer学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","appKey":"FYmTqTFfuO2WyFhFRMsr5F18","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

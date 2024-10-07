@@ -1,0 +1,881 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/juan.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jiang Cara">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一个基于Transformers的中文命名实体识别任务的示例。模型结构选择ModelForTokenClassification。数据集选择peoples_daily_ner，模型选择hfl&#x2F;chinese-macbert-base。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于 Transformers 的 NER">
+<meta property="og:url" content="https://jiangcara.github.io/posts/91e7aae8/">
+<meta property="og:site_name" content="卷卷">
+<meta property="og:description" content="一个基于Transformers的中文命名实体识别任务的示例。模型结构选择ModelForTokenClassification。数据集选择peoples_daily_ner，模型选择hfl&#x2F;chinese-macbert-base。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiangcara.github.io/images/09-%E5%9F%BA%E4%BA%8ETransformers%E7%9A%84NER/1723189853687-099234f5-8b41-4afc-9e6d-5de0ebfed5d9.png">
+<meta property="article:published_time" content="2024-09-29T14:34:12.356Z">
+<meta property="article:modified_time" content="2024-09-29T14:34:12.356Z">
+<meta property="article:author" content="Jiang Cara">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jiangcara.github.io/images/09-%E5%9F%BA%E4%BA%8ETransformers%E7%9A%84NER/1723189853687-099234f5-8b41-4afc-9e6d-5de0ebfed5d9.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>基于 Transformers 的 NER - 卷卷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>卷卷</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/wallhaven-weger7.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="基于 Transformers 的 NER"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-09-29 22:34" pubdate>
+          2024年9月29日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">基于 Transformers 的 NER</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>Reference：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gW4y197CT/">【HuggingFace
+Transformers-实战篇】命名实体识别</a></p>
+</blockquote>
+<h1 id="任务简介">任务简介</h1>
+<p><strong>命名实体识别</strong>（Named Entity Recognition,
+NER）是信息抽取的一个子任务，旨在提取文本信息中的关键实体并识别其类型，常见的通用类型有PER（人物）、LOC（位置）、ORG（组织）等。
+<img src="/images/09-基于Transformers的NER/1723189853687-099234f5-8b41-4afc-9e6d-5de0ebfed5d9.png" srcset="/img/loading.gif" lazyload>
+目前常见的数据标注方法有：IOB1、IOB2、IOOES、IOE等。</p>
+<p>以IOB2为例，I表示实体内部，O表示实体外部，B表示实体开始，一般的数据格式如下：乔，B-PER、布，I-PER、斯，I-PER。如果是IOBES标注，E表示实体的结束，S表示一个词单独构成一个实体。有时会用M替代I，本质上是一个意思。</p>
+<h1 id="任务评估指标">任务评估指标</h1>
+<ul>
+<li><strong>Precision</strong> (P) ：预测正确的实体个数 /
+预测出的实体个数（预测出的不一定对）；</li>
+<li><strong>Recall</strong> (R) ：预测正确的实体个数 /
+实际上的实体个数；</li>
+<li><strong>F1</strong>：F1认为准确率P和召回率R同等重要，<span class="math inline">\(F_1=\frac
+{2PR}{P+R}\)</span>。（还有F2和F0.5）</li>
+</ul>
+<h1 id="基于transformers的中文命名实体识别">基于Transformers的中文命名实体识别</h1>
+<p>对于中文来说，token是每个字，实际上模型是对每个token进行标签分类，模型结构选择
+<code>ModelForTokenClassification</code>。数据集选择<code>peoples_daily_ner</code>，模型选择<code>hfl/chinese-macbert-base</code>。</p>
+<h2 id="step1-导入相关包">Step1 导入相关包</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> evaluate<br><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> load_dataset<br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer, AutoModelForTokenClassification, TrainingArguments, Trainer, DataCollatorForTokenClassification<br></code></pre></td></tr></table></figure>
+<h2 id="step2-加载数据集">Step2 加载数据集</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 从本地加载数据集</span><br><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> DatasetDict<br>ner_datasets = DatasetDict.load_from_disk(<span class="hljs-string">&quot;ner_data&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p><img src="/images/09-基于Transformers的NER/1722497993966-32c4e76f-43a1-4a3a-a137-19e3c4c033b7.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到，在这个数据集中已经做了标签的映射，厦门、金门分别对应5、6分别对应B-LOC、I-LOC。</p>
+<p><img src="/images/09-基于Transformers的NER/1722498130012-136bc90a-ec21-41f9-92f7-08dca47e3a83.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 获取标签列表</span><br>label_list = ner_datasets[<span class="hljs-string">&quot;train&quot;</span>].features[<span class="hljs-string">&quot;ner_tags&quot;</span>].feature.names<br></code></pre></td></tr></table></figure>
+<p><img src="/images/09-基于Transformers的NER/1722498245911-54f6fd26-2669-411b-b6a1-3f8b0034d27c.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="step3-数据集预处理">Step3 数据集预处理</h2>
+<p>对于分词后的数据（中文就是分字），要指定<code>is_split_into_words=True</code>，不然会对每个字都包裹
+[CLS] 和[SEP] ，实际上对每句话包裹 [CLS] 和 [SEP] 就可以了。</p>
+<figure>
+<img src="/images/09-基于Transformers的NER/1723206603917-fe986ce7-8550-4ea6-b3c1-b20c84ab2541.png" srcset="/img/loading.gif" lazyload title="未指定is_split_into_words=True" alt="未指定is_split_into_words=True">
+<figcaption aria-hidden="true">未指定is_split_into_words=True</figcaption>
+</figure>
+<figure>
+<img src="/images/09-基于Transformers的NER/1723206645006-afda5b6d-760b-4056-a6ae-1c475b47b377.png" srcset="/img/loading.gif" lazyload title="指定is_split_into_words=True" alt="指定is_split_into_words=True">
+<figcaption aria-hidden="true">指定is_split_into_words=True</figcaption>
+</figure>
+<p>此外，在计算的过程中，我们要让模型知道哪些是有实际语义、哪些是
+[CLS]、[SEP] 这种特殊符号，因此还要遍历<code>word_ids</code>，将
+[CLS]、[SEP]
+对应的None值置为-100，这个值是交叉熵损失函数计算时会自动忽略的值。将每句话最后得到的编码结果用<code>label_ids</code>存储起来，写入字段<code>labels</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python">tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;hfl/chinese-macbert-base&quot;</span>)<br><br><span class="hljs-comment"># 借助 word_ids 实现标签映射</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">process_function</span>(<span class="hljs-params">examples</span>):<br>    tokenized_exmaples = tokenizer(examples[<span class="hljs-string">&quot;tokens&quot;</span>], max_length=<span class="hljs-number">128</span>, truncation=<span class="hljs-literal">True</span>, is_split_into_words=<span class="hljs-literal">True</span>)<br>    labels = []<br>    <span class="hljs-keyword">for</span> i, label <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(examples[<span class="hljs-string">&quot;ner_tags&quot;</span>]):<br>        word_ids = tokenized_exmaples.word_ids(batch_index=i)<br>        label_ids = []<br>        <span class="hljs-keyword">for</span> word_id <span class="hljs-keyword">in</span> word_ids:<br>            <span class="hljs-keyword">if</span> word_id <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>                label_ids.append(-<span class="hljs-number">100</span>)<br>            <span class="hljs-keyword">else</span>:<br>                label_ids.append(label[word_id])<br>        labels.append(label_ids)<br>    tokenized_exmaples[<span class="hljs-string">&quot;labels&quot;</span>] = labels<br>    <span class="hljs-keyword">return</span> tokenized_exmaples<br><br>tokenized_datasets = ner_datasets.<span class="hljs-built_in">map</span>(process_function, batched=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+<p>这里借助<code>word_ids</code>来进行标签映射的原因是，对于中文，一个字对应一个label；但对于英文单词的分词，比如说interesting
+word，虽然是两个单词但分词后是对应了五个位置的编码的，所以要借助<code>word_ids</code>来区分这五个编码里哪几个是interesting，哪几个是word。即使interesting被分成很多词，<code>label_ids.append(label[word_id])</code>会让它的所有分词结果对应同一个标签。</p>
+<figure>
+<img src="/images/09-基于Transformers的NER/1723207581749-f1c27f17-76fb-4fe6-a060-613640b4b5ca.png" srcset="/img/loading.gif" lazyload title="interesting word的编码结果" alt="interesting word的编码结果">
+<figcaption aria-hidden="true">interesting word的编码结果</figcaption>
+</figure>
+<figure>
+<img src="/images/09-基于Transformers的NER/1723207733477-41ecef7e-b839-495a-b7d7-eb7762e502b3.png" srcset="/img/loading.gif" lazyload title="interesting word的word_ids" alt="interesting word的word_ids">
+<figcaption aria-hidden="true">interesting word的word_ids</figcaption>
+</figure>
+<p>最后，数据集的特征除了原始字段，多了tokenizer带来的三个字段，以及每句话的编码结果labels。</p>
+<p><img src="/images/09-基于Transformers的NER/1722499653407-f015e09a-0aea-4ad2-93a1-1c9a0fec1a0a.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="step4-创建模型">Step4 创建模型</h2>
+<p>分词完成后，创建一个<code>AutoModelForTokenClassification</code>模型。<strong>对于所有的非二分类任务，切记要指定num_labels，否则会报device错误。</strong>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">model = AutoModelForTokenClassification.from_pretrained(<span class="hljs-string">&quot;hfl/chinese-macbert-base&quot;</span>, num_labels=<span class="hljs-built_in">len</span>(label_list))<br></code></pre></td></tr></table></figure></p>
+<h2 id="step5-创建评估函数">Step5 创建评估函数</h2>
+<p>命名实体识别任务要用到一个序列评估函数<code>seqeval</code>，可以pip安装也可以从下载后从本地加载。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 本地加载 seqeval</span><br>seqeval = evaluate.load(<span class="hljs-string">&quot;seqeval_metric.py&quot;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">eval_metric</span>(<span class="hljs-params">pred</span>):<br>    predictions, labels = pred<br>    predictions = np.argmax(, axis=-<span class="hljs-number">1</span>)<br><br>    <span class="hljs-comment"># 将id转换为原始的字符串类型的标签</span><br>    true_predictions = [<br>        [label_list[p] <span class="hljs-keyword">for</span> p, l <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(prediction, label) <span class="hljs-keyword">if</span> l != -<span class="hljs-number">100</span>]<br>        <span class="hljs-keyword">for</span> prediction, label <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(predictions, labels) <br>    ]<br><br>    true_labels = [<br>        [label_list[l] <span class="hljs-keyword">for</span> p, l <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(prediction, label) <span class="hljs-keyword">if</span> l != -<span class="hljs-number">100</span>]<br>        <span class="hljs-keyword">for</span> prediction, label <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(predictions, labels) <br>    ]<br><br>    result = seqeval.compute(predictions=true_predictions, references=true_labels, mode=<span class="hljs-string">&quot;strict&quot;</span>, scheme=<span class="hljs-string">&quot;IOB2&quot;</span>)<br><br>    <span class="hljs-keyword">return</span> &#123;<br>        <span class="hljs-string">&quot;f1&quot;</span>: result[<span class="hljs-string">&quot;overall_f1&quot;</span>]<br>    &#125;<br></code></pre></td></tr></table></figure></p>
+<h2 id="step6-配置训练参数">Step6 配置训练参数</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">args = TrainingArguments(<br>    output_dir=<span class="hljs-string">&quot;models_for_ner&quot;</span>,<br>    per_device_train_batch_size=<span class="hljs-number">64</span>,<br>    per_device_eval_batch_size=<span class="hljs-number">128</span>,<br>    evaluation_strategy=<span class="hljs-string">&quot;epoch&quot;</span>,<br>    save_strategy=<span class="hljs-string">&quot;epoch&quot;</span>,<br>    metric_for_best_model=<span class="hljs-string">&quot;f1&quot;</span>,<br>    load_best_model_at_end=<span class="hljs-literal">True</span>,<br>    logging_steps=<span class="hljs-number">50</span>,<br>    num_train_epochs=<span class="hljs-number">1</span><br>)<br></code></pre></td></tr></table></figure>
+<h2 id="step7-创建训练器">Step7 创建训练器</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">trainer = Trainer(<br>    model=model,<br>    args=args,<br>    train_dataset=tokenized_datasets[<span class="hljs-string">&quot;train&quot;</span>],<br>    eval_dataset=tokenized_datasets[<span class="hljs-string">&quot;validation&quot;</span>],<br>    compute_metrics=eval_metric,<br>    data_collator=DataCollatorForTokenClassification(tokenizer=tokenizer)<br>)<br></code></pre></td></tr></table></figure>
+<h2 id="step8-模型训练">Step8 模型训练</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">trainer.train()<br></code></pre></td></tr></table></figure>
+<p><img src="/images/09-基于Transformers的NER/1723208364966-210dc1da-8071-4d6f-8ed1-ff9eeea134ee.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="step9-模型评估">Step9 模型评估</h2>
+<p>可以在测试集上对模型进行评估。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">trainer.evaluate(eval_dataset=tokenized_datasets[<span class="hljs-string">&quot;test&quot;</span>])<br></code></pre></td></tr></table></figure></p>
+<p><img src="/images/09-基于Transformers的NER/1723208395335-14d1075c-9b30-4a81-a5fc-9535f6101305.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="step10-模型预测">Step10 模型预测</h2>
+<p>使用pipeline使用模型进行预测。可以发现预测结果是按token返回的，并且对应的标签是LABEL_3，这是因为模型config里默认的id2label是这样对应的。</p>
+<p><img src="/images/09-基于Transformers的NER/1723209423167-fbc05c45-d893-422b-bfd8-f2521ee93fbf.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/09-基于Transformers的NER/1723209184319-3de5720a-9b64-452b-8ff5-1da4dd65b721.png" srcset="/img/loading.gif" lazyload></p>
+<p>重新写一个id2label对默认的进行覆盖。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">model.config.id2label = &#123;idx: label <span class="hljs-keyword">for</span> idx, label <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(label_list)&#125;<br></code></pre></td></tr></table></figure>
+<p><img src="/images/09-基于Transformers的NER/1723209466998-baa5e017-2435-4720-b29b-0c9fe9941ebf.png" srcset="/img/loading.gif" lazyload></p>
+<p>此外，对于NER任务，如果不希望token的标签是一个一个返回，可以指定<code>aggregation_strategy="simple"</code>让模型返回完整实体。如果模型是基于GPU训练的，那么推理时要指定<code>device=0</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> pipeline<br><br>ner_pipe = pipeline(<span class="hljs-string">&quot;token-classification&quot;</span>, model=model, tokenizer=tokenizer, device=<span class="hljs-number">0</span>, aggregation_strategy=<span class="hljs-string">&quot;simple&quot;</span>)<br>res = ner_pipe(<span class="hljs-string">&quot;小明在北京上班&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>最后得到的结果是这样的，可以发现词与词之间使用空格的，因为tokenizer在解码时默认会用空格连接token。</p>
+<p><img src="/images/09-基于Transformers的NER/1723209542895-6f1ffe92-0839-4b7d-bb42-c2370ad4ec1e.png" srcset="/img/loading.gif" lazyload>
+可以通过<code>start</code>和<code>end</code>进行取词。进一步规整预测结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 根据start和end取实际的结果</span><br>ner_result = &#123;&#125;<br>x = <span class="hljs-string">&quot;小明在北京上班&quot;</span><br><span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> res:<br>    <span class="hljs-keyword">if</span> r[<span class="hljs-string">&quot;entity_group&quot;</span>] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> ner_result:<br>        ner_result[r[<span class="hljs-string">&quot;entity_group&quot;</span>]] = []<br>    ner_result[r[<span class="hljs-string">&quot;entity_group&quot;</span>]].append(x[r[<span class="hljs-string">&quot;start&quot;</span>]: r[<span class="hljs-string">&quot;end&quot;</span>]])<br></code></pre></td></tr></table></figure>
+<p><img src="/images/09-基于Transformers的NER/1723209494197-bc7a7183-0b38-4372-ba33-a646487b8e9e.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Huggingface-Transformers-%E5%AE%9E%E6%88%98%E7%AF%87/" class="category-chain-item">Huggingface Transformers-实战篇</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>基于 Transformers 的 NER</div>
+      <div>https://jiangcara.github.io/posts/91e7aae8/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jiang Cara</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年9月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/7a209f8f/" title="HuggingFace Transformers 显存优化策略">
+                        <span class="hidden-mobile">HuggingFace Transformers 显存优化策略</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","appKey":"FYmTqTFfuO2WyFhFRMsr5F18","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

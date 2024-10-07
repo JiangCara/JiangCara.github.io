@@ -1,0 +1,1166 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/juan.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jiang Cara">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="简单总结一些常见的数据预处理、词性标注方式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python nlp 简单的数据处理">
+<meta property="og:url" content="https://jiangcara.github.io/posts/24988785/">
+<meta property="og:site_name" content="卷卷">
+<meta property="og:description" content="简单总结一些常见的数据预处理、词性标注方式。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiangcara.github.io/images/%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86/20240731231952.png">
+<meta property="article:published_time" content="2024-07-31T15:03:35.000Z">
+<meta property="article:modified_time" content="2024-09-29T14:34:12.357Z">
+<meta property="article:author" content="Jiang Cara">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jiangcara.github.io/images/%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86/20240731231952.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Python nlp 简单的数据处理 - 卷卷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>卷卷</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/wallhaven-weger7.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python nlp 简单的数据处理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-31 23:03" pubdate>
+          2024年7月31日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          22 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python nlp 简单的数据处理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="简单字符串处理">简单字符串处理</h1>
+<h2 id="去除与替换">去除与替换</h2>
+<h3 id="strip">strip()</h3>
+<p><code>strip()</code>用于去除<strong>首</strong><code>lstrip()</code><strong>尾</strong><code>rstrip()</code>的字符，若括号内为空则默认去除空格。</p>
+<ul>
+<li>若是单个字符，则是从首/尾字母开始匹配要去除的内容，到第一个匹配失败停止。</li>
+</ul>
+<p><img src="/images/数据预处理/1722245686917-c0f88893-5ddb-4dc9-aeef-e846cd197651.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>若是多个字符，去除字符时与括号内的字符顺序无关。</li>
+</ul>
+<p><img src="/images/数据预处理/1722245656828-02223365-8f88-45e3-94ad-24d7381d830e.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="replace">replace()</h3>
+<p><code>replace()</code>需要两个参数，一个是要被替换的字符，另一个是用于替换的字符。（即替换前和替换后）</p>
+<p><img src="/images/数据预处理/1722320854940-1d1ad3d0-f035-4c6d-8973-0c332478a26b.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="查找与判断">查找与判断</h2>
+<h3 id="find">find()</h3>
+<p><code>find()</code>会返回要目标字符的索引（从0开始）。</p>
+<p><img src="/images/数据预处理/1722321155648-3977a996-7078-4a57-a57a-77743513f973.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="isxxx">isXXX()</h3>
+<p>python官方定义的字母是英文字母+汉字；官方定义的数字是阿拉伯数字+带圈的数字。</p>
+<p><img src="/images/数据预处理/1722321713096-71b971a2-9226-45dc-b6a4-c0ed17870416.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/数据预处理/1722321397295-c17269cd-b16b-43ed-b78a-998cfb0ecbee.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="分割与合并">分割与合并</h2>
+<h3 id="split">split()</h3>
+<p><code>split()</code>根据传入的分割字符进行分割，返回一个list。</p>
+<p><img src="/images/数据预处理/1722322405475-d759914c-e93b-42c5-b119-06783571a8a7.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="join">join()</h3>
+<p><code>join()</code>以指定的字符进行字符串合并，在分割符相同的情况下和<code>split()</code>为互逆操作。</p>
+<p><img src="/images/数据预处理/1722322430915-4508ef6f-25df-4f24-867b-474b7ca227c6.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="正则表达式">正则表达式</h1>
+<h2 id="匹配方法">匹配方法</h2>
+<ul>
+<li><code>match()</code>：从开始位置进行匹配，开头没有返回NoneType不会继续往后搜索，返回MatchObject；</li>
+<li><code>search()</code>：开头不匹配则会跳过开头继续查找，返回MatchObject；</li>
+<li><code>findall()</code>：搜索整个字符串，返回一个list。</li>
+<li><h2 id="字符匹配">字符匹配</h2>
+正则表达式是一个字符一个字符匹配的，用pattern存储“规则”（或者说是模板）。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>说明</strong></th>
+<th><strong>示例</strong></th>
+<th><strong>匹配结果</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>一般字符</code></td>
+<td>匹配字符本身</td>
+<td>abc</td>
+<td>abc</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>匹配除了换行符外的任意一个字符</td>
+<td>a.c</td>
+<td>abc, adc, a/c</td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td>匹配有特殊作用的字符，如 . 或 *</td>
+<td>a\.c</td>
+<td>a.c</td>
+</tr>
+<tr>
+<td><code>[...]</code></td>
+<td>匹配中括号内的<strong>任意一个</strong>字符</td>
+<td>a[bcd]e</td>
+<td>abe, ace, ade</td>
+</tr>
+</tbody>
+</table>
+<h3 id="section">.</h3>
+<p><img src="/images/数据预处理/1722324599675-615a1b7c-dfe6-4566-b003-e88bc3a41743.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="section-1">\</h3>
+<p><img src="/images/数据预处理/1722324611177-ce467b57-58fa-4cdb-9857-610367ab3761.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="section-2">[...]</h3>
+<ul>
+<li><code>[abc]</code>：匹配字符集里的字符；</li>
+<li><code>[a-zA-Z]</code>：匹配所有英文字母不区分大小写；</li>
+<li><code>[^a-zA-Z]</code>：<code>^</code>表示对当前正则表达式取否，即匹配不是英文字母的字符；</li>
+<li><code>|</code>：可以连接两个规则，如<code>[a-zA-Z]|[0-9]</code>=<code>[a-zA-Z0-9]</code>。</li>
+</ul>
+<p><img src="/images/数据预处理/1722324636773-43c14451-092e-4830-bfb6-865d136d5cd3.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/数据预处理/1722325331399-b0e0da30-f03c-469f-a810-3a1846ec7a85.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="预定义字符集">预定义字符集</h2>
+<p><code>\大写字母</code>是<code>\小写字母</code>的否定。</p>
+<ul>
+<li><code>\d, \D</code>：数字与非数字；</li>
+<li><code>\s, \S</code>：空白字符（间隔符）<code>[&lt;空格&gt;\t\r\n\f\v]</code>与非空白字符；</li>
+<li><code>\w, \W</code>：单词字符<code>[A-Za-z0-9_]</code>与非单词字符；</li>
+<li><code>\b</code>：<code>\w</code>能匹配的到的字符的边界，具体可参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012961419/article/details/107462741">这篇博客</a>，部分例子如下。</li>
+</ul>
+<p><img src="/images/数据预处理/1722340960904-14412fb5-1038-485e-95a2-1ab605f092a9.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="数量词">数量词</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>说明</strong></th>
+<th><strong>示例</strong></th>
+<th><strong>匹配结果</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*</code></td>
+<td>匹配前一个字符[0, ∞)次</td>
+<td>abc*</td>
+<td>ab, abccc</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>匹配前一个字符[1, ∞)次</td>
+<td>abc+</td>
+<td>abc, abccc</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>匹配前一个字符[0, 1)次</td>
+<td>abc?</td>
+<td>ab, abc</td>
+</tr>
+<tr>
+<td><code>&#123;m&#125;</code></td>
+<td>匹配前一个字符m次</td>
+<td>abc{3}</td>
+<td>abccc</td>
+</tr>
+<tr>
+<td><code>&#123;m,n&#125;</code></td>
+<td>匹配前一个字符[m, n]次</td>
+<td>ab{1,2}c</td>
+<td>anc, abbc</td>
+</tr>
+</tbody>
+</table>
+<h2 id="字符串的替换和修改">字符串的替换和修改</h2>
+<ul>
+<li><code>sub(rule, replace, target[,count])</code>：第一个参数是正则表达式，第二个参数指定用于替换的字符串，第三个参数是要被替换处理的字符串，第四个参数是最多替换次数。</li>
+<li><code>subn(rule, replace, target[,count])</code>：参数说明同上，不同的是，<code>sub()</code>返回一个被替换后的字符串，<code>subn()</code>返回的是一个元组，第一个元素是替换后的字符串，第二个元素是产生替换的次数。</li>
+</ul>
+<h2 id="resplit">re+split()</h2>
+<p>使用指定的正则规则在目标字符串中查找匹配的字符串，并以此为界进行分割。</p>
+<h2 id="p...">(?P&lt;...&gt;)</h2>
+<p><code>(?P&lt;name&gt;)</code>允许给不同的规则取名，通过名字来决定使用哪个规则。</p>
+<p><img src="/images/数据预处理/1722327806112-60d99b3f-192f-45e3-8177-bcffcf114339.png" srcset="/img/loading.gif" lazyload>
+需要注意的是，这里使用search匹配到的第一个结果是“机器学习”而非“自然语言处理”。这是因为使用命名组时，search先匹配的是符合两个规则的子串，然后在这个子串中进行匹配。在这个例子中，第一个被找到的匹配整个正则表达式的子串是“234机器学习”，所以，没有“自然语言处理”。如果要匹配数字之前的文本，要调换两个组的顺序。</p>
+<p><img src="/images/数据预处理/1722328229592-12047ac9-7401-41b5-a8aa-c41c4f3ef83c.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="nltk">NLTK</h1>
+<p>适用于英文文本的处理。<code>pip install nltk</code></p>
+<h2 id="分词">分词</h2>
+<p>英文分词的时候token是不区分大小写的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> nltk.tokenize <span class="hljs-keyword">import</span> word_tokenize<br><br>input_str = <span class="hljs-string">&quot;Today&#x27;s weather is good, very windy and sunny, we have no classes in the afternoon,We have to play basketball tomorrow.&quot;</span><br>tokens = word_tokenize(input_str)<br>tokens = [word.lower() <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> tokens]	<span class="hljs-comment"># 不区分大小写</span><br></code></pre></td></tr></table></figure>
+<h2 id="text对象">Text对象</h2>
+<p><code>Text</code>类里封装了很多方法。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> nltk.text <span class="hljs-keyword">import</span> Text<br><br>input_str = <span class="hljs-string">&quot;Today&#x27;s weather is good, very windy and sunny, we have no classes in the afternoon,We have to play basketball tomorrow.&quot;</span><br>tokens = word_tokenize(input_str)<br>t = Text(tokens)<br>t.count(<span class="hljs-string">&#x27;good&#x27;</span>)		<span class="hljs-comment"># 统计 good 的出现次数</span><br>t.index(<span class="hljs-string">&#x27;good&#x27;</span>)		<span class="hljs-comment"># 获取 good 的索引</span><br>t.plot(<span class="hljs-number">8</span>)			<span class="hljs-comment"># 将出现频率前八的单词可视化</span><br></code></pre></td></tr></table></figure></p>
+<p><img src="/images/数据预处理/1722393297455-cbef3436-9178-480f-be3c-1e1feda7551f.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="停用词过滤">停用词过滤</h2>
+<p>停用词即在句子中权重低的词（非关键词），如is/the/we/their等，这些出现频率太高、不包含重要语义的词。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> nltk.corpus <span class="hljs-keyword">import</span> stopwords<br><br>input_str = <span class="hljs-string">&quot;Today&#x27;s weather is good, very windy and sunny, we have no classes in the afternoon,We have to play basketball tomorrow.&quot;</span><br>tokens = word_tokenize(input_str)<br>test_words = [word.lower() <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> tokens]<br><br><span class="hljs-comment"># 将分词后的结果变为无重复元素的集合</span><br>test_words_set = <span class="hljs-built_in">set</span>(test_words)<br><span class="hljs-comment"># 查看 test_words_set 有的停用词</span><br>test_words_set.intersection(<span class="hljs-built_in">set</span>(stopwords.words(<span class="hljs-string">&#x27;english&#x27;</span>)))<br><span class="hljs-comment"># 过滤停用词</span><br>filtered = [w <span class="hljs-keyword">for</span> w <span class="hljs-keyword">in</span> test_words_set <span class="hljs-keyword">if</span>(w <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> stopwords.words(<span class="hljs-string">&#x27;english&#x27;</span>))]<br><span class="hljs-comment"># 输出结果</span><br><span class="hljs-comment"># [&#x27;today&#x27;, &#x27;good&#x27;, &#x27;windy&#x27;, &#x27;sunny&#x27;, &#x27;afternoon&#x27;, &#x27;play&#x27;, &#x27;basketball&#x27;, &#x27;tomorrow&#x27;, &#x27;weather&#x27;, &#x27;classes&#x27;, &#x27;,&#x27;, &#x27;.&#x27;, &quot;&#x27;s&quot;]</span><br></code></pre></td></tr></table></figure></p>
+<h2 id="词性标注">词性标注</h2>
+<p>标注后的词性可以参考<a target="_blank" rel="noopener" href="https://www.winwaed.com/blog/2011/11/08/part-of-speech-tags/">这里</a>给出的解释。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> nltk <span class="hljs-keyword">import</span> pos_tag<br><br>tags = pos_tag(tokens)<br></code></pre></td></tr></table></figure>
+<p><img src="/images/数据预处理/1722394241722-21116477-67c5-409e-8e5b-f742e3d90f80.png" srcset="/img/loading.gif" lazyload></p>
+<table>
+<thead>
+<tr>
+<th><strong>POS Tag</strong></th>
+<th><strong>指代</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CC</td>
+<td>并列连词</td>
+</tr>
+<tr>
+<td>CD</td>
+<td>基数词</td>
+</tr>
+<tr>
+<td>DT</td>
+<td>限定符</td>
+</tr>
+<tr>
+<td>EX</td>
+<td>存在词</td>
+</tr>
+<tr>
+<td>FW</td>
+<td>外来词</td>
+</tr>
+<tr>
+<td>IN</td>
+<td>介词或从属连词</td>
+</tr>
+<tr>
+<td>JJ</td>
+<td>形容词</td>
+</tr>
+<tr>
+<td>JJR</td>
+<td>比较级的形容词</td>
+</tr>
+<tr>
+<td>JJS</td>
+<td>最高级的形容词</td>
+</tr>
+<tr>
+<td>LS</td>
+<td>列表项标记</td>
+</tr>
+<tr>
+<td>MD</td>
+<td>情态动词</td>
+</tr>
+<tr>
+<td>NN</td>
+<td>名词单数</td>
+</tr>
+<tr>
+<td>NNS</td>
+<td>名词复数</td>
+</tr>
+<tr>
+<td>NNP</td>
+<td>专有名词</td>
+</tr>
+<tr>
+<td>PDT</td>
+<td>前置限定词</td>
+</tr>
+<tr>
+<td>POS</td>
+<td>所有格结尾</td>
+</tr>
+<tr>
+<td>PRP</td>
+<td>人称代词</td>
+</tr>
+<tr>
+<td>PRP$</td>
+<td>所有格代词</td>
+</tr>
+<tr>
+<td>RB</td>
+<td>副词</td>
+</tr>
+<tr>
+<td>RBR</td>
+<td>副词比较级</td>
+</tr>
+<tr>
+<td>RBS</td>
+<td>副词最高级</td>
+</tr>
+<tr>
+<td>RP</td>
+<td>小品词</td>
+</tr>
+<tr>
+<td>UH</td>
+<td>感叹词</td>
+</tr>
+<tr>
+<td>VB</td>
+<td>动词原型</td>
+</tr>
+<tr>
+<td>VBD</td>
+<td>动词过去式</td>
+</tr>
+<tr>
+<td>VBG</td>
+<td>动名词或现在分词</td>
+</tr>
+<tr>
+<td>VBN</td>
+<td>动词过去分词</td>
+</tr>
+<tr>
+<td>VBP</td>
+<td>非第三人称单数的现在时</td>
+</tr>
+<tr>
+<td>VBZ</td>
+<td>第三人称单数的现在时</td>
+</tr>
+<tr>
+<td>WDT</td>
+<td>以wh开头的限定词</td>
+</tr>
+</tbody>
+</table>
+<h2 id="分块">分块</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> nltk.chunk <span class="hljs-keyword">import</span> RegexpParser<br><br>sentence = [(<span class="hljs-string">&#x27;the&#x27;</span>,<span class="hljs-string">&#x27;DT&#x27;</span>),(<span class="hljs-string">&#x27;little&#x27;</span>,<span class="hljs-string">&#x27;JJ&#x27;</span>),(<span class="hljs-string">&#x27;yellow&#x27;</span>,<span class="hljs-string">&#x27;JJ&#x27;</span>),(<span class="hljs-string">&#x27;dog&#x27;</span>,<span class="hljs-string">&#x27;NN&#x27;</span>),(<span class="hljs-string">&#x27;died&#x27;</span>,<span class="hljs-string">&#x27;VBD&#x27;</span>)]<br>grammer = <span class="hljs-string">&quot;MY_NP: &#123;&lt;DT&gt;?&lt;JJ&gt;*&lt;NN&gt;&#125;&quot;</span><br>cp = nltk.RegexpParser(grammer) <span class="hljs-comment">#生成规则</span><br>result = cp.parse(sentence) <span class="hljs-comment">#进行分块</span><br><span class="hljs-built_in">print</span>(result)<br><br>result.draw() <span class="hljs-comment">#调用matplotlib库画出来，树状结构</span><br></code></pre></td></tr></table></figure>
+<h2 id="命名实体识别">命名实体识别</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> nltk <span class="hljs-keyword">import</span> ne_chunk<br><br>sentence = <span class="hljs-string">&quot;Edison went to Tsinghua University today.&quot;</span><br><span class="hljs-built_in">print</span>(ne_chunk(pos_tag(word_tokenize(sentence))))<br></code></pre></td></tr></table></figure>
+<p><img src="/images/数据预处理/1722394487120-00fc0347-ae29-471a-ae55-51684b23f8da.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="数据清洗实例">数据清洗实例</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> re<br><span class="hljs-keyword">from</span> nltk.corpus <span class="hljs-keyword">import</span> stopwords<br><span class="hljs-comment"># 输入数据</span><br>s = <span class="hljs-string">&#x27;    RT @Amila #Test\nTom\&#x27;s newly listed Co  &amp;amp; Mary\&#x27;s unlisted     Group to supply tech for nlTK.\nh $TSLA $AAPL https:// t.co/x34afsfQsh&#x27;</span><br><br><span class="hljs-comment">#指定停用词</span><br>cache_english_stopwords = stopwords.words(<span class="hljs-string">&#x27;english&#x27;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">text_clean</span>(<span class="hljs-params">text</span>):    <br>    <span class="hljs-comment"># 去掉HTML标签(&amp;amp, @Amila等)</span><br>    text_no_special_entities = re.sub(<span class="hljs-string">r&#x27;\&amp;\w*;|#\w*|@\w*&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, text)<br>    <br>    <span class="hljs-comment"># 去掉 $ 符号</span><br>    text_no_tickers = re.sub(<span class="hljs-string">r&#x27;\$\w*&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, text_no_special_entities) <br>    <br>    <span class="hljs-comment"># 去掉超链接</span><br>    text_no_hyperlinks = re.sub(<span class="hljs-string">r&#x27;https?:\/\/.*\/\w*&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, text_no_tickers)<br><br>    <span class="hljs-comment"># 去掉一些专门名词缩写，简单来说就是字母比较少的词</span><br>    text_no_small_words = re.sub(<span class="hljs-string">r&#x27;\b\w&#123;1,2&#125;\b&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, text_no_hyperlinks) <br>    <br>    <span class="hljs-comment"># 多余的空格变为一个空格，去掉句首的空格</span><br>    text_no_whitespace = re.sub(<span class="hljs-string">r&#x27;\s\s+&#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span>, text_no_small_words)<br>    text_no_whitespace = text_no_whitespace.lstrip(<span class="hljs-string">&#x27; &#x27;</span>) <br>    <br>    <span class="hljs-comment"># 分词</span><br>    tokens = word_tokenize(text_no_whitespace)<br>          <br>    <span class="hljs-comment"># 去停用词</span><br>    list_no_stopwords = [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> tokens <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> cache_english_stopwords]<br>    <br>    <span class="hljs-comment"># 过滤后结果</span><br>    text_filtered =<span class="hljs-string">&#x27; &#x27;</span>.join(list_no_stopwords)<br></code></pre></td></tr></table></figure>
+<p><img src="/images/数据预处理/1722394690786-e4dcd0b8-3c1a-4b90-a1ce-9de07349493d.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="spacy">Spacy</h1>
+<p><code>pip install spacy</code> &amp;
+<code>python -m spacy download en</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> spacy<br><br>nlp = spacy.load(<span class="hljs-string">&#x27;en&#x27;</span>)<br>doc = nlp(<span class="hljs-string">&#x27;Weather is good, very windy and sunny. We have no classes in the afternoon.&#x27;</span>)<br><br><span class="hljs-comment"># 分词</span><br><span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> doc:<br>    <span class="hljs-built_in">print</span> (token)<br>    <br><span class="hljs-comment"># 分句</span><br><span class="hljs-keyword">for</span> sent <span class="hljs-keyword">in</span> doc.sents:<br>    <span class="hljs-built_in">print</span> (sent)<br><br><span class="hljs-comment"># 查看词性</span><br><span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> doc:<br>    <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;&#123;&#125;-&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(token,token.pos_))<br><br><span class="hljs-comment"># 命名实体识别</span><br>doc_2 = nlp(<span class="hljs-string">&quot;I went to Paris where I met my old friend Jack from uni.&quot;</span>)<br><span class="hljs-keyword">for</span> ent <span class="hljs-keyword">in</span> doc_2.ents:<br>    <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;&#123;&#125;-&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(ent,ent.label_))<br></code></pre></td></tr></table></figure>
+<p>spacy提供实体标注可视化包<code>displacy</code>。</p>
+<p><img src="/images/数据预处理/1722395779082-dde9fc75-a9b3-4116-ac79-86c03545deec.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="jieba">jieba</h1>
+<p>jieba分词综合了<strong>基于字符串匹配</strong>的算法和<strong>基于统计</strong>的算法。</p>
+<ul>
+<li>基于前缀词典实现高效的词图扫描，生成句子中汉字所有可能成词情况所构成的有向无环图
+(DAG)；</li>
+<li>采用了<strong>动态规划查找最大概率路径</strong>，找出基于词频的最大切分组合；</li>
+<li>对于未登录词，采用了基于汉字成词能力的 <strong>HMM
+模型</strong>，使用了 <strong>Viterbi 算法。</strong></li>
+</ul>
+<h2 id="分词-1">分词</h2>
+<p>jieba分词时可选择4种模式：精确模式、全模式、搜索引擎模式、paddle模式，最常用的还是前三种。</p>
+<p><code>jieba.cut</code> 以及 <code>jieba.cut_for_search</code>
+返回的结构都是一个可迭代的 generator，可以使用 for
+循环来获得分词后得到的每一个词语(unicode)，<code>jieba.lcut</code> 以及
+<code>jieba.lcut_for_search</code> 直接返回 list。</p>
+<ul>
+<li><code>jieba.cut</code> 方法接受四个输入参数：
+<ol type="1">
+<li>需要分词的字符串；</li>
+<li><code>cut_all</code>参数用来控制采用全模式/精确模式，默认是精确模式；</li>
+<li><code>HMM</code> 参数用来控制是否使用 HMM 模型；</li>
+<li><code>use_paddle</code>
+参数用来控制是否使用paddle模式下的分词模式，paddle模式采用延迟加载方式，通过enable_paddle接口安装paddlepaddle-tiny，并且import相关代码；</li>
+</ol></li>
+<li><code>jieba.cut_for_search</code> 方法接受两个参数：
+<ol type="1">
+<li>需要分词的字符串；</li>
+<li>是否使用 HMM
+模型。该方法适合用于搜索引擎构建倒排索引的分词，粒度比较细。</li>
+</ol></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> jieba<br><br>seg_list = jieba.cut(<span class="hljs-string">&quot;我来到北京清华大学&quot;</span>, cut_all=<span class="hljs-literal">True</span>)	<span class="hljs-comment"># 全模式</span><br>seg_list = jieba.cut(<span class="hljs-string">&quot;我来到北京清华大学&quot;</span>, cut_all=<span class="hljs-literal">False</span>)	<span class="hljs-comment"># 精确模式</span><br>seg_list = jieba.cut(<span class="hljs-string">&quot;他来到了网易杭研大厦&quot;</span>)  <span class="hljs-comment"># 默认是精确模式</span><br>seg_list = jieba.cut_for_search(<span class="hljs-string">&quot;小明硕士毕业于中国科学院计算所，后在日本京都大学深造&quot;</span>)  <span class="hljs-comment"># 搜索引擎模式</span><br></code></pre></td></tr></table></figure>
+<p>全模式：我/ 来到/ 北京/ 清华/ 清华大学/ 华大/ 大学</p>
+<p>精确模式：我/ 来到/ 北京/ 清华大学</p>
+<p>新词识别：他, 来到, 了, 网易, 杭研, 大厦
+(此处，“杭研”并没有在词典中，但是也被Viterbi算法识别出来了)</p>
+<p>搜索引擎模式： 小明, 硕士, 毕业, 于, 中国, 科学, 学院, 科学院,
+中国科学院, 计算, 计算所, 后, 在, 日本, 京都, 大学, 日本京都大学,
+深造</p>
+<h2 id="添加自定义词典">添加自定义词典</h2>
+<p>对于一些专有名词，可以用jieba加载自定义词典（词典应保存为utf-8编码）。词典格式是一个词一行，每一行包括词语、词频（可省略）、词性（可省略）三部分，用空格隔开，顺序不可颠倒。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">jieba.load_userdict(<span class="hljs-string">&quot;./data/mydict.txt&quot;</span>) <br></code></pre></td></tr></table></figure>
+<p>也可以直接添加词，但这个词只是临时保存了，再创建新的文本分词时词表里不会有这个词。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">jieba.add_word(word, freq=<span class="hljs-literal">None</span>, tag=<span class="hljs-literal">None</span>)<br></code></pre></td></tr></table></figure></p>
+<h2 id="关键词抽取">关键词抽取</h2>
+<p><code>analyse.extract_tags</code>可以抽取文本里的关键词。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> jieba.analyse<br><br>text = <span class="hljs-string">&quot;故宫的著名景点包括乾清宫、太和殿和黄琉璃瓦等&quot;</span><br>seg_list = jieba.cut(text, cut_all=<span class="hljs-literal">False</span>)<br>tags = jieba.analyse.extract_tags(text, topK=<span class="hljs-number">5</span>)<br></code></pre></td></tr></table></figure></p>
+<p><img src="/images/数据预处理/1722397142095-bdb43f07-7fc2-4174-83c0-a6be938aee22.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>withWeight</code>可以查看每个词的权重，<code>topK</code>限定查看的范围。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">tags = jieba.analyse.extract_tags(text, topK=<span class="hljs-number">5</span>, withWeight=<span class="hljs-literal">True</span>)<br><span class="hljs-keyword">for</span> word, weight <span class="hljs-keyword">in</span> tags:<br>    <span class="hljs-built_in">print</span>(word, weight)<br></code></pre></td></tr></table></figure>
+<p><img src="/images/数据预处理/1722397220471-0f53ce3e-00ae-4de1-a851-17a03f8e0bab.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="词性标注-1">词性标注</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> jieba.posseg <span class="hljs-keyword">as</span> pseg<br> <br>words = pseg.cut(<span class="hljs-string">&quot;我爱北京天安门&quot;</span>)<br><span class="hljs-keyword">for</span> word, flag <span class="hljs-keyword">in</span> words:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;%s %s&quot;</span> % (word, flag))<br></code></pre></td></tr></table></figure>
+<hr>
+<blockquote>
+<p>Reference：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1MY411e7pX">python-nlp（P2-P13）</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012961419/article/details/107462741">正则表达式-边界</a>，<a target="_blank" rel="noopener" href="https://github.com/wdndev/llm_interview_note/blob/main/01.%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/2.jieba%E5%88%86%E8%AF%8D%E7%94%A8%E6%B3%95%E5%8F%8A%E5%8E%9F%E7%90%86/2.jieba%E5%88%86%E8%AF%8D%E7%94%A8%E6%B3%95%E5%8F%8A%E5%8E%9F%E7%90%86.md">jieba分词用法及原理</a></p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/NLP/" class="category-chain-item">NLP</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python nlp 简单的数据处理</div>
+      <div>https://jiangcara.github.io/posts/24988785/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jiang Cara</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/7a209f8f/" title="HuggingFace Transformers 显存优化策略">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HuggingFace Transformers 显存优化策略</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/5c24a1dc/" title="HuggingFace Transformers 基础组件之Trainer">
+                        <span class="hidden-mobile">HuggingFace Transformers 基础组件之Trainer</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","appKey":"FYmTqTFfuO2WyFhFRMsr5F18","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

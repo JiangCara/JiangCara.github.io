@@ -1,0 +1,1023 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/juan.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jiang Cara">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Transformer是一个用于NLP序列到序列（seq2seq）任务的模型架构，创新的引入了自注意力机制，在处理序列数据时表现出色。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Transformer学习笔记">
+<meta property="og:url" content="https://jiangcara.github.io/posts/bda47da5/">
+<meta property="og:site_name" content="卷卷">
+<meta property="og:description" content="Transformer是一个用于NLP序列到序列（seq2seq）任务的模型架构，创新的引入了自注意力机制，在处理序列数据时表现出色。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiangcara.github.io/images/Transformer%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/5a7bf9578472e74ba3a1b1f99b2f8789.png">
+<meta property="article:published_time" content="2024-07-19T13:52:57.000Z">
+<meta property="article:modified_time" content="2024-09-29T14:34:12.356Z">
+<meta property="article:author" content="Jiang Cara">
+<meta property="article:tag" content="transformer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jiangcara.github.io/images/Transformer%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/5a7bf9578472e74ba3a1b1f99b2f8789.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Transformer学习笔记 - 卷卷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>卷卷</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/wallhaven-weger7.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Transformer学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-19 21:52" pubdate>
+          2024年7月19日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          22 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Transformer学习笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="transformer整体结构">Transformer整体结构</h1>
+<p>Transformer是一个用于NLP序列到序列（seq2seq）任务的模型架构，创新的引入了自注意力机制，在处理序列数据时表现出色。
+它主要由以下两个部分组成：Encoder和Decoder，整体结构如下图。</p>
+<figure>
+<img src="/images/Transformer学习笔记/5a7bf9578472e74ba3a1b1f99b2f8789.png" srcset="/img/loading.gif" lazyload alt="Transformer整体结构">
+<figcaption aria-hidden="true">Transformer整体结构</figcaption>
+</figure>
+<ul>
+<li><strong>Encoder</strong>：红色部分；<strong>Decoder</strong>：蓝色部分。</li>
+<li><strong>Input</strong>(BPE+PE)：输入由两部分组成，分别是BPE向量和位置向量。
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41020633/article/details/123622667"><strong>BPE</strong></a>(Byte
+Pair
+Encoding)：分词算法，通过将之前没见过的单词切分成见过的subword，从而表达更多的单词，再通过embedding获得向量表示。</li>
+<li><strong>PE</strong>(Positional Encoding)：
+在原有的embedding上加上一个位置向量，以区分不同位置的相同单词。</li>
+</ol></li>
+</ul>
+<figure>
+<img src="/images/Transformer学习笔记/3fd640ca201181e8c42ce1fe2b92033c.png" srcset="/img/loading.gif" lazyload alt="位置编码计算方式">
+<figcaption aria-hidden="true">位置编码计算方式</figcaption>
+</figure>
+<ul>
+<li><strong>Model</strong>：Encoder和Decoder块的堆叠。Nx是堆叠的Transformer
+block的数量，论文中Nx=6。</li>
+<li><strong>Onput</strong>(Liner+Softmax)：输出在词表上的概率分布。</li>
+<li><strong>Loss function</strong>：标准交叉熵函数。</li>
+</ul>
+<p>总的来说，Transformer的工作流程如下：</p>
+<ol type="1">
+<li>输入的文本进行分词后，每个词会获得一个向量表示即embedding，这个embedding由BPE和PE相加得到。因此，一句话的向量表示时词向量的堆叠，即一个向量矩阵。</li>
+<li>将得到的表示向量矩阵传入Encoder中，经过六个Encoder后得到输入句子的编码矩阵
+<span class="math inline">\(X\)</span>。</li>
+<li>编码矩阵 <span class="math inline">\(X\)</span>
+会进入Decoder中，Decoder会根据已输入的 <span class="math inline">\(i\)</span> 个词依次预测第 <span class="math inline">\(i+1\)</span>个词。为了防止模型看到后面的词来预测前面的输入，会采取mask操作盖住
+<span class="math inline">\(i+1\)</span> 后的词。</li>
+</ol>
+<h1 id="encoder">Encoder</h1>
+<p><img src="/images/Transformer学习笔记/915ecd1d98dd650291c3eb894bc37462.png" srcset="/img/loading.gif" lazyload alt="Encoder"> Encoder部分包含三个部分：</p>
+<ol type="1">
+<li>多头注意力层（<code>Multi-Head Attention</code>）</li>
+<li>前馈神经网络（<code>Feed Forward</code>）</li>
+<li>残差连接（红线部分，即<code>Add</code>操作）和正则化层（<code>Norm</code>操作）</li>
+</ol>
+<h2 id="muti-head-attention多头注意力机制">1. Muti-Head
+Attention：多头注意力机制</h2>
+<p>Muti-Head
+Attention是由多个Self-Attention组成的，所以先着重关注Self-Attention的内部结构。Self-Attention希望每个token自主选择应该关注这句话中的哪些token，并进行信息的整合。</p>
+<h3 id="masked-self-attention掩码自注意力机制">1.1 Masked
+self-attention：掩码自注意力机制</h3>
+<p><img src="/images/Transformer学习笔记/f681d244dc2fc4c4a00686948cd65567.png" srcset="/img/loading.gif" lazyload alt="Masked self-attention"> 可以看到，这一部分接收的输入是 $ Q, K, V$
+三个矩阵，这部分的计算方式如下：</p>
+<p><span class="math display">\[
+\rm Attention(\it Q,K,V)=\rm softmax(\it  QK^T)V.
+\]</span></p>
+<p>其中， <span class="math inline">\(Q, K, V\)</span> 是由输入 <span class="math inline">\(X\)</span> 与三个不同的权重矩阵 <span class="math inline">\(W^Q,W^K,W^V\)</span> 相乘的结果，本质上都是 <span class="math inline">\(X\)</span> 的线性变换。</p>
+<blockquote>
+<p>设 <span class="math inline">\(X\)</span> 是 <span class="math inline">\(m\times n\)</span> 的矩阵， <span class="math inline">\(W^Q,W^K,W^V\)</span> 是 <span class="math inline">\(n\times k\)</span> 的矩阵，最后得到的 <span class="math inline">\(Q,K,V\)</span> 则是<span class="math inline">\(m\times k\)</span>的矩阵。</p>
+<ul>
+<li><span class="math inline">\({QK}^T\)</span> 相乘后得到<span class="math inline">\(m\times m\)</span>的矩阵；</li>
+<li>经过<span class="math inline">\(\rm
+softmax\)</span>层后得到注意力分数的分布，矩阵维度仍是 <span class="math inline">\(m\times m\)</span>；</li>
+<li>注意力分数与<span class="math inline">\(V\)</span>相乘，还原成维度为
+<span class="math inline">\(m\times k\)</span> 的矩阵输出，与输入的<span class="math inline">\(X\)</span>一一对应。</li>
+</ul>
+</blockquote>
+<figure>
+<img src="/images/Transformer学习笔记/a6e22592627c416790470fb11e11fbe7.png" srcset="/img/loading.gif" lazyload alt="Attention计算过程">
+<figcaption aria-hidden="true">Attention计算过程</figcaption>
+</figure>
+<p>总结来说，整个Attention计算过程就是，矩阵 <span class="math inline">\(Q,K\)</span>
+相乘得到注意力分数，通过scale系数对规模进行放缩，再通过softmax将注意力分数变成一个概率分布，最后与对应的矩阵
+<span class="math inline">\(V\)</span> 进行矩阵乘法，实现对矩阵 <span class="math inline">\(V\)</span> 的加权平均。</p>
+<p>详细计算过程可以看这篇博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42110638/article/details/134016569">一文搞定自注意力机制</a>。</p>
+<blockquote>
+<p>在这里要先和RNN里的注意力机制做一下区分：</p>
+<ul>
+<li>RNN的注意力机制：给定一个 <span class="math inline">\(query\)</span>
+向量和 <span class="math inline">\(value\)</span> 向量的集合，基于 <span class="math inline">\(query\)</span> 向量对 <span class="math inline">\(value\)</span> 向量进行加权平均，采用 <span class="math inline">\(q\)</span> 和 <span class="math inline">\(v\)</span> 计算注意力分数。</li>
+<li>Transformer采用的是基于点积的注意力机制，给定 <span class="math inline">\(query\)</span> 向量、<span class="math inline">\(key\)</span>和<span class="math inline">\(value\)</span>向量对的集合，采用$ q$ 和 <span class="math inline">\(k\)</span> 的点积来计算注意力分数。</li>
+</ul>
+</blockquote>
+<h3 id="scaled-dot-product-attention引入放缩系数">1.2 Scaled dot-product
+attention：引入放缩系数</h3>
+<p>随着key向量维度的增长，<span class="math inline">\(q\)</span> 和
+<span class="math inline">\(k\)</span>
+的点积得到的标量(值)的方差也会变大，如果直接作用到softmax函数，得到的概率分布会变得更加尖锐，大部分概率分布接近于0，导致梯度越来越小，不利于参数的更新。</p>
+<p>所以在这个基础上，引入一个<code>scaled系数</code>，组成一个完整的Scaled
+dot-product attention模块，即在原有的基础上除以一个 <span class="math inline">\(\sqrt{d_k}\)</span>
+，即向量维度的开方。因此，最终的计算方式如下：</p>
+<p><span class="math display">\[\rm Attention(\it Q,K,V)=\rm softmax(\it
+\frac {QK^T}{\sqrt {d_k}})V.\]</span></p>
+<h3 id="muti-head-attention多头注意力机制-1">1.3 Muti-Head
+Attention：多头注意力机制</h3>
+<figure>
+<img src="/images/Transformer学习笔记/21235d74288f0568af03a6193ee4436e.png" srcset="/img/loading.gif" lazyload alt="矩阵Q,K,V都是从文本的表示向量乘上一个变换矩阵的到的">
+<figcaption aria-hidden="true">矩阵Q,K,V都是从文本的表示向量乘上一个变换矩阵的到的</figcaption>
+</figure>
+<p>Transformer采用了多个结构相同，但是参数不同的注意力模块(h个)组成多头注意力机制。每个注意力头的计算方式相同，但每个注意力头
+<span class="math inline">\(i\)</span> 对应权重矩阵的<span class="math inline">\(W_i^Q,W_i^K,W_i^V\)</span>不同。</p>
+<p><code>即每个注意力头中 X 乘上的权重矩阵不同，每个注意力头进行不同的线性变换</code>。</p>
+<figure>
+<img src="/images/Transformer学习笔记/af1f23643d9a4ec93d8f69756d04c24f.png" srcset="/img/loading.gif" lazyload alt="多注意力头">
+<figcaption aria-hidden="true">多注意力头</figcaption>
+</figure>
+<ul>
+<li><strong>Input</strong>：如果是第一层Encoder，输入是embedding和位置编码的相加，非第一层的Encoder的输入是前一层的输出。</li>
+<li><strong>Scaled dot-product
+attention层</strong>：计算注意力分数。</li>
+<li><strong>Concat层</strong>：将注意力头得到的输出进行拼接，再通过线性层整合得到最终输出。</li>
+<li><strong>Output</strong>：Muti-head
+attention模块的输出经过残差连接和正则化后，输入到后面的前馈神经网络。</li>
+</ul>
+<h3 id="一个embedding计算例子">1.4 一个embedding计算例子</h3>
+<p><strong>Step1.</strong> 计算单词Thinking、Machines的embedding，得到
+<span class="math inline">\({x_1,x_2}\)</span>。</p>
+<p><strong>Step2.</strong> <span class="math inline">\({x_1,x_2}\)</span> 与权重矩阵 $ W^Q, W^K, W^V$
+相乘，得到 <span class="math inline">\({q_1,k_1,v_1}\)</span>。</p>
+<p><strong>Step3.</strong> 计算注意力分数，即$
+{q_1,k_1}$的点积，这里假设 <span class="math inline">\({q_1 · k_1}=112,
+{q_2· k_2}=96\)</span> （$ {q_i,k_i}$ 堆叠起来就是矩阵 <span class="math inline">\(Q, K\)</span> ，即 $ {QK}^T$ 计算的结果）。</p>
+<p><strong>Step4.</strong> 除以scaled系数<span class="math inline">\(\sqrt
+{d_k}\)</span>，一般来说是向量维度的开方，这里假设<span class="math inline">\(d_k=64\)</span>。</p>
+<p><strong>Step5.</strong> 通过计算softmax得到注意力分数的概率分布：
+<span class="math display">\[
+\rm softmax\it (x)=\frac{e^{x_i}}{\sum_i e^{x_i}},\rm softmax
+(x_1)=\frac{e^{12}}{e^{14}+e^{12}}=0.88,\rm softmax
+(x_2)=\frac{e^{14}}{e^{14}+e^{12}}=0.12.
+\]</span></p>
+<p><strong>Step6.</strong> 将得到的概率分布矩阵与$ v_1$
+相乘，得到最后的输出$ z_1$ （矩阵$ V$ 是每个$ v_i$
+堆叠起来的结果，相乘后的$ z_i$ 堆叠起来的得到最后的输出矩阵 <span class="math inline">\(Z\)</span> 。</p>
+<figure>
+<img src="/images/Transformer学习笔记/efc34d5b592f444c977eb8f3c028a7ad.png" srcset="/img/loading.gif" lazyload alt="一个embedding计算例子">
+<figcaption aria-hidden="true">一个embedding计算例子</figcaption>
+</figure>
+<h2 id="feed-forward-network前馈神经网络">2. Feed-Forward
+Network：前馈神经网络</h2>
+<p>这部分时两层的MLP层（全连接层），第一层的激活函数为
+Relu，第二层不使用激活函数，对应的公式如下： <span class="math display">\[
+max(0,XW_1+b_1)W_2+b_2.
+\]</span></p>
+<h2 id="addnorm残差连接与正则化">3. Add&amp;Norm：残差连接与正则化</h2>
+<p>这一层包括<code>残差连接</code>（Residual
+connection）和<code>正则化</code>（Layer
+normalization），就是将每一小块的输入和这一小块的输出相加后再输入到下一块，即图中的红线部分。计算公式如下：</p>
+<ul>
+<li>第一个Add&amp;Norm层：<span class="math inline">\(LayerNorm(X+MultiHeadAttention(X))\)</span></li>
+<li>第二个Add&amp;Norm层：<span class="math inline">\(LayerNorm(X+FeedForward(X))\)</span></li>
+</ul>
+<p><code>残差连接</code>借鉴于CV领域中的ResNet，将输入输出直接相加，缓解模型过深导致的梯度消失问题。</p>
+<p><code>正则化</code>会将输入的向量变成一个均值为0，方差为1的分布，缓解梯度消失/爆炸问题。</p>
+<h1 id="decoder">Decoder</h1>
+<p><img src="/images/Transformer学习笔记/8f895e501141b24f140798198b7f82da.png" srcset="/img/loading.gif" lazyload alt="Decoder"> Decoder部分包含四个部分：</p>
+<ol type="1">
+<li>采用了掩码的多头注意力层（<code>Masked Multi-Head Attention</code>）</li>
+<li>多头注意力层（<code>Multi-Head Attention</code>）</li>
+<li>前馈神经网络（<code>Feed Forward</code>）</li>
+<li>残差连接（<code>Add</code>操作）和正则化层（<code>Norm</code>操作）</li>
+</ol>
+<h2 id="masked-self-attention掩码自注意力机制-1">1. Masked
+self-attention：掩码自注意力机制</h2>
+<p>为了限制保证Decoder端生成文本的时候是顺序生成的，<strong>不会在生成第i个位置的时候参考i+1位置的信息</strong>，使用mask让$
+Q, K$相乘得到的注意力分数的上三角部分的值变成负无穷大。</p>
+<p>这样一来，它们经过softmax之后那些位置对应的概率会变为0，使得模型在当前输出的步骤看不到后面的单词。<strong>注意
+Mask 操作是在 Self-Attention 里 Softmax 层之前使用的。</strong></p>
+<figure>
+<img src="/images/Transformer学习笔记/b48ef80600624032a938afb748709178.png" srcset="/img/loading.gif" lazyload alt="带掩码的注意力计算">
+<figcaption aria-hidden="true">带掩码的注意力计算</figcaption>
+</figure>
+<h2 id="muti-head-attention多头注意力机制-2">2. Muti-head
+attention：多头注意力机制</h2>
+<p>Decoder里这个Muti-head
+attention模块与Encoder里的略有不同，简而言之，Decoder的$
+Q$分为两种情况：</p>
+<ul>
+<li>如果是第一个Decoder block，则通过输入矩阵$ X$ 计算得到$ Q$；</li>
+<li>如果不是第一个，则通过上一Decoder block的输出$ Z$ 计算得到 $
+Q$。</li>
+</ul>
+<p>而Decoder的 <span class="math inline">\({K,V}\)</span>
+则是通过Encoder的输出 <span class="math inline">\(C\)</span>
+计算得到的。</p>
+<p>这个设计是为了帮助Decoder每一步生成都可以关注和整合Encoder端每个位置的信息，让每一个单词都可以在Decoder的时候利用到Encoder所有单词的信息。</p>
+<h2 id="具体计算过程">3. 具体计算过程</h2>
+<p>详细计算过程可以参考这篇博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Xiao_Ya__/article/details/139303221">Transformer模型详解</a>。这里引用其中的几张图总结一下：</p>
+<p><strong>Step1.</strong> 输入单词向量矩阵 $ X$ 和Mask矩阵 $ M$ 。 <img src="/images/Transformer学习笔记/3b4d9042b0814e3c909dee3915183a5d.png" srcset="/img/loading.gif" lazyload alt="Step1"></p>
+<p><strong>Step2.</strong> 像之前一样通过输入矩阵$ X$ 得到矩阵 <span class="math inline">\({Q,K,V}\)</span> 后，计算 $ {QK}^T$ 。 <img src="/images/Transformer学习笔记/ebd999b0fed345ddbc43f46bd871086d.png" srcset="/img/loading.gif" lazyload alt="Step2"></p>
+<p><strong>Step3.</strong> 将 <span class="math inline">\({QK}^T\)</span> 与Mask矩阵 <span class="math inline">\(M\)</span> 相乘，使得矩阵上三角值为0（被遮盖）。
+<img src="/images/Transformer学习笔记/241ee8414f094a5fbee7c8649445868b.png" srcset="/img/loading.gif" lazyload alt="Step3"></p>
+<p><strong>Step4.</strong> <span class="math inline">\({Mask \
+QK}^T\)</span> 与矩阵<span class="math inline">\(V\)</span> 相乘得到输出
+<span class="math inline">\(Z\)</span> ，其中 <span class="math inline">\(Z\)</span> 的每一行 <span class="math inline">\(z_i\)</span> 只包含单词 <span class="math inline">\(i\)</span> 的信息。 <img src="/images/Transformer学习笔记/1d9d4083b8154e99be4cdbf82f7d7eab.png" srcset="/img/loading.gif" lazyload alt="Step4"></p>
+<p><strong>Step5.</strong> Softmax 根据输出矩阵的每一行预测下一个单词。
+<img src="/images/Transformer学习笔记/c27607428849412d8f32c3a33073509c.png" srcset="/img/loading.gif" lazyload alt="Step5"></p>
+<h1 id="other-tricks">Other tricks</h1>
+<ul>
+<li>训练过程采用了Checkpoint
+averaging技术，使用Adam优化器进行参数更新。</li>
+<li>为了提高模型的训练效果防止过拟合，在残差连接之前加上了dropout。</li>
+<li>在输出层加入label smoothing来提高训练效率。</li>
+<li>在生产过程中采用了更复杂的一个生成策略(Auto-regressive decoding with
+beam search and length penalties)。</li>
+</ul>
+<h1 id="advantage">Advantage</h1>
+<ul>
+<li>强表示能力，可以迁移到别的NLP任务中；</li>
+<li>结构本身适合并行计算，对目前GPU等加速设备非常友好；</li>
+<li>对attenition机制进行可视化，可以发现注意力模块很好地建模了句子中token之间的关系；</li>
+<li>给预训练语言模型带来了很多启发(Bert,
+GPT)，成为目前预训练模型最主要的一个框架。</li>
+</ul>
+<h1 id="disadvantage">Disadvantage</h1>
+<ul>
+<li>模型本身对参数非常敏感，优化过程很困难；</li>
+<li>模型复杂度是文本长度n的平方，导致对长文本束手无策，当前很多模型会设置一个最大输入长度512。</li>
+</ul>
+<hr>
+<blockquote>
+<p>原始论文：《Attention is all you need》(NeurIPS 2017)</p>
+<p>参考视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1rS411F735">THUNLP-Transformer</a>，<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Q7421f75Y?p=4">马士兵Transformer详解</a></p>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42110638/article/details/134016569">一文搞定自注意力机制</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/Xiao_Ya__/article/details/139303221">Transformer模型详解</a></p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/PLMs/" class="category-chain-item">PLMs</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/transformer/" class="print-no-link">#transformer</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Transformer学习笔记</div>
+      <div>https://jiangcara.github.io/posts/bda47da5/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jiang Cara</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/31beefe2/" title="HuggingFace Transformers 基础知识与环境安装">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HuggingFace Transformers 基础知识与环境安装</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","appKey":"FYmTqTFfuO2WyFhFRMsr5F18","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
