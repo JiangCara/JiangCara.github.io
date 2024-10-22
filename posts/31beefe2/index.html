@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/c776fb77e7ad5.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -331,23 +331,23 @@ Transformers-入门篇】基础知识与环境安装</a></p>
 </blockquote>
 <h1 id="创建虚拟环境">创建虚拟环境</h1>
 <p>直接去官网安装anaconda，打开Anaconda Prompt。</p>
-<p><img src="/images/01-Transformers环境安装/image-20240724195342704.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/image-20240724195342704.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>使用conda命令新建一个虚拟环境transformers，中间的y/n输入y就行。</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">conda</span> create -n transformers_cpu python=<span class="hljs-number">3</span>.<span class="hljs-number">9</span><br></code></pre></td></tr></table></figure>
-<p><img src="/images/01-Transformers环境安装/1719733109005-5c71a950-a482-4052-8f71-6c5a535bbad1.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719733109005-5c71a950-a482-4052-8f71-6c5a535bbad1.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>安装好了之后激活环境，括号里的字变成创建的环境名则成功激活。</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">conda <span class="hljs-built_in">activate</span> transformers_cpu<br></code></pre></td></tr></table></figure>
-<p><img src="/images/01-Transformers环境安装/1719750679098-1be20f9a-72a5-46c5-865c-28e91b63248a.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719750679098-1be20f9a-72a5-46c5-865c-28e91b63248a.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>推荐换一下默认源，换成清华的pypi镜像，下载速度会快很多。</p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim">pip config <span class="hljs-keyword">set</span> <span class="hljs-keyword">global</span>.<span class="hljs-built_in">index</span>-url https://pypi.tuna.tsinghua.edu.<span class="hljs-keyword">cn</span>/simple <br></code></pre></td></tr></table></figure>
 <h1 id="安装pytorch">安装pytorch</h1>
-<p><img src="/images/01-Transformers环境安装/1719732799604-879be6ef-77d5-401f-bba2-5f28d2dca703.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719732799604-879be6ef-77d5-401f-bba2-5f28d2dca703.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="正常步骤">正常步骤</h2>
 <p>安装pytorch，鼠标右键选择NVIDIA控制面板，点击系统信息-&gt;组件查看NVIDIA
 cuda版本。</p>
-<p><img src="/images/01-Transformers环境安装/1719732410123-f746d55e-893a-451a-b719-564399bc195c.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719732410123-f746d55e-893a-451a-b719-564399bc195c.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>到<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">pytorch官网</a>按照自己的cuda版本，安装比cuda低版本的pytorch版本，推荐使用pip进行安装。</p>
-<p><img src="/images/01-Transformers环境安装/1719749802692-01bd15e9-d119-4905-a709-0dc0ce5d0fd5.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719749802692-01bd15e9-d119-4905-a709-0dc0ce5d0fd5.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>如果想装pytorch以前的版本在这：<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/previous-versions/">https://pytorch.org/get-started/previous-versions/</a>，找对应版本的命令。</p>
 <p>我电脑驱动太老了，直接装的cpu版本。</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip3 <span class="hljs-keyword">install</span> torch torchvision torchaudio<br></code></pre></td></tr></table></figure>
@@ -358,43 +358,43 @@ cuda版本。</p>
 <li><code>print(torch.__version__)</code></li>
 </ol>
 <p>因为我装的是cpu版本，所以返回的是False。</p>
-<p><img src="/images/01-Transformers环境安装/1719751363725-1bd79a84-53dd-47c2-b8c7-329824fc22db.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719751363725-1bd79a84-53dd-47c2-b8c7-329824fc22db.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="踩坑未解决">踩坑【未解决】</h2>
 <p>因为我的cuda是9.1，最开始想安装的是cu9.0版本的，对应版本是torch-0.4.1，但这个版本太老了踩了很多坑！！！记录一下装torch-0.4.1的全过程。</p>
 <p>安装网址：<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/previous-versions/">https://pytorch.org/get-started/previous-versions/</a>，下载对应文件到本地。</p>
-<p><img src="/images/01-Transformers环境安装/1719738388692-55821673-fba0-4454-8e05-5c33cbc69984.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719738388692-55821673-fba0-4454-8e05-5c33cbc69984.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>然后pip install+下载路径，会提示error，说没有whl。</p>
-<p><img src="/images/01-Transformers环境安装/1719737592714-93671e26-4dd8-4a4c-a9d3-d8b89ef6bde6.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719737592714-93671e26-4dd8-4a4c-a9d3-d8b89ef6bde6.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>找了很久，看到<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44832009/article/details/129351554">这篇博客</a>，按照里面的方法解决了这个报错。总结如下：</p>
 <ol type="1">
 <li>进入下载目录，我这里下载路径是C:；</li>
 <li>输入命令<code>pip debug --verbose</code>；</li>
 </ol>
-<p><img src="/images/01-Transformers环境安装/1719738279838-124fdf86-d13e-4360-81f3-31685f33c8ef.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719738279838-124fdf86-d13e-4360-81f3-31685f33c8ef.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <ol type="1">
 <li>我原本下载文件的名字是torch-0.4.1-cp35-cp35m-win_amd64，那么找到对应的将文件名修改为torch-0.4.1-cp35-abi3-win_amd64a。</li>
 <li><code>pip install torch-0.4.1-cp35-abi3-win_amd64.whl</code>，安装成功。</li>
 </ol>
-<p><img src="/images/01-Transformers环境安装/1719738423004-e487aace-3592-4bf7-832b-9a2e6f6d8337.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
-<p><img src="/images/01-Transformers环境安装/1719749879421-9b2a4436-5433-440b-84e6-06e8a25f7e97.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719738423004-e487aace-3592-4bf7-832b-9a2e6f6d8337.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719749879421-9b2a4436-5433-440b-84e6-06e8a25f7e97.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>结果到<code>import torch</code>的时候直接找不到torch，没找到解决办法......</p>
-<p><img src="/images/01-Transformers环境安装/1719750144030-a4c3cf76-f9a7-46cf-913f-9c8330f76c9c.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719750144030-a4c3cf76-f9a7-46cf-913f-9c8330f76c9c.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h1 id="安装vscode">安装vscode</h1>
 <p>pycharm只有专业版才能写jupyter notebook，所以这里选择vscode。</p>
 <p>官网安装vscode，下载一些必要插件：Python、Remote-ssh(远程连服务器)、Chinese
 Language Pack(汉化包)、Jupyter等。</p>
-<p><img src="/images/01-Transformers环境安装/1719736179242-4eb0867f-e6b6-425d-a56d-79af30889a2c.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719736179242-4eb0867f-e6b6-425d-a56d-79af30889a2c.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>设置终端，vscode默认终端是powershell，改成cmd更方便。调出终端的快捷键是
 ctrl+` 。</p>
-<p><img src="/images/01-Transformers环境安装/1719736429065-a6e0c9e9-aa63-41a2-9a2d-230f22188e41.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719736429065-a6e0c9e9-aa63-41a2-9a2d-230f22188e41.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>重新打开vscode后配置生效。</p>
-<p><img src="/images/01-Transformers环境安装/1719736455650-021a06e6-18c4-40fb-8c11-a92f53075987.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719736455650-021a06e6-18c4-40fb-8c11-a92f53075987.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h1 id="安装transformers">安装transformers</h1>
 <p>安装transfomers的基本库。</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip <span class="hljs-keyword">install</span> transformers datasets evaluate peft accelerate gradio optimum sentencepiece<br></code></pre></td></tr></table></figure>
-<p><img src="/images/01-Transformers环境安装/1719751494054-577f6692-1b44-41ad-9822-9250c938629a.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719751494054-577f6692-1b44-41ad-9822-9250c938629a.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">pip <span class="hljs-keyword">install </span><span class="hljs-keyword">jupyterlab </span><span class="hljs-keyword">scikit-learn </span>pandas matplotlib tensorboard nltk rouge<br></code></pre></td></tr></table></figure>
-<p><img src="/images/01-Transformers环境安装/1719751853333-3aeb5bdf-7a8a-48c1-ac71-70774c1d51eb.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719751853333-3aeb5bdf-7a8a-48c1-ac71-70774c1d51eb.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <ul>
 <li>Transformers：核心库，模型加载，模型训练，流水线等</li>
 <li>Tokenizer：分词器，对数据进行预处理，文本到token序列的互相转换</li>
@@ -406,53 +406,53 @@ ctrl+` 。</p>
 <li>Gradio：可视化部署库，几行代码快速实现基于web交互的算法演示系统</li>
 </ul>
 <p>修改hosts文件，避免下载模型时可能出现的问题，文件路径<code>C:\Windows\System32\drivers\etc\hosts</code>。</p>
-<p><img src="/images/01-Transformers环境安装/1719736841100-5285f6d6-6df3-4a07-9900-f9f44773f0a1.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719736841100-5285f6d6-6df3-4a07-9900-f9f44773f0a1.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>拷贝以下内容到hosts文件中，保存。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain">185.199.108.133 raw.githubusercontent.com<br>185.199.109.133 raw.githubusercontent.com<br>185.199.110.133 raw.githubusercontent.com<br>185.199.111.133 raw.githubusercontent.com<br>2606:50c0:8000::154 raw.githubusercontent.com<br>2606:50c0:8001::154 raw.githubusercontent.com<br>2606:50c0:8002::154 raw.githubusercontent.com<br>2606:50c0:8003::154 raw.githubusercontent.com<br></code></pre></td></tr></table></figure>
-<p><img src="/images/01-Transformers环境安装/1719751252792-155eea3c-9453-46dc-b845-f51c4f3c46a4.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719751252792-155eea3c-9453-46dc-b845-f51c4f3c46a4.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>环境配置完成。</p>
 <p>进入vscode，创建一个juoyter demo，检查环境。</p>
-<p><img src="/images/01-Transformers环境安装/1719752386257-b4aced34-9c37-42ab-8760-74e2fec9eee9.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719752386257-b4aced34-9c37-42ab-8760-74e2fec9eee9.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>选择刚刚配置好的transformers_cpu的环境。</p>
-<p><img src="/images/01-Transformers环境安装/1719752441413-46ec7bcb-1435-43eb-9964-3392d3908eaa.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719752441413-46ec7bcb-1435-43eb-9964-3392d3908eaa.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>运行示例代码<code>from transformers import *</code>。</p>
 <p>第一次运行时有报错，提示版本不兼容，大概率是scipy和numpy库的版本不兼容，scipy的版本兼容numpy版本在
 1.16.5 到 1.23.0 之间，我的numpy版本可以看到是2.0.0。</p>
-<p><img src="/images/01-Transformers环境安装/1719753402908-83079dc2-238f-4c5d-aedf-44c4157d5bda.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719753402908-83079dc2-238f-4c5d-aedf-44c4157d5bda.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>这时可以选择升级scipy或者降级numpy。我选的是前者，因为降级numpy报了一大堆错误orz。</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pip</span> install --upgrade scipy`或`pip install numpy==<span class="hljs-number">1</span>.<span class="hljs-number">16</span>.<span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
 <p>成功解决，环境配置完成！</p>
-<p><img src="/images/01-Transformers环境安装/1719753117739-6c4a7437-01e0-4ed9-b8af-0a25052cfe31.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719753117739-6c4a7437-01e0-4ed9-b8af-0a25052cfe31.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h1 id="简单实例">简单实例</h1>
 <p>先配置好python解释器的环境，选择transformers_cpu。</p>
-<p><img src="/images/01-Transformers环境安装/1719753600848-53df9d07-c154-4b51-9532-cb13ac129b1f.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719753600848-53df9d07-c154-4b51-9532-cb13ac129b1f.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="文本分类">文本分类</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入gradio</span><br><span class="hljs-keyword">import</span> gradio <span class="hljs-keyword">as</span> gr<br><span class="hljs-comment"># 导入transformers相关包</span><br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> *<br><span class="hljs-comment"># 通过Interface加载pipeline并启动文本分类服务</span><br>gr.Interface.from_pipeline(pipeline(<span class="hljs-string">&quot;text-classification&quot;</span>, model=<span class="hljs-string">&quot;uer/roberta-base-finetuned-dianping-chinese&quot;</span>)).launch()<br></code></pre></td></tr></table></figure>
 <p>运行代码，可以看到在下载对应的模型，默认下载路径<code>C:\Users\Administrator\.cache\huggingface\hub\</code>。</p>
-<p><img src="/images/01-Transformers环境安装/1719753795221-2fe914db-5ce8-4d2c-9c95-26cb42d32a94.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719753795221-2fe914db-5ce8-4d2c-9c95-26cb42d32a94.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>可以在调用from_pretrained函数时使用cache_dir入参，指定缓存文件夹名。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">AutoModel.from_pretrained(<span class="hljs-string">&#x27;bert-base-chinese&#x27;</span>, <span class="hljs-attribute">cache_dir</span>=<span class="hljs-string">&#x27;./&#x27;</span>)<br></code></pre></td></tr></table></figure>
 <p>下载完成后，点击这个连接，访问文本分类模型。</p>
-<p><img src="/images/01-Transformers环境安装/1719757014381-1d67a062-a9d4-4361-9911-e963813d57fa.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719757014381-1d67a062-a9d4-4361-9911-e963813d57fa.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>但是有报错，查了一下应该还是numpy版本的问题，还是太高了，所以需要降级numpy。</p>
-<p><img src="/images/01-Transformers环境安装/1719758136956-e7765538-acdc-4f1c-96cb-67d87ea8b92a.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
-<p><img src="/images/01-Transformers环境安装/1719758091420-4568e1bc-0c72-4482-9131-9ad0b584e598.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719758136956-e7765538-acdc-4f1c-96cb-67d87ea8b92a.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719758091420-4568e1bc-0c72-4482-9131-9ad0b584e598.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p><code>pip install -U numpy==1.16.5</code>，报了一大堆错……</p>
-<p><img src="/images/01-Transformers环境安装/1719758337219-1c8a9777-5af9-4bc3-96fd-8bae85e3a202.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719758337219-1c8a9777-5af9-4bc3-96fd-8bae85e3a202.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p><code>pip install -U numpy==1.20.3</code>，查了下python3.9对应的numpy版本时1.20.3，试了一下，这次装成功了，但还是报错。</p>
-<p><img src="/images/01-Transformers环境安装/1719760719065-a93df1ff-f823-461f-a500-fcda037055ac.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
-<p><img src="/images/01-Transformers环境安装/1719760079764-1022b772-f4a6-49ac-b486-d78abd9f212a.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719760719065-a93df1ff-f823-461f-a500-fcda037055ac.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719760079764-1022b772-f4a6-49ac-b486-d78abd9f212a.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>matplotlib 3.9.0需要numpy&gt;=1.23，pandas
 2.2.2需要numpy&gt;=1.22.4，scipy
 1.13.1需要2.3&gt;numpy&gt;=1.22.4。尝试安装1.23.0，<code>pip install -U numpy==1.23.0</code>，没报错！</p>
-<p><img src="/images/01-Transformers环境安装/1719761348042-04e72a51-c095-42e4-8ab0-6358c94574aa.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719761348042-04e72a51-c095-42e4-8ab0-6358c94574aa.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>重新运行代码，成功了！！！！</p>
-<p><img src="/images/01-Transformers环境安装/1719761236687-9b19f056-008a-4832-b34c-ed4e0cbc32d7.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719761236687-9b19f056-008a-4832-b34c-ed4e0cbc32d7.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="阅读理解">阅读理解</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入gradio</span><br><span class="hljs-keyword">import</span> gradio <span class="hljs-keyword">as</span> gr<br><span class="hljs-comment"># 导入transformers相关包</span><br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> pipeline<br><br><span class="hljs-comment"># 通过Interface加载pipeline并启动阅读理解服务</span><br><span class="hljs-comment"># 如果无法通过这种方式加载，可以采用离线加载的方式</span><br>gr.Interface.from_pipeline(pipeline(<span class="hljs-string">&quot;question-answering&quot;</span>, model=<span class="hljs-string">&quot;uer/roberta-base-chinese-extractive-qa&quot;</span>)).launch()<br></code></pre></td></tr></table></figure>
 <p>有了之前的经验，第二个实例就很顺利了！</p>
-<p><img src="/images/01-Transformers环境安装/1719812400053-bca4f9bf-4c17-4092-af2c-7b8e7f42da40.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
-<p><img src="/images/01-Transformers环境安装/1719812470403-d4848f3c-252a-4598-bdd8-e0a13b021822.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719812400053-bca4f9bf-4c17-4092-af2c-7b8e7f42da40.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/01-Transformers环境安装/1719812470403-d4848f3c-252a-4598-bdd8-e0a13b021822.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 
                 
               </div>

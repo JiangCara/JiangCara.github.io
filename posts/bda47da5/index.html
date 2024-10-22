@@ -73,7 +73,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/c776fb77e7ad5.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -330,7 +330,7 @@
 <p>Transformer是一个用于NLP序列到序列（seq2seq）任务的模型架构，创新的引入了自注意力机制，在处理序列数据时表现出色。
 它主要由以下两个部分组成：Encoder和Decoder，整体结构如下图。</p>
 <figure>
-<img src="/images/Transformer学习笔记/5a7bf9578472e74ba3a1b1f99b2f8789.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="Transformer整体结构">
+<img src="/images/Transformer学习笔记/5a7bf9578472e74ba3a1b1f99b2f8789.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="Transformer整体结构">
 <figcaption aria-hidden="true">Transformer整体结构</figcaption>
 </figure>
 <ul>
@@ -345,7 +345,7 @@ Encoding)：分词算法，通过将之前没见过的单词切分成见过的su
 </ol></li>
 </ul>
 <figure>
-<img src="/images/Transformer学习笔记/3fd640ca201181e8c42ce1fe2b92033c.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="位置编码计算方式">
+<img src="/images/Transformer学习笔记/3fd640ca201181e8c42ce1fe2b92033c.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="位置编码计算方式">
 <figcaption aria-hidden="true">位置编码计算方式</figcaption>
 </figure>
 <ul>
@@ -364,7 +364,7 @@ block的数量，论文中Nx=6。</li>
 <span class="math inline">\(i+1\)</span> 后的词。</li>
 </ol>
 <h1 id="encoder">Encoder</h1>
-<p><img src="/images/Transformer学习笔记/915ecd1d98dd650291c3eb894bc37462.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="Encoder"> Encoder部分包含三个部分：</p>
+<p><img src="/images/Transformer学习笔记/915ecd1d98dd650291c3eb894bc37462.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="Encoder"> Encoder部分包含三个部分：</p>
 <ol type="1">
 <li>多头注意力层（<code>Multi-Head Attention</code>）</li>
 <li>前馈神经网络（<code>Feed Forward</code>）</li>
@@ -376,7 +376,7 @@ Attention：多头注意力机制</h2>
 Attention是由多个Self-Attention组成的，所以先着重关注Self-Attention的内部结构。Self-Attention希望每个token自主选择应该关注这句话中的哪些token，并进行信息的整合。</p>
 <h3 id="masked-self-attention掩码自注意力机制">1.1 Masked
 self-attention：掩码自注意力机制</h3>
-<p><img src="/images/Transformer学习笔记/f681d244dc2fc4c4a00686948cd65567.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="Masked self-attention"> 可以看到，这一部分接收的输入是 $ Q, K, V$
+<p><img src="/images/Transformer学习笔记/f681d244dc2fc4c4a00686948cd65567.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="Masked self-attention"> 可以看到，这一部分接收的输入是 $ Q, K, V$
 三个矩阵，这部分的计算方式如下：</p>
 <p><span class="math display">\[
 \rm Attention(\it Q,K,V)=\rm softmax(\it  QK^T)V.
@@ -393,7 +393,7 @@ softmax\)</span>层后得到注意力分数的分布，矩阵维度仍是 <span 
 </ul>
 </blockquote>
 <figure>
-<img src="/images/Transformer学习笔记/a6e22592627c416790470fb11e11fbe7.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="Attention计算过程">
+<img src="/images/Transformer学习笔记/a6e22592627c416790470fb11e11fbe7.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="Attention计算过程">
 <figcaption aria-hidden="true">Attention计算过程</figcaption>
 </figure>
 <p>总结来说，整个Attention计算过程就是，矩阵 <span class="math inline">\(Q,K\)</span>
@@ -421,14 +421,14 @@ dot-product attention模块，即在原有的基础上除以一个 <span class="
 <h3 id="muti-head-attention多头注意力机制-1">1.3 Muti-Head
 Attention：多头注意力机制</h3>
 <figure>
-<img src="/images/Transformer学习笔记/21235d74288f0568af03a6193ee4436e.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="矩阵Q,K,V都是从文本的表示向量乘上一个变换矩阵的到的">
+<img src="/images/Transformer学习笔记/21235d74288f0568af03a6193ee4436e.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="矩阵Q,K,V都是从文本的表示向量乘上一个变换矩阵的到的">
 <figcaption aria-hidden="true">矩阵Q,K,V都是从文本的表示向量乘上一个变换矩阵的到的</figcaption>
 </figure>
 <p>Transformer采用了多个结构相同，但是参数不同的注意力模块(h个)组成多头注意力机制。每个注意力头的计算方式相同，但每个注意力头
 <span class="math inline">\(i\)</span> 对应权重矩阵的<span class="math inline">\(W_i^Q,W_i^K,W_i^V\)</span>不同。</p>
 <p><code>即每个注意力头中 X 乘上的权重矩阵不同，每个注意力头进行不同的线性变换</code>。</p>
 <figure>
-<img src="/images/Transformer学习笔记/af1f23643d9a4ec93d8f69756d04c24f.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="多注意力头">
+<img src="/images/Transformer学习笔记/af1f23643d9a4ec93d8f69756d04c24f.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="多注意力头">
 <figcaption aria-hidden="true">多注意力头</figcaption>
 </figure>
 <ul>
@@ -459,7 +459,7 @@ attention模块的输出经过残差连接和正则化后，输入到后面的�
 相乘，得到最后的输出$ z_1$ （矩阵$ V$ 是每个$ v_i$
 堆叠起来的结果，相乘后的$ z_i$ 堆叠起来的得到最后的输出矩阵 <span class="math inline">\(Z\)</span> 。</p>
 <figure>
-<img src="/images/Transformer学习笔记/efc34d5b592f444c977eb8f3c028a7ad.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="一个embedding计算例子">
+<img src="/images/Transformer学习笔记/efc34d5b592f444c977eb8f3c028a7ad.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="一个embedding计算例子">
 <figcaption aria-hidden="true">一个embedding计算例子</figcaption>
 </figure>
 <h2 id="feed-forward-network前馈神经网络">2. Feed-Forward
@@ -479,7 +479,7 @@ normalization），就是将每一小块的输入和这一小块的输出相加�
 <p><code>残差连接</code>借鉴于CV领域中的ResNet，将输入输出直接相加，缓解模型过深导致的梯度消失问题。</p>
 <p><code>正则化</code>会将输入的向量变成一个均值为0，方差为1的分布，缓解梯度消失/爆炸问题。</p>
 <h1 id="decoder">Decoder</h1>
-<p><img src="/images/Transformer学习笔记/8f895e501141b24f140798198b7f82da.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="Decoder"> Decoder部分包含四个部分：</p>
+<p><img src="/images/Transformer学习笔记/8f895e501141b24f140798198b7f82da.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="Decoder"> Decoder部分包含四个部分：</p>
 <ol type="1">
 <li>采用了掩码的多头注意力层（<code>Masked Multi-Head Attention</code>）</li>
 <li>多头注意力层（<code>Multi-Head Attention</code>）</li>
@@ -493,7 +493,7 @@ Q, K$相乘得到的注意力分数的上三角部分的值变成负无穷大。
 <p>这样一来，它们经过softmax之后那些位置对应的概率会变为0，使得模型在当前输出的步骤看不到后面的单词。<strong>注意
 Mask 操作是在 Self-Attention 里 Softmax 层之前使用的。</strong></p>
 <figure>
-<img src="/images/Transformer学习笔记/b48ef80600624032a938afb748709178.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="带掩码的注意力计算">
+<img src="/images/Transformer学习笔记/b48ef80600624032a938afb748709178.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="带掩码的注意力计算">
 <figcaption aria-hidden="true">带掩码的注意力计算</figcaption>
 </figure>
 <h2 id="muti-head-attention多头注意力机制-2">2. Muti-head
@@ -512,15 +512,15 @@ Q$。</li>
 <p>这个设计是为了帮助Decoder每一步生成都可以关注和整合Encoder端每个位置的信息，让每一个单词都可以在Decoder的时候利用到Encoder所有单词的信息。</p>
 <h2 id="具体计算过程">3. 具体计算过程</h2>
 <p>详细计算过程可以参考这篇博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Xiao_Ya__/article/details/139303221">Transformer模型详解</a>。这里引用其中的几张图总结一下：</p>
-<p><strong>Step1.</strong> 输入单词向量矩阵 $ X$ 和Mask矩阵 $ M$ 。 <img src="/images/Transformer学习笔记/3b4d9042b0814e3c909dee3915183a5d.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="Step1"></p>
-<p><strong>Step2.</strong> 像之前一样通过输入矩阵$ X$ 得到矩阵 <span class="math inline">\({Q,K,V}\)</span> 后，计算 $ {QK}^T$ 。 <img src="/images/Transformer学习笔记/ebd999b0fed345ddbc43f46bd871086d.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="Step2"></p>
+<p><strong>Step1.</strong> 输入单词向量矩阵 $ X$ 和Mask矩阵 $ M$ 。 <img src="/images/Transformer学习笔记/3b4d9042b0814e3c909dee3915183a5d.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="Step1"></p>
+<p><strong>Step2.</strong> 像之前一样通过输入矩阵$ X$ 得到矩阵 <span class="math inline">\({Q,K,V}\)</span> 后，计算 $ {QK}^T$ 。 <img src="/images/Transformer学习笔记/ebd999b0fed345ddbc43f46bd871086d.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="Step2"></p>
 <p><strong>Step3.</strong> 将 <span class="math inline">\({QK}^T\)</span> 与Mask矩阵 <span class="math inline">\(M\)</span> 相乘，使得矩阵上三角值为0（被遮盖）。
-<img src="/images/Transformer学习笔记/241ee8414f094a5fbee7c8649445868b.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="Step3"></p>
+<img src="/images/Transformer学习笔记/241ee8414f094a5fbee7c8649445868b.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="Step3"></p>
 <p><strong>Step4.</strong> <span class="math inline">\({Mask \
 QK}^T\)</span> 与矩阵<span class="math inline">\(V\)</span> 相乘得到输出
-<span class="math inline">\(Z\)</span> ，其中 <span class="math inline">\(Z\)</span> 的每一行 <span class="math inline">\(z_i\)</span> 只包含单词 <span class="math inline">\(i\)</span> 的信息。 <img src="/images/Transformer学习笔记/1d9d4083b8154e99be4cdbf82f7d7eab.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="Step4"></p>
+<span class="math inline">\(Z\)</span> ，其中 <span class="math inline">\(Z\)</span> 的每一行 <span class="math inline">\(z_i\)</span> 只包含单词 <span class="math inline">\(i\)</span> 的信息。 <img src="/images/Transformer学习笔记/1d9d4083b8154e99be4cdbf82f7d7eab.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="Step4"></p>
 <p><strong>Step5.</strong> Softmax 根据输出矩阵的每一行预测下一个单词。
-<img src="/images/Transformer学习笔记/c27607428849412d8f32c3a33073509c.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload alt="Step5"></p>
+<img src="/images/Transformer学习笔记/c27607428849412d8f32c3a33073509c.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="Step5"></p>
 <h1 id="other-tricks">Other tricks</h1>
 <ul>
 <li>训练过程采用了Checkpoint

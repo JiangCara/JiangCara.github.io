@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/c776fb77e7ad5.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -333,7 +333,7 @@ Course</a></p>
 <h1 id="背景知识">背景知识</h1>
 <h2 id="encoder-decoder">Encoder &amp; Decoder</h2>
 <p>补充一下Transformer的背景知识，简单来说，Transformer分为Encoder（编码器）和Decoder（解码器）两个部分，其中基于掩码的注意力机制是模型的重点，是面向seq2seq任务的，一些细节可以参考之前写的一个<a href="https://jiangcara.github.io/posts/bda47da5/">Transformer学习笔记</a>。</p>
-<p><img src="/images/04-基础组件之Model（上）/1720798084999-b94c1f2b-7437-49fa-a310-71706c4b4d9f.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
+<p><img src="/images/04-基础组件之Model（上）/1720798084999-b94c1f2b-7437-49fa-a310-71706c4b4d9f.png" srcset="/img/c776fb77e7ad5.gif" lazyload>
 现在大部分的预训练语言模型（PLMs）都是基于Transformer
 block的堆叠，堆叠的方式有三种：</p>
 <ol type="1">
@@ -341,12 +341,12 @@ block的堆叠，堆叠的方式有三种：</p>
 <li>基于Decoder，适合文本生成任务；</li>
 <li>结合Encoder和Decoder，适合总结摘要、翻译、生成式问答任务等。</li>
 </ol>
-<p>官网给出了这三种堆叠方式下的经典模型，如下图。 <img src="/images/04-基础组件之Model（上）/1720796097629-3d5e1b48-5eab-4236-9a5a-313975b30286.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
-up在视频中也给出了这三类模型的简要介绍。 <img src="/images/04-基础组件之Model（上）/1720798189571-2c0d6a66-266d-4a2f-9708-5b9e64170a37.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p>官网给出了这三种堆叠方式下的经典模型，如下图。 <img src="/images/04-基础组件之Model（上）/1720796097629-3d5e1b48-5eab-4236-9a5a-313975b30286.png" srcset="/img/c776fb77e7ad5.gif" lazyload>
+up在视频中也给出了这三类模型的简要介绍。 <img src="/images/04-基础组件之Model（上）/1720798189571-2c0d6a66-266d-4a2f-9708-5b9e64170a37.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="model-head">Model Head</h2>
 <p>对于model
 head，官网给出的解释是将高维向量映射映射到不同的维度上。我觉得可以理解为模型在output前经过的最后一层，通常为1或多个全连接层，作用是将模型的编码结果根据不同类型的任务映射成不同类型的内容。
-<img src="/images/04-基础组件之Model（上）/1720798745650-0160aab1-9de4-4411-afb6-747525fedf81.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
+<img src="/images/04-基础组件之Model（上）/1720798745650-0160aab1-9de4-4411-afb6-747525fedf81.png" srcset="/img/c776fb77e7ad5.gif" lazyload>
 调用模型本身只会返回一个基于这个模型的编码结果（hidden
 states)，所以需要model head来当任务头。不同的model
 head对应不同的任务，有很多种选择：</p>
@@ -365,55 +365,55 @@ head对应不同的任务，有很多种选择：</p>
 <p>先导包。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoConfig, AutoModel, AutoTokenizer<br></code></pre></td></tr></table></figure> ### 在线加载
 这是从官网直接下载下来，只有初次调用会下载，后续调用的时候会使用缓存。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">model = AutoModel.from_pretrained(<span class="hljs-string">&quot;hfl/rbt3&quot;</span>, force_download=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure></p>
-<p><img src="/images/04-基础组件之Model（上）/1720876849958-13271808-b265-45b6-bb50-5120dbd67bf4.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/04-基础组件之Model（上）/1720876849958-13271808-b265-45b6-bb50-5120dbd67bf4.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>还可以使用git
 clone的方式进行下载，模型会保存到当前目录的rbt3文件夹下。由于我没配置git，就没有尝试。总之第一种git方式是下了所有文件，第二种git方式是下载指定的pytorch版本的bin文件。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">!git clone <span class="hljs-string">&quot;https://huggingface.co/hfl/rbt3&quot;</span><br>!git lfs clone <span class="hljs-string">&quot;https://huggingface.co/hfl/rbt3&quot;</span> --include=<span class="hljs-string">&quot;*.bin&quot;</span><br></code></pre></td></tr></table></figure>
 <h3 id="离线加载">离线加载</h3>
 <p>如果模型比较大，网不好的话下载不了，可以采取离线下载的方式。也就是进到<a target="_blank" rel="noopener" href="https://huggingface.co/hfl/rbt3">模型详情页</a>把文件都下载下来。</p>
-<p><img src="/images/04-基础组件之Model（上）/1720877086943-5cbd5b73-b935-461f-ad99-373dcb0bf241.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/04-基础组件之Model（上）/1720877086943-5cbd5b73-b935-461f-ad99-373dcb0bf241.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>可以看到有三个较大的文件，这三个文件时这个模型用不同框架实现的三个版本，即flax版、tensorflow版和pytorch版。我们用到的是pytorch版，因此其他两个版本模型不用下载，只要其他文件和pytorch版模型就行。下载后存储到指定路径中，即可进行加载。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">model = AutoModel.from_pretrained(<span class="hljs-string">&quot;hflrbt3&quot;</span>)<br></code></pre></td></tr></table></figure>
-<p>我这里就是把模型保存在同一个目录下的文件夹内。 <img src="/images/04-基础组件之Model（上）/1720877436916-a5740903-98c4-4447-bfa3-bf37a6fee9c7.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p>我这里就是把模型保存在同一个目录下的文件夹内。 <img src="/images/04-基础组件之Model（上）/1720877436916-a5740903-98c4-4447-bfa3-bf37a6fee9c7.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="模型加载参数">模型加载参数</h2>
-<p>加载模型后，可以看到模型本身的一些参数，可以对模型进行配置。 <img src="/images/04-基础组件之Model（上）/1720701569721-aa2d3703-86a9-40f6-b1d6-bc218599ca34.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
+<p>加载模型后，可以看到模型本身的一些参数，可以对模型进行配置。 <img src="/images/04-基础组件之Model（上）/1720701569721-aa2d3703-86a9-40f6-b1d6-bc218599ca34.png" srcset="/img/c776fb77e7ad5.gif" lazyload>
 除此之外，还可以在训练过程中修改模型的一些参数，这里要调用<code>AutoConfig</code>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">config = AutoConfig.from_pretrained(<span class="hljs-string">&quot;./hflrbt3/&quot;</span>)<br></code></pre></td></tr></table></figure>
 <p>打印出来的结果和之前一样，但是输入config.的时候会出来很多选项，都是可以设置的参数。
-<img src="/images/04-基础组件之Model（上）/1720878008296-b53ef402-b2eb-4227-af52-62f00c87ed32.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
+<img src="/images/04-基础组件之Model（上）/1720878008296-b53ef402-b2eb-4227-af52-62f00c87ed32.png" srcset="/img/c776fb77e7ad5.gif" lazyload>
 这个模型是一个bert模型，所以可以进入BertConfig中去看更加具体的参数。而BertConfig又继承自PretrainConfig类，里面的参数同样可以进行配置。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> BertConfig<br></code></pre></td></tr></table></figure>
-<p><img src="/images/04-基础组件之Model（上）/1720878190929-df04ac35-78e2-49c2-bf3e-de8b687959d7.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
+<p><img src="/images/04-基础组件之Model（上）/1720878190929-df04ac35-78e2-49c2-bf3e-de8b687959d7.png" srcset="/img/c776fb77e7ad5.gif" lazyload>
 以设置参数<code>output_attentions</code>为例，如果调用模型时没有将它设置为True，可以看到模型会输出隐藏状态、池化结果等，但最后的attention都是none。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">model = AutoModel.from_pretrained(<span class="hljs-string">&quot;hflrbt3&quot;</span>)<br>output = model(**inputs)<br></code></pre></td></tr></table></figure>
-<p><img src="/images/04-基础组件之Model（上）/1720878864087-46b1c3f8-f200-49ad-b394-1df9530b50d2.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
+<p><img src="/images/04-基础组件之Model（上）/1720878864087-46b1c3f8-f200-49ad-b394-1df9530b50d2.png" srcset="/img/c776fb77e7ad5.gif" lazyload>
 如果设置参数<code>output_attentions=True</code>，则会输出attention。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">model = AutoModel.from_pretrained(<span class="hljs-string">&quot;hflrbt3&quot;</span>, output_attentions=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
-<p><img src="/images/04-基础组件之Model（上）/1720879143144-e9da4a3f-f2cf-4bf0-9ba9-358c702c8cd3.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/04-基础组件之Model（上）/1720879143144-e9da4a3f-f2cf-4bf0-9ba9-358c702c8cd3.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h1 id="模型调用">模型调用</h1>
 <p>这里的<code>return_tensors="pt"</code>是指定tokenizer返回pytorch
 tensor形式的数据。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">sen = <span class="hljs-string">&quot;弱小的我也有大梦想！&quot;</span><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;hflrbt3&quot;</span>)<br>inputs = tokenizer(sen, return_tensors=<span class="hljs-string">&quot;pt&quot;</span>)<br></code></pre></td></tr></table></figure></p>
-<p><img src="/images/04-基础组件之Model（上）/1720878527358-56217ea6-b04d-410a-8da4-74d3b7c3b7d7.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/04-基础组件之Model（上）/1720878527358-56217ea6-b04d-410a-8da4-74d3b7c3b7d7.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="无model-head的模型调用">无Model Head的模型调用</h2>
 <p><code>AutoModel</code>不带model
 head编码，模型实际上是对输入的序列进行编码，输出的编码结果就是last_hidden_state。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">model = AutoModel.from_pretrained(<span class="hljs-string">&quot;hflrbt3&quot;</span>, output_attentions=<span class="hljs-literal">True</span>)<br>output = model(**inputs)<br></code></pre></td></tr></table></figure>
 <p>可以看到last_hidden_state的维度是1<em>12</em>768，其中1是batch的维度（只有一个句子），12是这个句子中token的个数，也就是<code>"input_ids"</code>的长度。</p>
-<p><img src="/images/04-基础组件之Model（上）/1720879984749-84004725-797b-425e-ad42-e8fe270b831b.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/04-基础组件之Model（上）/1720879984749-84004725-797b-425e-ad42-e8fe270b831b.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="有model-head的模型调用">有Model Head的模型调用</h2>
 <p><code>AutoModelForSequenceClassification</code>就是一个带model
 head编码的模型，它会将last_hidden_state从高维度向量映射成指定的低维向量，如这里指定<code>num_label=10</code>，即十分类任务，就为映射成十维向量。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoModelForSequenceClassification, BertForSequenceClassification<br><br>clz_model = AutoModelForSequenceClassification.from_pretrained(<span class="hljs-string">&quot;hflrbt3&quot;</span>, num_labels=<span class="hljs-number">10</span>)<br>output = clz_model(**inputs)<br></code></pre></td></tr></table></figure></p>
-<p><img src="/images/04-基础组件之Model（上）/1720880637842-471dae9c-61ab-420d-b42f-52a84dd70912.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/04-基础组件之Model（上）/1720880637842-471dae9c-61ab-420d-b42f-52a84dd70912.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>至于能够通过修改<code>num_label</code>就能修改映射维度，是因为这个模型是继承自Bert文本分类模型的，里面定义了将<code>hidden_size</code>映射成<code>num_label</code>的维度，所以可以这么做。</p>
-<p><img src="/images/04-基础组件之Model（上）/1720880758137-4d60b034-c4d6-4abc-be11-a7af737b0fa2.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
-<p><img src="/images/04-基础组件之Model（上）/1720880791109-4cbd4c21-8a81-4cb1-9c25-578b9488615d.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
+<p><img src="/images/04-基础组件之Model（上）/1720880758137-4d60b034-c4d6-4abc-be11-a7af737b0fa2.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/04-基础组件之Model（上）/1720880791109-4cbd4c21-8a81-4cb1-9c25-578b9488615d.png" srcset="/img/c776fb77e7ad5.gif" lazyload>
 深入看下这个bert文本分类模型的细节，可以发现他就是三层连在一起，即bert层、dropout层和一个全连接层。</p>
-<p><img src="/images/04-基础组件之Model（上）/1720880945445-1ff60e4f-f3ba-4ebf-895f-269250edb538.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/04-基础组件之Model（上）/1720880945445-1ff60e4f-f3ba-4ebf-895f-269250edb538.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>模型的input先经过forward函数，得到output，再将output中的池化结果取出来，也就是[CLS]的向量结果。这是因为在分类任务中，[CLS]是整个序列的类别标签，用于表示该序列所属类。在训练过程中，[CLS]充当预测目标，Bert通过预测[CLS]的类别来学习整个序列的语义信息，并将该类别作为整个序列的预测结果。</p>
-<p><img src="/images/04-基础组件之Model（上）/1720881417531-26573853-b970-4f1d-9e73-f7802a74f32f.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/04-基础组件之Model（上）/1720881417531-26573853-b970-4f1d-9e73-f7802a74f32f.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>而后模型会对我们有没有输入label进行判断，进而判断这是回归任务、二分类任务还是多分类任务，并且根据不同的任务类型去计算loss。最后还指定了返回值的格式，如果没有指定以字典形式返回，则以默认方式返回。</p>
-<p><img src="/images/04-基础组件之Model（上）/1720881978945-0c8c29aa-8ba8-4672-8576-59157f7a71e9.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/04-基础组件之Model（上）/1720881978945-0c8c29aa-8ba8-4672-8576-59157f7a71e9.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 
                 
               </div>
