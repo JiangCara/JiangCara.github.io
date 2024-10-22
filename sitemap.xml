@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jiangcara.github.io/posts/9cdded66/</loc>
+    
+    <lastmod>2024-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jiangcara.github.io/posts/91e7aae8/</loc>
+    
+    <lastmod>2024-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jiangcara.github.io/posts/24988785/</loc>
     
     <lastmod>2024-09-29</lastmod>
@@ -74,15 +92,6 @@
   </url>
   
   <url>
-    <loc>https://jiangcara.github.io/posts/91e7aae8/</loc>
-    
-    <lastmod>2024-09-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://jiangcara.github.io/posts/bda47da5/</loc>
     
     <lastmod>2024-09-29</lastmod>
@@ -130,7 +139,7 @@
 
   <url>
     <loc>https://jiangcara.github.io/</loc>
-    <lastmod>2024-10-07</lastmod>
+    <lastmod>2024-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -138,7 +147,7 @@
   
   <url>
     <loc>https://jiangcara.github.io/tags/transformer/</loc>
-    <lastmod>2024-10-07</lastmod>
+    <lastmod>2024-10-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -147,28 +156,28 @@
   
   <url>
     <loc>https://jiangcara.github.io/categories/Huggingface-Transformers-%E5%85%A5%E9%97%A8%E7%AF%87/</loc>
-    <lastmod>2024-10-07</lastmod>
+    <lastmod>2024-10-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jiangcara.github.io/categories/Huggingface-Transformers-%E5%AE%9E%E6%88%98%E7%AF%87/</loc>
-    <lastmod>2024-10-07</lastmod>
+    <lastmod>2024-10-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jiangcara.github.io/categories/PLMs/</loc>
-    <lastmod>2024-10-07</lastmod>
+    <lastmod>2024-10-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jiangcara.github.io/categories/NLP/</loc>
-    <lastmod>2024-10-07</lastmod>
+    <lastmod>2024-10-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
