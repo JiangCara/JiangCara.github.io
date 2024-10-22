@@ -1,0 +1,1202 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/juan.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jiang Cara">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本篇是对于主流参数高效微调(PEFT)方法的简要介绍，包含简单的代码实践。涉及到的方法有BitFit、Prompt-Tuning、P-Tuning、Prefix-Tuning、LoRA、IA3、Adapter。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Transformers PEFT库支持的高效微调方法介绍">
+<meta property="og:url" content="https://jiangcara.github.io/posts/9cdded66/">
+<meta property="og:site_name" content="卷卷">
+<meta property="og:description" content="本篇是对于主流参数高效微调(PEFT)方法的简要介绍，包含简单的代码实践。涉及到的方法有BitFit、Prompt-Tuning、P-Tuning、Prefix-Tuning、LoRA、IA3、Adapter。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiangcara.github.io/images/10-PEFT%E7%BB%8F%E5%85%B8%E6%96%B9%E6%B3%95%E4%BB%8B%E7%BB%8D/1723519595024-09e2ee05-7900-44a3-a851-e7d13bce3f6b.png">
+<meta property="article:published_time" content="2024-10-21T14:11:42.000Z">
+<meta property="article:modified_time" content="2024-10-22T05:31:14.445Z">
+<meta property="article:author" content="Jiang Cara">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jiangcara.github.io/images/10-PEFT%E7%BB%8F%E5%85%B8%E6%96%B9%E6%B3%95%E4%BB%8B%E7%BB%8D/1723519595024-09e2ee05-7900-44a3-a851-e7d13bce3f6b.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Transformers PEFT库支持的高效微调方法介绍 - 卷卷</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>卷卷</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/wallhaven-weger7.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Transformers PEFT库支持的高效微调方法介绍"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-21 22:11" pubdate>
+          2024年10月21日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          46 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Transformers PEFT库支持的高效微调方法介绍</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="peft简介">PEFT简介</h1>
+<p>自BERT问世后，NLP任务的主流范式变为：<strong>预训练语言模型（PLMs）+微调。</strong>但是现在PLMs的趋势就是模型参数量越来越大，BERT-base只有0.1B参数，而现在的大模型起步就要6、7B。因此，对大规模PLMs进行微调的成本十分高昂。</p>
+<p>参数高效微调（Parameter-Efficient
+Fine-Tuning，PEFT）是一种微调策略，<strong>旨在仅训练少量参数使模型适应到下游任务</strong>，在一些场景下甚至不输于全量微调，极大降低了计算和存储成本。</p>
+<p>PEFT通过<strong>冻结预训练模型的某些层，仅微调特定于下游任务的最后几层来实现这种效率</strong>，只对模型的一小部分参数（这部分可能来源于模型自身，也可能是外部引入的）进行训练，在计算资源有限的情况下十分有用。</p>
+<figure>
+<img src="/images/10-PEFT经典方法介绍/1723519595024-09e2ee05-7900-44a3-a851-e7d13bce3f6b.png" srcset="/img/loading.gif" lazyload alt="《Scaling Down to Scale Up: A Guide to Parameter-Efficient Fine-Tuning》：常见的 PEFT 方法分类">
+<figcaption aria-hidden="true">《Scaling Down to Scale Up: A Guide to
+Parameter-Efficient Fine-Tuning》：常见的 PEFT 方法分类</figcaption>
+</figure>
+<p>如图，<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2303.15647">论文</a>将PEFT技术大致分为三类：</p>
+<ol type="1">
+<li><strong>引入额外参数（additive）</strong>：这部分又包括适配器（adapters）和软提示（soft
+prompts），当然hard
+prompts也属于这类。要注意的是关于adapter，在PEFT里并没有现成的实现。</li>
+<li><strong>选择部分参数（selective）</strong>：选择参数进行更新。</li>
+<li><strong>引入重参数（reparametrization-based）</strong>：最著名的当属LoRa。</li>
+</ol>
+<blockquote>
+<p>微调 &amp; 参数高效微调：</p>
+<ul>
+<li>微调是在预训练好的模型上，用新的数据在新的任务上进一步训练，所有参数都会被训练。</li>
+<li>参数高效微调是只训练预训练语言模型参数的子集，更新这些关键参数。</li>
+</ul>
+</blockquote>
+<p>下面以一个生成式对话机器人（Bloom模型）为例，比较几个经典PEFT方法下需要被更新的参数量。数据集：<a target="_blank" rel="noopener" href="https://huggingface.co/datasets/shibing624/alpaca-zh">https://huggingface.co/datasets/shibing624/alpaca-zh</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">model = AutoModelForCausalLM.from_pretrained(<span class="hljs-string">&quot;Langboat/bloom-1b4-zh&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>先估算一下如果要对这个模型进行全量微调所需要额显存，可以看到这个模型参数可达到1.3B（B是billion，十亿），粗略算一下跑整个模型要占用的显存至少需要20个G。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723531317335-73dc2c02-592e-4de1-9eb8-4257bc08388f.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="bitfit">1. BitFit</h1>
+<blockquote>
+<p><em>《BitFit: Simple Parameter-efficient Fine-tuning or
+Transformer-based Masked Language-models》</em></p>
+</blockquote>
+<p><code>BitFit</code>是一种稀疏的微调方法，它<strong>选择模型里的 bias
+参数</strong>进行更新（属于selective类）。实现方式就是将所有非 bias
+部分的是否可求导<code>param.requires_grad</code>设置为 False。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> name, param <span class="hljs-keyword">in</span> model.named_parameters():<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;bias&quot;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> name:<br>        param.requires_grad = <span class="hljs-literal">False</span><br>    <span class="hljs-keyword">else</span>:<br>        num_param += param.numel()<br></code></pre></td></tr></table></figure>
+<p>可以看到，使用<code>BitFit</code>方法微调涉及到的参数只有54万，大概占总参数的0.04%。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723646508218-c58a99b9-af45-4422-9790-3ae704599f00.png" srcset="/img/loading.gif" lazyload></p>
+<p>未经过<code>BitFit</code>微调前，模型的推理效果如下，可以看到模型的回答会出现反复的情况。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723646969962-2cfd76b9-a92d-48a9-bb9d-79012abb4fd0.png" srcset="/img/loading.gif" lazyload></p>
+<p>经过<code>BitFit</code>微调后训练一段时间，每 step 打印 log，可以看到
+loss 还是能收敛的。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723702086290-678f1fb7-ea90-457c-a48a-2547084ed38b.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/10-PEFT经典方法介绍/1723702105413-37a8be11-cf49-4adb-ad63-2a2dfa507e63.png" srcset="/img/loading.gif" lazyload></p>
+<p>模型效果也会得到提升。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723702145302-5bd417f9-4b93-4906-88df-35db097a240d.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>PEFT库里没有实现<code>BitFit</code>，实现的大致思路是把可训练的部分参数训练完取出来save，在下次加载模型的时候除了加载原模型，还要用save的参数替换原模型的参数。</p>
+</blockquote>
+<h1 id="prompt-tuning">2. Prompt-Tuning</h1>
+<blockquote>
+<p><em>《The Power of Scale for Parameter-Efficient Prompt
+Tuning》</em></p>
+</blockquote>
+<p><code>Prompt-Tuning</code>会冻结主模型的全部参数，在训练数据前加入一小段
+prompt，<strong>只训练prompt对应的embedding</strong>，然后将 Prompt
+Embedding 与 Input Embedding 拼接起来一起送入 Transformer
+Blocks（属于additive类）。prompt 又分为 hard prompt 和 soft prompt。</p>
+<ul>
+<li><strong>hard
+prompt</strong>：prompt内容是人为定义的自然语言，比如“对输入内容进行文本摘要”。</li>
+<li><strong>soft
+prompt</strong>：prompt内容是一组可学习的参数，通常是一个小的嵌入向量，在训练过程中不断被优化。</li>
+</ul>
+<figure>
+<img src="/images/10-PEFT经典方法介绍/1723708945754-b43fcd4d-9940-4069-8603-422a68d2c6ba.png" srcset="/img/loading.gif" lazyload alt="图来自：https://github.com/zyds/transformers-code/">
+<figcaption aria-hidden="true">图来自：https://github.com/zyds/transformers-code/</figcaption>
+</figure>
+<p>在加载原始模型之后创建 peft model
+，主要分为两步：首先构造配置信息，然后根据配置信息创建模型。先导入必要的包：</p>
+<ul>
+<li><code>PromptTuningConfig</code>与<code>get_peft_model</code>结合使用来加载
+peft model；</li>
+<li><code>TaskType</code>用于指定任务类型；</li>
+<li><code>CAUSAL_LM</code>也就是本次例子使用的模型类型，即Causal
+Language Model（因果语言模型）；</li>
+<li><code>PromptTuningInit</code>可以用于控制是 hard prompt 还是 soft
+prompt 。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> peft <span class="hljs-keyword">import</span> PromptTuningConfig, get_peft_model, TaskType, PromptTuningInit<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><code>TaskType</code>里还支持很多类型的任务，不过<code>CAUSAL_LM</code>基本支持各类
+peft 方法，其他任务不一定。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723712272747-ac38e08d-be33-408a-974e-a6dc215545de.png" srcset="/img/loading.gif" lazyload></p>
+</blockquote>
+<h2 id="soft-prompt">2.1 soft prompt</h2>
+<p>先来说 soft prompt 的配置信息，它的 prompt
+内容不需要人为指定，是让模型自己去学的，所以用<code>num_virtual_tokens</code>指定prompt长度就可以创建简单的
+soft prompt。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 加载原始 model</span><br>model = AutoModelForCausalLM.from_pretrained(<span class="hljs-string">&quot;Langboat/bloom-1b4-zh&quot;</span>)<br><span class="hljs-comment"># 构造配置信息</span><br>config = PromptTuningConfig(task_type=TaskType.CAUSAL_LM, num_virtual_tokens=<span class="hljs-number">10</span>)<br><span class="hljs-comment"># 创建 peft model</span><br>model = get_peft_model(model, config)<br></code></pre></td></tr></table></figure>
+<p>此时<code>PromptTuningInit</code>未指定，默认是<code>RANDOM</code>随机初始化。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723778043601-a6606ba4-3f05-4c7d-83c6-138f0beee39e.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到，在<code>get_peft_model</code>后，模型外套了一个
+PeftModel，并且在末尾可以看到一个embedding层维度是10(num_virtual_tokens)×2048，对应的就是
+soft prompt。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723714404724-84451b18-dac1-440d-8541-6df2a9b022b7.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/10-PEFT经典方法介绍/1723777764691-49a36ad5-b015-4e7b-9278-772982e1c53d.png" srcset="/img/loading.gif" lazyload></p>
+<p>此时，模型要训练的参数量就是 soft prompt 的 embedding
+涉及的参数量，即20480，占总参数的0.001%。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723777866137-420becc9-cca2-4a4e-afeb-650af8077a28.png" srcset="/img/loading.gif" lazyload></p>
+<p>但是因为这种方式涉及的参数太少，loss
+可能会降得很慢，可以看到刚开始一直徘徊在3左右，所以需要训练更多的轮数来达到比较好的效果。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723781569308-b0f18538-3ae4-4b23-8d90-92a564d7764b.png" srcset="/img/loading.gif" lazyload></p>
+<p>训练后加载 peft model，这里需要重新执行一下之前加载原始 model
+的单元格，<code>model_id</code>指向我们用<code>Prompt-Tuning</code>方法冻结参数训练后保存的模型路径。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> peft <span class="hljs-keyword">import</span> PeftModel<br><br>peft_model = PeftModel.from_pretrained(model=model, model_id=<span class="hljs-string">&quot;./chatbot/checkpoint-20/&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>模型推理效果（如果这一步报错 NoneType，要检查模型和数据是否都在
+cpu/gpu 上）。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723781740014-f1391158-188b-4379-9f91-ed26cdbfba6a.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="hard-prompt">2.2 hard prompt</h2>
+<p>再说hard prompt 的配置信息，它的 prompt
+内容是人为指定的自然语言，所以这里就需要通过<code>prompt_tuning_init</code>指定初始化方式为<code>TEXT</code>，并<code>prompt_tuning_init_text</code>指定
+prompt 内容。此时，<code>num_virtual_tokens</code>的大小就是 prompt
+分词后的长度，用<code>tokenizer_name_or_path</code>指定 prompt
+使用的分词器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 加载原始模型</span><br>model = AutoModelForCausalLM.from_pretrained(<span class="hljs-string">&quot;Langboat/bloom-1b4-zh&quot;</span>)<br><span class="hljs-comment"># 构造配置信息</span><br>config = PromptTuningConfig(task_type=TaskType.CAUSAL_LM,<br>                            prompt_tuning_init=PromptTuningInit.TEXT,<br>                            prompt_tuning_init_text=<span class="hljs-string">&quot;下面是一段人与机器人的对话。&quot;</span>,<br>                            num_virtual_tokens=<span class="hljs-built_in">len</span>(tokenizer(<span class="hljs-string">&quot;下面是一段人与机器人的对话。&quot;</span>)[<span class="hljs-string">&quot;input_ids&quot;</span>]),<br>                            tokenizer_name_or_path=<span class="hljs-string">&quot;Langboat/bloom-1b4-zh&quot;</span>)<br><span class="hljs-comment"># 创建 peft model</span><br>model = get_peft_model(model, config)<br></code></pre></td></tr></table></figure>
+<p>此时，模型的<code>num_virtual_tokens=8</code>，模型要训练的参数量是
+8×2048 =16384，占总参数量的0.001%。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723782211299-0a61ef6e-0360-4fc3-800f-f8d0b73cf15a.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到 hard prompt 方式的 loss 下降得更快。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723788226239-ce3d76fa-0a5e-4715-abee-0e2458ad084a.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/10-PEFT经典方法介绍/1723788697443-9bee7e2d-31eb-4a2d-bc1e-9a5f43ac43ec.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>此外，Prompt Tuning 还提出了 Prompt Ensembling，也就是<strong>在一个
+Batch 里同时训练同一个任务的不同
+prompt（即采用多种不同方式询问同一个问题）</strong>，这样相当于训练了不同模型，比模型集成的成本小很多。</p>
+</blockquote>
+<h1 id="p-tuning">3. P-Tuning</h1>
+<blockquote>
+<p><em>《GPT Understands, Too》</em></p>
+</blockquote>
+<p><code>P-Tuning</code> 只支持 soft prompt，它把 Prompt Embedding
+变为一个 Prompt Encoder，在 Prompt-Tuning 的基础上<strong>对 Prompt
+部分进行编码计算</strong>，来解决前面 soft prompt
+优化太慢的问题，加速收敛。PEFT 中支持两种编码方式，LSTM 或者是 MLP。</p>
+<figure>
+<img src="/images/10-PEFT经典方法介绍/1723779614610-64a2ddcb-ab73-44cf-82ce-8f89c1e953be.png" srcset="/img/loading.gif" lazyload alt="图来自：https://github.com/zyds/transformers-code/">
+<figcaption aria-hidden="true">图来自：https://github.com/zyds/transformers-code/</figcaption>
+</figure>
+<p>相比于之前，这里要用到的包是<code>PromptEncoderConfig</code>和<code>PromptEncoderReparameterizationType</code>，如果不指定后者的话，默认是使用
+MLP 编码，会有三个全连接层；如果指定是 LSTM 就是 LSTM
+加两个全连接层。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> peft <span class="hljs-keyword">import</span> PromptEncoderConfig, TaskType, get_peft_model, PromptEncoderReparameterizationType<br><br><span class="hljs-comment"># 加载原始模型</span><br>model = AutoModelForCausalLM.from_pretrained(<span class="hljs-string">&quot;Langboat/bloom-1b4-zh&quot;</span>)<br><span class="hljs-comment"># 构造配置信息</span><br>config = PromptEncoderConfig(task_type=TaskType.CAUSAL_LM, num_virtual_tokens=<span class="hljs-number">10</span>)<br><span class="hljs-comment"># 创建 peft model</span><br>model = get_peft_model(model, config)<br></code></pre></td></tr></table></figure>
+<h2 id="lstm">LSTM</h2>
+<p>LSTM
+层可以控制的参数：<code>encoder_dropout</code>、<code>encoder_num_layers</code>、<code>encoder_hidden_size</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">config = PromptEncoderConfig(task_type=TaskType.CAUSAL_LM, num_virtual_tokens=<span class="hljs-number">10</span>,<br>                             encoder_reparameterization_type=PromptEncoderReparameterizationType.LSTM,<br>                             encoder_dropout=<span class="hljs-number">0.1</span>, encoder_num_layers=<span class="hljs-number">5</span>, encoder_hidden_size=<span class="hljs-number">1024</span>)<br></code></pre></td></tr></table></figure>
+<p>使用 LSTM
+编码涉及到的参数量更大，比重达到9%，很难把显存控制在8G以内。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723791493659-6668eb20-254e-4dd6-a0cf-6dbe8dd1ffba.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="mlp">MLP</h2>
+<p>MLP
+层可以控制的参数：<code>encoder_dropout</code>、<code>encoder_hidden_size</code>，<code>encoder_num_layers</code>一直为2。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">config = PromptEncoderConfig(task_type=TaskType.CAUSAL_LM, num_virtual_tokens=<span class="hljs-number">10</span>,<br>                             encoder_reparameterization_type=PromptEncoderReparameterizationType.MLP,<br>                             encoder_dropout=<span class="hljs-number">0.1</span>, encoder_hidden_size=<span class="hljs-number">1024</span>)<br></code></pre></td></tr></table></figure>
+<p>使用 MLP 编码所涉及到的参数量占总参数量的0.4%。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1723789960517-4e5a41b3-12ac-4277-bf09-5e3c6263fbf4.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="p-tuning-v2">4. P-Tuning v2</h1>
+<blockquote>
+<p><em>《P-Tuning v2: Prompt Tuning Can Be Comparable to Fine-tuning
+Universally Across Scales and Tasks》</em></p>
+</blockquote>
+<p><code>P-Tuning v2</code>具体做法基本同<code>Prefix-Tuning</code>，可以看作是将文本生成的<code>Prefix-Tuning</code>技术适配到NLU（自然语言理解）任务中，<strong>在每一层都加入了Prompts
+tokens作为输入，而不是仅仅加在输入层，且位置也不局限于前缀，也可以是中间或尾部，可以是离散的token或连续的向量</strong>。这带来两个方面的好处：</p>
+<ul>
+<li>更多可学习的参数（从P-tuning和Prompt
+Tuning的0.01%增加到0.1%-3%）。</li>
+<li>加入到更深层结构中的Prompt能给模型预测带来更直接的影响。</li>
+</ul>
+<p><code>P-Tuning v2</code>还做了一些改进：</p>
+<ul>
+<li>移除了重参数化的编码器（如 Prefix-Tuning 中的 MLP、P-Tuning 中的
+LSTM）；</li>
+<li>针对不同任务采用不同的提示长度；</li>
+<li>引入多任务学习；</li>
+<li>回归传统的分类标签范式，而不是映射器（verbalizer）。</li>
+</ul>
+<h1 id="prefix-tuning">5. Prefix-Tuning</h1>
+<blockquote>
+<p><em>《Prefix-Tuning: Optimizing Continuous Prompts for
+Generation》</em></p>
+</blockquote>
+<p><code>P-Tuning</code>是训练一个额外的 prompt
+编码器来调整模型的输入表示，<strong>仅限于输入层</strong>；而<code>Prefix-Tuning</code>是将其作为可学习的前缀放在
+transformer blocks
+的<strong>每一层输入</strong>中，从而引导模型的计算（属于additive类）。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1724520076971-573dc8b7-fde9-461c-8a5d-592aa2f591a9.png" srcset="/img/loading.gif" lazyload></p>
+<p>具体来说，prefix 会影响当前时间步 key 和 value
+的计算，计算结果随后会变成后续时间步的 past_key 和 past_values
+继续影响后面注意力的计算，引导模型生成更符合特定任务的输出。</p>
+<blockquote>
+<p><code>past_key_value</code>是生成式模型在处理长序列时提高效率的一个
+trick。在解码时模型是根据历史输入预测下一个 token
+的，在这个过程中会产生大量重复的计算，因为历史输入是不受后面的词影响的，所以可以将过去计算的
+key 和 value 缓存下来，作为 past_key_value
+输入到下一次计算中，这一技术又被称为<code>kv_cache</code>。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1724521153163-042f5a27-5913-455f-95dd-11d12fc60140.png" srcset="/img/loading.gif" lazyload></p>
+</blockquote>
+<p>增加 prefix 并不会影响输入序列 <span class="math inline">\(X\)</span>
+与 <span class="math inline">\({ Q, K, V }\)</span> 计算后的维度。假设
+<span class="math inline">\(X\)</span> 的原始维度为 <span class="math inline">\(m \times n\)</span>，<span class="math inline">\(m\)</span> 时 token 的数量，<span class="math inline">\(n\)</span> 是 token 嵌入后向量的长度；增加的
+prefix 维度是 <span class="math inline">\(p\times
+n\)</span>，则最后新的输入序列 <span class="math inline">\(X&#39;\)</span> 维度变为 <span class="math inline">\((m+p)\times n\)</span>，经过线性变换后得到的 <span class="math inline">\({ Q, K, V }\)</span> 维度也变为 <span class="math inline">\((m+p)\times n\)</span>，注意力计算的结果维度依旧是
+<span class="math inline">\((m+p)\times n\)</span>，与 <span class="math inline">\(X\)</span> 对应。</p>
+<blockquote>
+<p>关于注意力计算过程详见之前的文章<a href="https://jiangcara.github.io/posts/bda47da5/">Transform学习笔记</a>。</p>
+</blockquote>
+<p><code>Prefix-Tuning</code>要使用到的包是<code>PrefixTuningConfig</code>。</p>
+<ul>
+<li><code>num_virtual_tokens</code>：指定可学习前缀的长度；</li>
+<li><code>prefix_projection</code>：用于控制全连接层（两层MLP）要不要插入可学习前缀，默认是
+False。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> peft <span class="hljs-keyword">import</span> PrefixTuningConfig, get_peft_model, TaskType<br><br><span class="hljs-comment"># 加载原始模型</span><br>model = AutoModelForCausalLM.from_pretrained(<span class="hljs-string">&quot;Langboat/bloom-1b4-zh&quot;</span>)<br><span class="hljs-comment"># 构造配置信息</span><br>config = PrefixTuningConfig(task_type=TaskType.CAUSAL_LM, num_virtual_tokens=<span class="hljs-number">10</span>, prefix_projection=<span class="hljs-literal">False</span>)<br><span class="hljs-comment"># 创建 peft model</span><br>model = get_peft_model(model, config)<br></code></pre></td></tr></table></figure>
+<p>此时模型新增的部分如下图。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1724684661618-bfe5cae4-742c-49fd-8bf5-0ccc65afc8ff.png" srcset="/img/loading.gif" lazyload></p>
+<p>涉及的参数量占总参数的 0.07%。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1724684698696-c701e258-6ffd-4888-ae3f-0f9420b1b615.png" srcset="/img/loading.gif" lazyload></p>
+<p>如果默认<code>prefix_projection=False</code>，可以发现训练的时候 loss
+收敛的会比较慢，类似 Prompt-Tuning 里的 soft
+prompt。因此可以设置<code>prefix_projection=True</code>，将重参数层打开，加快
+loss
+收敛，当然涉及到的参数量也会增加很多，显存占用也会增多。<code>out_features</code>大小可以用参数<code>encoder_hidden_size</code>控制。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1724685459500-73bd1097-46e7-43ed-96bd-2f673c6f1066.png" srcset="/img/loading.gif" lazyload></p>
+<p>要注意的是，针对不同的模型结构，需要构造不同的Prefix。</p>
+<ul>
+<li><strong>针对自回归架构模型</strong>：<strong>在句子前面添加前缀</strong>，得到
+<code>z = [PREFIX; x; y]</code>，合适的上文能够在固定 LM
+的情况下去引导生成下文（比如：GPT3的上下文学习）。</li>
+<li><strong>针对编码器-解码器架构模型</strong>：<strong>Encoder和Decoder都增加了前缀</strong>，得到
+<code>z = [PREFIX; x; PREFIX0; y]</code>。Encoder端增加前缀是为了引导输入部分的编码，Decoder
+端增加前缀是为了引导后续token的生成。</li>
+</ul>
+<h1 id="lora">6. LoRA</h1>
+<blockquote>
+<p><em>《LoRA: LOW-RANK ADAPTATION OF LARGE LANGUAGE MODELS》</em></p>
+</blockquote>
+<p><code>LoRA</code>的核心思想就是<strong>通过低秩分解来模拟参数的改变量，</strong>从而以极小的参数量来实现大模型的间接训练（属于重参数类）<strong>。</strong></p>
+<p><img src="/images/10-PEFT经典方法介绍/1729348503266-45c559ee-752c-4aba-b00f-b1579c94c1a4.png" srcset="/img/loading.gif" lazyload></p>
+<p>在涉及到矩阵相乘的模块，在原始的PLM旁边增加一个新的通路，通过前后两个矩阵
+<span class="math inline">\(A,B\)</span> 相乘，第一个矩阵 <span class="math inline">\(A\)</span> 负责降维，第二个矩阵 <span class="math inline">\(B\)</span> 负责升维，中间层维度为 <span class="math inline">\(r\)</span>，即 <span class="math inline">\(h=W_0x+ΔWx=W_0x+{BA}x\)</span>。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1729348518523-529ba377-97fa-40e6-9547-e1dfcb027291.png" srcset="/img/loading.gif" lazyload></p>
+<p>可训练层维度和预训练模型层维度一致为 <span class="math inline">\(d\)</span>，先将维度<span class="math inline">\(d\)</span>通过全连接层降维至 <span class="math inline">\(r\)</span>，再从 <span class="math inline">\(r\)</span> 通过全连接层映射回 <span class="math inline">\(d\)</span> 维度，其中 <span class="math inline">\(r&lt;&lt;d\)</span>，<span class="math inline">\(r\)</span> 是矩阵的秩。这样矩阵计算就从 <span class="math inline">\(d \times d\)</span> 变为 <span class="math inline">\(d \times r + r \times d\)</span>，减少参数量。</p>
+<p><code>LoRA</code>使用到的包是<code>LoraConfig</code>。</p>
+<ul>
+<li><code>target_module</code>：指定新增通路的部分，比如默认的模块是<code>['query_key_value']</code>；</li>
+<li><code>r</code>：指定中间层的维度，默认是8；</li>
+<li><code>modules_to_save</code>：指定除了lora微调的部分还想要训练的部分；</li>
+<li><code>lora_alpha</code>：缩放因子，控制lora微调参数的权重。</li>
+</ul>
+<p>具体参数说明可以看<code>LoraConfig</code>里的说明。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1729355405804-9045ff5f-5704-47c0-85ef-1b16a8540d7e.png" srcset="/img/loading.gif" lazyload></p>
+<p>通过正则指定对 module name 中 1 开头的 module 进行微调，同时训练
+word_embeddings 部分的参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> peft <span class="hljs-keyword">import</span> LoraConfig, get_peft_model, TaskType<br><br><span class="hljs-comment"># 加载原始模型</span><br>model = AutoModelForCausalLM.from_pretrained(<span class="hljs-string">&quot;Langboat/bloom-1b4-zh&quot;</span>)<br><span class="hljs-comment"># 构造配置信息</span><br>config = LoraConfig(task_type=TaskType.CAUSAL_LM, target_modules=<span class="hljs-string">&quot;.*\.1.*query_key_value&quot;</span>, modules_to_save=[<span class="hljs-string">&quot;word_embeddings&quot;</span>])<br><span class="hljs-comment"># 创建 peft model</span><br>model = get_peft_model(model, config)<br></code></pre></td></tr></table></figure>
+<p><img src="/images/10-PEFT经典方法介绍/1729354204923-2a8cb10c-d2df-432d-9577-4c92ab1222bf.png" srcset="/img/loading.gif" lazyload></p>
+<p>执行成功后的模型信息如图，可以看到 query_key_value 部分包含 loraA 和
+loraB两块，word_embedding层也发生了改变。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1729356192045-dfafa17f-82b2-446c-9531-5bc38fb6e371.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/10-PEFT经典方法介绍/1729355698102-bdad15ba-cb87-43f6-a4d1-b5eb62b30996.png" srcset="/img/loading.gif" lazyload></p>
+<p>训练20%左右的推理效果如下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">model = model.cuda()<br>ipt = tokenizer(<span class="hljs-string">&quot;Human: &#123;&#125;\n&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-string">&quot;考试有哪些技巧？&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).strip() + <span class="hljs-string">&quot;\n\nAssistant: &quot;</span>, return_tensors=<span class="hljs-string">&quot;pt&quot;</span>).to(model.device)<br>tokenizer.decode(model.generate(**ipt, max_length=<span class="hljs-number">128</span>, do_sample=<span class="hljs-literal">True</span>)[<span class="hljs-number">0</span>], skip_special_tokens=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+<p><img src="/images/10-PEFT经典方法介绍/1729356467076-146391a3-6752-4312-aee4-a07e7c24b8da.png" srcset="/img/loading.gif" lazyload></p>
+<p>保存 lora 微调后的模型，并与原始模型合并保存到本地。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoModelForCausalLM, AutoTokenizer<br><span class="hljs-keyword">from</span> peft <span class="hljs-keyword">import</span> PeftModel<br><br><span class="hljs-comment"># 加载基础模型</span><br>model = AutoModelForCausalLM.from_pretrained(<span class="hljs-string">&quot;Langboat/bloom-1b4-zh&quot;</span>, low_cpu_mem_usage=<span class="hljs-literal">True</span>)<br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;Langboat/bloom-1b4-zh&quot;</span>)<br><br><span class="hljs-comment"># 加载 lora 模型</span><br>p_model = PeftModel.from_pretrained(model, model_id=<span class="hljs-string">&quot;./chatbot/checkpoint-500/&quot;</span>)<br><span class="hljs-comment"># 模型合并并保存到本地</span><br>merge_model = p_model.merge_and_unload()<br>merge_model.save_pretrained(<span class="hljs-string">&quot;./chatbot/merge_model&quot;</span>)<br><br><span class="hljs-comment"># 使用模型进行推理</span><br>ipt = tokenizer(<span class="hljs-string">&quot;Human: &#123;&#125;\n&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-string">&quot;考试有哪些技巧？&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).strip() + <span class="hljs-string">&quot;\n\nAssistant: &quot;</span>, return_tensors=<span class="hljs-string">&quot;pt&quot;</span>)<br>tokenizer.decode(merge_model.generate(**ipt, max_length=<span class="hljs-number">128</span>, do_sample=<span class="hljs-literal">False</span>)[<span class="hljs-number">0</span>], skip_special_tokens=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+<p><img src="/images/10-PEFT经典方法介绍/1729356725547-b8b8a640-98c4-4a47-8292-e74e34e32a7f.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>LoRA</code>支持的模型可以再
+<code>peft.utils</code>文件中找到，其中<code>TRANSFORMERS_MODELS_TO_LORA_TARGET_MODULES_MAPPING</code>包含了<code>LoRA</code>支持的模型中默认支持<code>LoRA</code>的
+module。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1729356942879-12ca9138-9753-40cd-8a84-a19360db725c.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/10-PEFT经典方法介绍/1729357007346-6f559ec5-8b47-4ad0-81a7-2fb6b13ca396.png" srcset="/img/loading.gif" lazyload></p>
+<p>如果微调的模型不在默认支持列表里，需要在这里定义一下模型和默认 LoRA
+微调的部分。</p>
+<h2 id="adalora">AdaLoRA</h2>
+<blockquote>
+<p><em>《ADAPTIVE BUDGET ALLOCATION FOR PARAMETEREFFICIENT
+FINE-TUNING》</em></p>
+</blockquote>
+<p><code>AdaLoRA</code>是对<code>LoRA</code>的一种改进，它根据<strong>重要性评分动态分配参数预算给权重矩阵</strong>。具体做法如下：</p>
+<ul>
+<li><strong>调整增量矩分配</strong>。<code>AdaLoRA</code>将关键的增量矩阵分配高秩以捕捉更精细和任务特定的信息，而将较不重要的矩阵的秩降低，以防止过拟合并节省计算预算。</li>
+<li><strong>以奇异值分解的形式对增量更新进行参数化，并根据重要性指标裁剪掉不重要的奇异值，同时保留奇异向量</strong>。由于对一个大矩阵进行精确SVD分解的计算消耗非常大，这种方法通过减少它们的参数预算来加速计算，同时，保留未来恢复的可能性并稳定训练。</li>
+</ul>
+<p><span class="math display">\[W=W(0)+Δ=W(0)+PΛQ.\]</span></p>
+<ul>
+<li><strong>在训练损失中添加了额外的惩罚项</strong>，规范奇异矩阵 <span class="math inline">\(P\)</span> 和 <span class="math inline">\(Q\)</span>
+的正交性，避免SVD的大量计算并稳定训练。</li>
+</ul>
+<h2 id="qlora">QLoRA</h2>
+<blockquote>
+<p><em>《QLORA: Efficient Finetuning of Quantized LLMs》</em></p>
+</blockquote>
+<p><code>QLoRA</code>使用<strong>一种新颖的高精度技术将预训练模型量化为
+4
+bit，然后添加一小组可学习的低秩适配器权重，这些权重通过量化权重的反向传播梯度进行微调</strong>。</p>
+<p><code>QLoRA</code>有一种低精度存储数据类型（4
+bit），还有一种计算数据类型（BFloat16）。实际上，这意味着无论何时使用
+QLoRA 权重张量，我们都会将张量反量化为 BFloat16，然后执行 16
+位矩阵乘法。<code>QLoRA</code>提出了两种技术实现高保真 4
+bit微调——<strong>4 bit NormalFloat(NF4)
+量化和双量化</strong>。此外，还引入了<strong>分页优化器</strong>，以防止梯度检查点期间的内存峰值，从而导致内存不足的错误，这些错误在过去使得大型模型难以在单台机器上进行微调。</p>
+<ul>
+<li><strong>4bit
+NormalFloat</strong>（NF4）：对于正态分布权重而言，一种信息理论上最优的新数据类型，该数据类型对正态分布数据产生比
+4 bit整数和 4bit 浮点数更好的实证结果。</li>
+<li><strong>双量化</strong>：对第一次量化后的那些常量再进行一次量化，减少存储空间。</li>
+<li><strong>分页优化器</strong>：使用NVIDIA统一内存特性，该特性可以在在GPU偶尔OOM的情况下，进行CPU和GPU之间自动分页到分页的传输，以实现无错误的
+GPU 处理。该功能的工作方式类似于 CPU
+内存和磁盘之间的常规内存分页。使用此功能为优化器状态（Optimizer）分配分页内存，然后在
+GPU 内存不足时将其自动卸载到 CPU
+内存，并在优化器更新步骤需要时将其加载回 GPU 内存。</li>
+</ul>
+<p><img src="/images/10-PEFT经典方法介绍/1729514618459-ecb2d685-b5ff-467a-b159-d8566197dd9f.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="ia3">7. IA3</h1>
+<blockquote>
+<p><em>《Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper
+than In-Context Learning》</em></p>
+</blockquote>
+<p><code>IA3</code>是对模型的一些<strong>激活层进行抑制或放大</strong>，也就是<strong>通过点乘一个可学习向量的形式对模型的一部分参数进行加权</strong>。可以看到，<code>IA3</code>的参数分为两部分你，一部分是
+<span class="math inline">\(l_V\)</span> 和 <span class="math inline">\(l_K\)</span>，一部分是 FFN 部分的 <span class="math inline">\(l_{ff}\)</span>。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1729357455586-a03b5b24-00c5-41a6-a3f2-7843353b93fe.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里要用到的包是<code>IA3Config</code>，其中<code>target_modules</code>和<code>modules_to_save</code>的作用与
+LoRA 一样。</p>
+<ul>
+<li><code>target_modules</code>：IA3的这部分包含两块，{'query_key_value',
+'mlp.dense_4h_to_h'}；</li>
+<li><code>feedforward_modules</code>：用于指定<code>target_modules</code>中哪块是
+feedforward 层。</li>
+</ul>
+<blockquote>
+<p>如果是feedforward层，可学习向量与<strong>feedforward的输入相乘</strong>，再进入
+linear；</p>
+<p>如果不是，可学习向量<strong>与注意力块的输出result相乘</strong>。</p>
+</blockquote>
+<p><img src="/images/10-PEFT经典方法介绍/1729358587959-447657ed-32c4-4bb9-a56e-7d6836cd3894.png" srcset="/img/loading.gif" lazyload></p>
+<p>涉及的参数量占总参数的 0.02%。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1729358249380-abc343af-0762-4173-885e-2a75b28bf83d.png" srcset="/img/loading.gif" lazyload></p>
+<p>原论文中提到<code>IA3</code>的最佳学习率是<code>3e-3</code>。</p>
+<h1 id="adapter-tuning">Adapter-Tuning</h1>
+<blockquote>
+<p><em>《Parameter-Efficient Transfer Learning for NLP》</em></p>
+</blockquote>
+<p>预训练模型参数量越来越多，在训练下游任务时进行全量微调变得昂贵且耗时。基于此，作者提出了<code>Adapter</code>。<strong>在预训练模型每层中插入用于下游任务的参数</strong>（针对每个下游任务，仅增加3.6%的参数），<strong>在微调时将模型主体冻结，仅训练特定于任务的参数</strong>，从而减少了训练时的算力开销。</p>
+<p>该方法<strong>设计了Adapter结构</strong>，并将其嵌入Transformer的结构里面，<strong>针对每一个Transformer层，增加了两个Adapter结构（分别是多头注意力的投影之后和第二个feed-forward层之后）</strong>，<strong>在训练时，固定住原来预训练模型的参数不变，只对新增的
+Adapter 结构和 Layer Norm
+层进行微调，从而保证了训练的高效性</strong>。</p>
+<p>每当出现新的下游任务，通过添加 Adapter
+模块来产生一个易于扩展的下游模型，从而避免全量微调与灾难性遗忘的问题。</p>
+<p><img src="/images/10-PEFT经典方法介绍/1729515850473-da0d8718-d707-4acc-9176-54e6fb3ffe85.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="adapter-fusion">Adapter Fusion</h2>
+<blockquote>
+<p><em>《AdapterFusion:Non-Destructive Task Composition for Transfer
+Learning》</em></p>
+</blockquote>
+<p><code>Adapter Fusion</code>，<strong>一种融合多任务信息的Adapter的变体</strong>，在<code>Adapter</code>的基础上进行优化，通过将学习过程分为两阶段来提升下游任务表现。</p>
+<ul>
+<li><strong>知识提取阶段</strong>：在不同任务下引入各自的 Adapter
+模块，用于学习特定任务的信息。</li>
+<li><strong>知识组合阶段</strong>：将预训练模型参数与特定于任务的
+Adapter
+参数固定，<strong>引入新参数（AdapterFusion）来学习组合多个Adapter中的知识，以提高模型在目标任务中的表现</strong>。</li>
+</ul>
+<p>通过AdapterFusion，模型可以为不同的任务对应的adapter分配不同的权重，聚合N个任务的信息，从而为特定任务输出更合适的结果。通过将适配器的训练分为知识提取和知识组合两部分，<strong>解决了灾难性遗忘、任务间干扰和训练不稳定的问题</strong>。但是，Adapter模块的添加也导致模型整体参数量的增加，降低了模型推理时的性能。</p>
+<h2 id="adapterdrop"><strong>AdapterDrop</strong></h2>
+<blockquote>
+<p><em>《AdapterDrop: On the Efficiency of Adapters in
+Transformers》</em></p>
+</blockquote>
+<p>作者通过对<code>Adapter</code>的计算效率进行分析，<strong>发现与全量微调相比，Adapter在训练时快60%，但是在推理时慢4%-6%</strong>。基于此，作者提出了<code>AdapterDrop</code>方法缓解该问题。</p>
+<p><code>AdapterDrop</code>在不影响任务性能的情况下，<strong>对Adapter动态高效的移除，尽可能的减少模型的参数量，提高模型在反向传播（训练）和正向传播（推理）时的效率</strong>。</p>
+<p><code>AdapterDrop</code><strong>通过从较低的 Transformer
+层删除可变数量的</strong><code>Adaper</code><strong>来提升推理速度。</strong>
+当对多个任务执行推理时，动态地减少了运行时的计算开销，并在很大程度上保持了任务性能。</p>
+<h2 id="unipelt">UniPELT</h2>
+<blockquote>
+<p><em>《UNIPELT: A Unified Framework for Parameter-Efficient Language
+Model Tuning》</em></p>
+</blockquote>
+<p>近年来，涌现出了许多针对语言模型的参数高效微调方法，在模型训练参数极大的减少的情况下，模型效果与全量微调相当。但是不同的PELT方法在同一个任务上表现差异可能都非常大，这让针对特定任务选择合适的方法非常繁琐。</p>
+<p>基于此，作者提出了<code>UniPELT</code>方法，<strong>将不同的PELT方法作为子模块，并通过门控机制学习激活最适合当前数据或任务的方法。UniPELT是
+LoRA、Prefix Tuning和Adapter的门控组合。</strong></p>
+<p>更具体地说，LoRA 重参数化用于 <span class="math inline">\(W_Q\)</span> 和 <span class="math inline">\(W_V\)</span>
+注意力矩阵，<code>Prefix Tuning</code>应用于每一 Transformer 层的 key 和
+value，并在 Transformer 块的 feed-forward
+子层之后添加<code>Adapter</code>。</p>
+<ul>
+<li>对于每个模块，门控被实现为线性层，通过 <span class="math inline">\(G_P\)</span>
+参数控制<code>Prefix-tuning</code>方法的开关，<span class="math inline">\(G_L\)</span>
+控制<code>LoRA</code>方法的开关，<span class="math inline">\(G_A\)</span>
+控制<code>Adapter</code>方法的开关。</li>
+<li>可训练参数包括 LoRA 矩阵 <span class="math inline">\(W_{A/Down}\)</span> 和 <span class="math inline">\(W_{B/up}\)</span>，提示调优参数 <span class="math inline">\(P_K\)</span> 和 <span class="math inline">\(P_V\)</span>、Adapter参数和门函数权重。即图中蓝颜色的参数为可学习的参数。</li>
+</ul>
+<p><img src="/images/10-PEFT经典方法介绍/1729347066826-85c8fc71-7a9a-48c5-b493-80d1c03af17d.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>本方法始终优于常规的全量微调以及它在不同设置下包含的子模块，通常超过在每个任务中单独使用每个子模块的最佳性能的上限</strong>；并且，通过研究结果表明，多种
+PELT 方法的混合涉及到PLM
+的不同部分可能对模型有效性和鲁棒性都有好处。</p>
+<h1 id="总结">总结</h1>
+<figure>
+<img src="/images/10-PEFT经典方法介绍/image-20241022131301381.png" srcset="/img/loading.gif" lazyload alt="PEFT方法总结">
+<figcaption aria-hidden="true">PEFT方法总结</figcaption>
+</figure>
+<blockquote>
+<p>Reference：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Xu4y1k7Ls/">【HuggingFace
+Transformers-实战篇】参数高效微调</a>、<a target="_blank" rel="noopener" href="https://github.com/zyds/transformers-code/tree/master/pptx">PPT</a>；</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2303.15647">A Guide to
+Parameter-Efficient Fine-Tuning</a>；</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/wdndev/llm_interview_note/tree/main/05.%E6%9C%89%E7%9B%91%E7%9D%A3%E5%BE%AE%E8%B0%83">llm面试：有监督微调</a>。</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Huggingface-Transformers-%E5%AE%9E%E6%88%98%E7%AF%87/" class="category-chain-item">Huggingface Transformers-实战篇</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Transformers PEFT库支持的高效微调方法介绍</div>
+      <div>https://jiangcara.github.io/posts/9cdded66/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jiang Cara</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/91e7aae8/" title="基于 Transformers 的 NER">
+                        <span class="hidden-mobile">基于 Transformers 的 NER</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","appKey":"FYmTqTFfuO2WyFhFRMsr5F18","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
