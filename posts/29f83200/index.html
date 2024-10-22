@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/juan.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/SKY.png">
+  <link rel="icon" href="/img/SKY.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jiangcara.github.io/images/05-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BDatasets/1721488338967-b9af2ffc-db10-4a80-ae9d-1f366902bd25.png">
 <meta property="article:published_time" content="2024-07-31T14:43:58.000Z">
-<meta property="article:modified_time" content="2024-09-29T14:34:12.356Z">
+<meta property="article:modified_time" content="2024-10-22T09:08:04.166Z">
 <meta property="article:author" content="Jiang Cara">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jiangcara.github.io/images/05-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BDatasets/1721488338967-b9af2ffc-db10-4a80-ae9d-1f366902bd25.png">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/c776fb77e7ad5.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -207,7 +207,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
-                <span>友链</span>
+                <span>六楼</span>
               </a>
             </li>
           
@@ -336,38 +336,38 @@ Transformers-入门篇】基础组件之Datasets</a></p>
 <ol type="1">
 <li><strong>在线加载：</strong>直接输入想要加载的在线模型在官网中的名字，可以看到是一个DatasetDict类，里面包括训练集和验证集的信息，<code>features</code>可以直观的理解为csv的表头，<code>num_rows</code>是数据数量。</li>
 </ol>
-<p><img src="/images/05-基础组件之Datasets/1721487535496-9bc6fa13-c507-40fb-bf02-fdf5fbdbf2df.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721487535496-9bc6fa13-c507-40fb-bf02-fdf5fbdbf2df.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <ol start="2" type="1">
 <li><strong>加载数据合集中的子任务：</strong>有的数据集（比如glue）包括很多的下游任务数据集，如果我们只想加载其中一个子任务的数据集，需要传入第二个参数，即子任务的名字，这里是"boolq"。之前提到过，<code>trust_remote_code=True</code>意味着信任从远程下载的配置文件。</li>
 </ol>
-<p><img src="/images/05-基础组件之Datasets/1721488338967-b9af2ffc-db10-4a80-ae9d-1f366902bd25.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721488338967-b9af2ffc-db10-4a80-ae9d-1f366902bd25.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <ol start="3" type="1">
 <li><strong>按数据集划分进行加载：</strong><code>split</code>参数允许加载切割后的数据集。比如，可以只加载训练集train，也可以指定要加载的数据比例。<code>"train[10:100]"</code>是加载索引10-100的训练集数据，<code>"train[:50%]"</code>是加载训练集后50%的数据。<code>"train[:50%]", "validation[50%:]"</code>代表着分开加载，先加载训练集后50%的数据，再加载验证集前50%的数据，可以看到此时的返回的是list。</li>
 </ol>
 <figure>
-<img src="/images/05-基础组件之Datasets/image-20240731223909620.png" srcset="/img/loading.gif" lazyload alt="&quot;train[:50%]&quot;, &quot;validation[50%:]&quot;">
+<img src="/images/05-基础组件之Datasets/image-20240731223909620.png" srcset="/img/c776fb77e7ad5.gif" lazyload alt="&quot;train[:50%]&quot;, &quot;validation[50%:]&quot;">
 <figcaption aria-hidden="true">"train[:50%]",
 "validation[50%:]"</figcaption>
 </figure>
 <h2 id="查看数据集">查看数据集</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 通过索引查看对应数据</span><br>datasets[<span class="hljs-string">&quot;train&quot;</span>][<span class="hljs-number">0</span>]<br>datasets[<span class="hljs-string">&quot;train&quot;</span>][:<span class="hljs-number">2</span>]<br>datasets[<span class="hljs-string">&quot;train&quot;</span>][<span class="hljs-string">&quot;title&quot;</span>][:<span class="hljs-number">5</span>]<br></code></pre></td></tr></table></figure>
 <p>取出第一条数据、前两条数据、前五条数据的title。</p>
-<p><img src="/images/05-基础组件之Datasets/1721489553482-f9f92f59-8b7f-430f-a640-72aa63401ce9.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721489553482-f9f92f59-8b7f-430f-a640-72aa63401ce9.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>还可以查看数据集的表头、数据属性等。</p>
-<p><img src="/images/05-基础组件之Datasets/1721489826500-4c957538-0aab-4c0b-962a-0afefcd9f90c.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/images/05-基础组件之Datasets/1721489779397-f43f745f-ed3a-49f6-b5ad-888e3a56b878.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721489826500-4c957538-0aab-4c0b-962a-0afefcd9f90c.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721489779397-f43f745f-ed3a-49f6-b5ad-888e3a56b878.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="数据集划分">数据集划分</h2>
 <p>可以通过<code>train_test_split()</code>来划分测试集，<code>test_size</code>用于指定数据比例，这里指定test的比例为0.1。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset = datasets[<span class="hljs-string">&quot;train&quot;</span>]<br>dataset.train_test_split(test_size=<span class="hljs-number">0.1</span>)<br></code></pre></td></tr></table></figure> 可以看到在训练集上以9：1的比例进行了数据划分。</p>
-<p><img src="/images/05-基础组件之Datasets/1721490096576-42a5ec1d-2904-4bd4-9b1f-d998272d365c.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721490096576-42a5ec1d-2904-4bd4-9b1f-d998272d365c.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>对于监督学习，如果希望划分后数据集label分布均匀，可以通过<code>stratify_by_column</code>指明标签所在的数据字段，保证划分出来的标签是均衡的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset = boolq_dataset[<span class="hljs-string">&quot;train&quot;</span>]<br>dataset.train_test_split(test_size=<span class="hljs-number">0.1</span>, stratify_by_column=<span class="hljs-string">&quot;label&quot;</span>)   <br></code></pre></td></tr></table></figure>
-<p><img src="/images/05-基础组件之Datasets/1721490331890-2135b639-92b4-4136-b6d7-53d61cb9507b.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721490331890-2135b639-92b4-4136-b6d7-53d61cb9507b.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="数据的选取与过滤">数据的选取与过滤</h2>
 <p>如果需要加载特定的数据，可以用<code>select()</code>根据数据索引进行选取，或者用<code>filter()</code>进行数据过滤，这就涉及到<code>lambda</code>函数。<code>lambda</code>的语法只包含一个语句，表现形式如下：<code>lambda [arg1 [,arg2,.....argn]]:expression</code>。其中，lambda
 是 Python 预留的关键字，[arg…] 和 expression 由用户自定义。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 选取</span><br>datasets[<span class="hljs-string">&quot;train&quot;</span>].select([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>])<br><span class="hljs-comment"># 过滤：筛选出title中含有“中国”的数据</span><br>filter_dataset = datasets[<span class="hljs-string">&quot;train&quot;</span>].<span class="hljs-built_in">filter</span>(<span class="hljs-keyword">lambda</span> example: <span class="hljs-string">&quot;中国&quot;</span> <span class="hljs-keyword">in</span> example[<span class="hljs-string">&quot;title&quot;</span>])<br></code></pre></td></tr></table></figure></p>
-<p><img src="/images/05-基础组件之Datasets/1721561208111-3007aa92-577a-4786-9ff7-45f63d4842c1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721561208111-3007aa92-577a-4786-9ff7-45f63d4842c1.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <blockquote>
 <p><code>lambda</code>的常见用法如下：</p>
 <ol type="1">
@@ -379,16 +379,16 @@ Transformers-入门篇】基础组件之Datasets</a></p>
 <h2 id="数据映射">数据映射</h2>
 <p>定义一个函数后，如果希望对每条数据都应用这个函数，要用到<code>map()</code>方法。一个简单的方式是将函数名作为map的参数传入。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">add_prefix</span>(<span class="hljs-params">example</span>):<br>    example[<span class="hljs-string">&quot;title&quot;</span>] = <span class="hljs-string">&#x27;Prefix: &#x27;</span> + example[<span class="hljs-string">&quot;title&quot;</span>]<br>    <span class="hljs-keyword">return</span> example<br><br><span class="hljs-comment"># 使用map将函数add_prefix映射到每一条数据上</span><br>prefix_dataset = datasets.<span class="hljs-built_in">map</span>(add_prefix)<br>prefix_dataset[<span class="hljs-string">&quot;train&quot;</span>][:<span class="hljs-number">10</span>][<span class="hljs-string">&quot;title&quot;</span>]<br></code></pre></td></tr></table></figure>
-<p><img src="/images/05-基础组件之Datasets/1721562726121-55607039-86a1-45d9-8094-e4e0bd140eae.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721562726121-55607039-86a1-45d9-8094-e4e0bd140eae.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>更为复杂的一个使用方式是结合tokenizer做数据处理。这里定义一个数据处理的函数，对模型的输入（title和content)进行分词。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer<br><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;bert-base-chinese&quot;</span>)<br><span class="hljs-comment"># 若选择多线程处理，tokenizer要作为一个参数传给preprocess_function</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">preprocess_function</span>(<span class="hljs-params">example, tokenizer=tokenizer</span>):<br>    model_inputs = tokenizer(example[<span class="hljs-string">&quot;content&quot;</span>], max_length=<span class="hljs-number">512</span>, truncation=<span class="hljs-literal">True</span>)<br>    labels = tokenizer(example[<span class="hljs-string">&quot;title&quot;</span>], max_length=<span class="hljs-number">32</span>, truncation=<span class="hljs-literal">True</span>)<br>    <span class="hljs-comment"># label就是title编码的结果</span><br>    model_inputs[<span class="hljs-string">&quot;labels&quot;</span>] = labels[<span class="hljs-string">&quot;input_ids&quot;</span>]<br>    <span class="hljs-keyword">return</span> model_inputs<br><br>processed_datasets = datasets.<span class="hljs-built_in">map</span>(preprocess_function)<br></code></pre></td></tr></table></figure>
 <p>将这个函数映射到整个数据集上，得到以下结果。可以看到此时的数据集多了几个字段，其实就是label（titile的编码结果）以及tokenizer返回的input_ids、token_type_ids和attention_mask（详见<a href>tokenizer</a>）。</p>
-<p><img src="/images/05-基础组件之Datasets/1721563180795-32a54957-024c-4904-84ce-dfddea89b7f7.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721563180795-32a54957-024c-4904-84ce-dfddea89b7f7.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>此外，<code>map()</code>还支持batch和多线程处理数据，使用<code>num_proc</code>可以指定线程的数量。<strong>要注意的是，如果选择多线程处理，那么tokenizer要作为一个参数传给数据处理的函数，因为线程之间资源是不共享的，所以在调用函数时要将tokenizer传给每个线程。</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 批处理</span><br>processed_datasets = datasets.<span class="hljs-built_in">map</span>(preprocess_function, batched=<span class="hljs-literal">True</span>)<br><span class="hljs-comment"># 多线程处理</span><br>processed_datasets = datasets.<span class="hljs-built_in">map</span>(preprocess_function, num_proc=<span class="hljs-number">4</span>)<br><br></code></pre></td></tr></table></figure>
 <p>数据处理后，如果不需要原始字段，可以使用<code>map()</code>自带的参数<code>remove_columns</code>移除原始数据集的字段。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">processed_datasets = datasets.<span class="hljs-built_in">map</span>(preprocess_function, batched=<span class="hljs-literal">True</span>, remove_columns=datasets[<span class="hljs-string">&quot;train&quot;</span>].column_names)<br></code></pre></td></tr></table></figure></p>
-<p><img src="/images/05-基础组件之Datasets/1721564054425-68c522c4-ede8-4f7f-b446-aef4bd6a127d.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721564054425-68c522c4-ede8-4f7f-b446-aef4bd6a127d.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="保存与加载">保存与加载</h2>
 <p>处理完数据后，<code>save_to_disk()</code>用于保存处理后的数据到本地，<code>load_from_disk()</code>用于从本地加载数据。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 数据保存</span><br>processed_datasets.save_to_disk(<span class="hljs-string">&quot;./processed_data&quot;</span>)<br><span class="hljs-comment"># 数据加载</span><br>processed_datasets = load_from_disk(<span class="hljs-string">&quot;./processed_data&quot;</span>)<br></code></pre></td></tr></table></figure></p>
@@ -405,25 +405,25 @@ Transformers-入门篇】基础组件之Datasets</a></p>
 <p>通过pandas读取数据后，可以使用<code>Dataset.from_pandas()</code>将数据转化为Dataset类。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>data = pd.read_csv(<span class="hljs-string">&quot;./ChnSentiCorp_htl_all.csv&quot;</span>)<br>dataset = Dataset.from_pandas(data)<br></code></pre></td></tr></table></figure>
 <p>Dataset还提供了很多其他格式数据的转换方式，如json、dict等。</p>
-<p><img src="/images/05-基础组件之Datasets/1721568962884-ffc45c3f-5bf6-4e25-8c74-7b5a0f1ad710.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721568962884-ffc45c3f-5bf6-4e25-8c74-7b5a0f1ad710.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>需要注意的是，在加载list数据时，需要明确数据字段，否则会报错，因为Dataset中的feature就是数据集中的字段，需要根据字段名去读取该字段下的数据。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># List格式的数据需要内嵌&#123;&#125;，明确数据字段</span><br>data = [&#123;<span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;abc&quot;</span>&#125;, &#123;<span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;def&quot;</span>&#125;]<br><span class="hljs-comment"># 报错写法：data = [&quot;abc&quot;, &quot;def&quot;]</span><br>Dataset.from_list(data)<br></code></pre></td></tr></table></figure>
 <h2 id="配合自定义脚本加载数据集">配合自定义脚本加载数据集</h2>
 <p>有时数据集格式复杂，需要配合自定义脚本进行数据集加载。以问答数据集cmrc2018_trial为例。</p>
 <figure>
-<img src="/images/05-基础组件之Datasets/1721570155024-b9353c8c-aa0c-45b8-9b33-d4e6b88ce45c.png" srcset="/img/loading.gif" lazyload title="问答数据集cmrc2018_trial" alt="问答数据集cmrc2018_trial">
+<img src="/images/05-基础组件之Datasets/1721570155024-b9353c8c-aa0c-45b8-9b33-d4e6b88ce45c.png" srcset="/img/c776fb77e7ad5.gif" lazyload title="问答数据集cmrc2018_trial" alt="问答数据集cmrc2018_trial">
 <figcaption aria-hidden="true">问答数据集cmrc2018_trial</figcaption>
 </figure>
 <p>采用直接加载的方式。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">load_dataset(<span class="hljs-string">&quot;json&quot;</span>, data_files=<span class="hljs-string">&quot;./cmrc2018_trial.json&quot;</span>, field=<span class="hljs-string">&quot;data&quot;</span>)<br></code></pre></td></tr></table></figure>
-<p><img src="/images/05-基础组件之Datasets/1721570451320-fe35332f-12d2-4358-a2ab-313dd10425f6.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721570451320-fe35332f-12d2-4358-a2ab-313dd10425f6.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>可以看到，如果直接加载数据是读取不全的。它只读取到了paragraphs、id和title字段，paragraphs里有多个字段被忽略了，id、context以及qas里的question、answers这种嵌套在里面的数据都没有读到。（这里<code>field</code>用于指明数据存放在data字段里）
-<img src="/images/05-基础组件之Datasets/1721570199605-f0d4b4e0-82b5-43a4-921b-29c3388c82b1.png" srcset="/img/loading.gif" lazyload></p>
+<img src="/images/05-基础组件之Datasets/1721570199605-f0d4b4e0-82b5-43a4-921b-29c3388c82b1.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <p>为了将数据读全，需要配合自定义脚本进行数据读取。主要实现三个方法：<code>_info</code>用于定义字段的数据类型，<code>_split_generators</code>用于指定数据集路径和数据集划分，<code>_generate_examples</code>用于数据处理。up的脚本可以在<a target="_blank" rel="noopener" href="https://github.com/zyds/transformers-code/tree/master/01-Getting%20Started/05-datasets">github</a>上找到。</p>
-<p><img src="/images/05-基础组件之Datasets/1721653420920-3d2bff3a-42f1-49a6-9b26-921a8604cc11.png" srcset="/img/loading.gif" lazyload>
+<p><img src="/images/05-基础组件之Datasets/1721653420920-3d2bff3a-42f1-49a6-9b26-921a8604cc11.png" srcset="/img/c776fb77e7ad5.gif" lazyload>
 配合自定义脚本加载数据，得到想要的结果。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset = load_dataset(<span class="hljs-string">&quot;./load_script.py&quot;</span>, split=<span class="hljs-string">&quot;train&quot;</span>, trust_remote_code=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
-<p><img src="/images/05-基础组件之Datasets/1721653523347-2e31137e-e196-4877-8a0b-0aca2f310dc1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/05-基础组件之Datasets/1721653523347-2e31137e-e196-4877-8a0b-0aca2f310dc1.png" srcset="/img/c776fb77e7ad5.gif" lazyload></p>
 <h1 id="文本分类代码优化">【文本分类代码优化】</h1>
 <p>上一章的文本分类示例在进行数据加载的时候，写了一个数据聚合函数传给DataLoader，其实Dataset提供了一些简单格式数据处理下预制好的DataCollator。以最简单的DataCollatorWithPadding为例，对上一章给出的文本分类代码进行优化（主要是步骤1~4的优化）。</p>
 <ol type="1">
@@ -671,7 +671,7 @@ labels以外的字段），是无法使用官方提供的DataCollator进行paddi
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont color_icon_love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
   
