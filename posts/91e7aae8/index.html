@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/juan.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/SKY.png">
+  <link rel="icon" href="/img/SKY.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -207,7 +207,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
-                <span>友链</span>
+                <span>六楼</span>
               </a>
             </li>
           
@@ -332,7 +332,7 @@ Transformers-实战篇】命名实体识别</a></p>
 <h1 id="任务简介">任务简介</h1>
 <p><strong>命名实体识别</strong>（Named Entity Recognition,
 NER）是信息抽取的一个子任务，旨在提取文本信息中的关键实体并识别其类型，常见的通用类型有PER（人物）、LOC（位置）、ORG（组织）等。
-<img src="/images/09-基于Transformers的NER/1723189853687-099234f5-8b41-4afc-9e6d-5de0ebfed5d9.png" srcset="/img/loading.gif" lazyload>
+<img src="/images/09-基于Transformers的NER/1723189853687-099234f5-8b41-4afc-9e6d-5de0ebfed5d9.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
 目前常见的数据标注方法有：IOB1、IOB2、IOOES、IOE等。</p>
 <p>以IOB2为例，I表示实体内部，O表示实体外部，B表示实体开始，一般的数据格式如下：乔，B-PER、布，I-PER、斯，I-PER。如果是IOBES标注，E表示实体的结束，S表示一个词单独构成一个实体。有时会用M替代I，本质上是一个意思。</p>
 <h1 id="任务评估指标">任务评估指标</h1>
@@ -351,20 +351,20 @@ NER）是信息抽取的一个子任务，旨在提取文本信息中的关键�
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> evaluate<br><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> load_dataset<br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer, AutoModelForTokenClassification, TrainingArguments, Trainer, DataCollatorForTokenClassification<br></code></pre></td></tr></table></figure>
 <h2 id="step2-加载数据集">Step2 加载数据集</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 从本地加载数据集</span><br><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> DatasetDict<br>ner_datasets = DatasetDict.load_from_disk(<span class="hljs-string">&quot;ner_data&quot;</span>)<br></code></pre></td></tr></table></figure>
-<p><img src="/images/09-基于Transformers的NER/1722497993966-32c4e76f-43a1-4a3a-a137-19e3c4c033b7.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/09-基于Transformers的NER/1722497993966-32c4e76f-43a1-4a3a-a137-19e3c4c033b7.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <p>可以看到，在这个数据集中已经做了标签的映射，厦门、金门分别对应5、6分别对应B-LOC、I-LOC。</p>
-<p><img src="/images/09-基于Transformers的NER/1722498130012-136bc90a-ec21-41f9-92f7-08dca47e3a83.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/09-基于Transformers的NER/1722498130012-136bc90a-ec21-41f9-92f7-08dca47e3a83.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 获取标签列表</span><br>label_list = ner_datasets[<span class="hljs-string">&quot;train&quot;</span>].features[<span class="hljs-string">&quot;ner_tags&quot;</span>].feature.names<br></code></pre></td></tr></table></figure>
-<p><img src="/images/09-基于Transformers的NER/1722498245911-54f6fd26-2669-411b-b6a1-3f8b0034d27c.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/09-基于Transformers的NER/1722498245911-54f6fd26-2669-411b-b6a1-3f8b0034d27c.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="step3-数据集预处理">Step3 数据集预处理</h2>
 <p>对于分词后的数据（中文就是分字），要指定<code>is_split_into_words=True</code>，不然会对每个字都包裹
 [CLS] 和[SEP] ，实际上对每句话包裹 [CLS] 和 [SEP] 就可以了。</p>
 <figure>
-<img src="/images/09-基于Transformers的NER/1723206603917-fe986ce7-8550-4ea6-b3c1-b20c84ab2541.png" srcset="/img/loading.gif" lazyload title="未指定is_split_into_words=True" alt="未指定is_split_into_words=True">
+<img src="/images/09-基于Transformers的NER/1723206603917-fe986ce7-8550-4ea6-b3c1-b20c84ab2541.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload title="未指定is_split_into_words=True" alt="未指定is_split_into_words=True">
 <figcaption aria-hidden="true">未指定is_split_into_words=True</figcaption>
 </figure>
 <figure>
-<img src="/images/09-基于Transformers的NER/1723206645006-afda5b6d-760b-4056-a6ae-1c475b47b377.png" srcset="/img/loading.gif" lazyload title="指定is_split_into_words=True" alt="指定is_split_into_words=True">
+<img src="/images/09-基于Transformers的NER/1723206645006-afda5b6d-760b-4056-a6ae-1c475b47b377.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload title="指定is_split_into_words=True" alt="指定is_split_into_words=True">
 <figcaption aria-hidden="true">指定is_split_into_words=True</figcaption>
 </figure>
 <p>此外，在计算的过程中，我们要让模型知道哪些是有实际语义、哪些是
@@ -375,15 +375,15 @@ NER）是信息抽取的一个子任务，旨在提取文本信息中的关键�
 <p>这里借助<code>word_ids</code>来进行标签映射的原因是，对于中文，一个字对应一个label；但对于英文单词的分词，比如说interesting
 word，虽然是两个单词但分词后是对应了五个位置的编码的，所以要借助<code>word_ids</code>来区分这五个编码里哪几个是interesting，哪几个是word。即使interesting被分成很多词，<code>label_ids.append(label[word_id])</code>会让它的所有分词结果对应同一个标签。</p>
 <figure>
-<img src="/images/09-基于Transformers的NER/1723207581749-f1c27f17-76fb-4fe6-a060-613640b4b5ca.png" srcset="/img/loading.gif" lazyload title="interesting word的编码结果" alt="interesting word的编码结果">
+<img src="/images/09-基于Transformers的NER/1723207581749-f1c27f17-76fb-4fe6-a060-613640b4b5ca.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload title="interesting word的编码结果" alt="interesting word的编码结果">
 <figcaption aria-hidden="true">interesting word的编码结果</figcaption>
 </figure>
 <figure>
-<img src="/images/09-基于Transformers的NER/1723207733477-41ecef7e-b839-495a-b7d7-eb7762e502b3.png" srcset="/img/loading.gif" lazyload title="interesting word的word_ids" alt="interesting word的word_ids">
+<img src="/images/09-基于Transformers的NER/1723207733477-41ecef7e-b839-495a-b7d7-eb7762e502b3.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload title="interesting word的word_ids" alt="interesting word的word_ids">
 <figcaption aria-hidden="true">interesting word的word_ids</figcaption>
 </figure>
 <p>最后，数据集的特征除了原始字段，多了tokenizer带来的三个字段，以及每句话的编码结果labels。</p>
-<p><img src="/images/09-基于Transformers的NER/1722499653407-f015e09a-0aea-4ad2-93a1-1c9a0fec1a0a.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/09-基于Transformers的NER/1722499653407-f015e09a-0aea-4ad2-93a1-1c9a0fec1a0a.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="step4-创建模型">Step4 创建模型</h2>
 <p>分词完成后，创建一个<code>AutoModelForTokenClassification</code>模型。<strong>对于所有的非二分类任务，切记要指定num_labels，否则会报device错误。</strong>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">model = AutoModelForTokenClassification.from_pretrained(<span class="hljs-string">&quot;hfl/chinese-macbert-base&quot;</span>, num_labels=<span class="hljs-built_in">len</span>(label_list))<br></code></pre></td></tr></table></figure></p>
@@ -396,24 +396,24 @@ word，虽然是两个单词但分词后是对应了五个位置的编码的，�
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">trainer = Trainer(<br>    model=model,<br>    args=args,<br>    train_dataset=tokenized_datasets[<span class="hljs-string">&quot;train&quot;</span>],<br>    eval_dataset=tokenized_datasets[<span class="hljs-string">&quot;validation&quot;</span>],<br>    compute_metrics=eval_metric,<br>    data_collator=DataCollatorForTokenClassification(tokenizer=tokenizer)<br>)<br></code></pre></td></tr></table></figure>
 <h2 id="step8-模型训练">Step8 模型训练</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">trainer.train()<br></code></pre></td></tr></table></figure>
-<p><img src="/images/09-基于Transformers的NER/1723208364966-210dc1da-8071-4d6f-8ed1-ff9eeea134ee.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/09-基于Transformers的NER/1723208364966-210dc1da-8071-4d6f-8ed1-ff9eeea134ee.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="step9-模型评估">Step9 模型评估</h2>
 <p>可以在测试集上对模型进行评估。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">trainer.evaluate(eval_dataset=tokenized_datasets[<span class="hljs-string">&quot;test&quot;</span>])<br></code></pre></td></tr></table></figure></p>
-<p><img src="/images/09-基于Transformers的NER/1723208395335-14d1075c-9b30-4a81-a5fc-9535f6101305.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/09-基于Transformers的NER/1723208395335-14d1075c-9b30-4a81-a5fc-9535f6101305.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="step10-模型预测">Step10 模型预测</h2>
 <p>使用pipeline使用模型进行预测。可以发现预测结果是按token返回的，并且对应的标签是LABEL_3，这是因为模型config里默认的id2label是这样对应的。</p>
-<p><img src="/images/09-基于Transformers的NER/1723209423167-fbc05c45-d893-422b-bfd8-f2521ee93fbf.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/images/09-基于Transformers的NER/1723209184319-3de5720a-9b64-452b-8ff5-1da4dd65b721.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/09-基于Transformers的NER/1723209423167-fbc05c45-d893-422b-bfd8-f2521ee93fbf.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
+<p><img src="/images/09-基于Transformers的NER/1723209184319-3de5720a-9b64-452b-8ff5-1da4dd65b721.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <p>重新写一个id2label对默认的进行覆盖。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">model.config.id2label = &#123;idx: label <span class="hljs-keyword">for</span> idx, label <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(label_list)&#125;<br></code></pre></td></tr></table></figure>
-<p><img src="/images/09-基于Transformers的NER/1723209466998-baa5e017-2435-4720-b29b-0c9fe9941ebf.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/09-基于Transformers的NER/1723209466998-baa5e017-2435-4720-b29b-0c9fe9941ebf.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <p>此外，对于NER任务，如果不希望token的标签是一个一个返回，可以指定<code>aggregation_strategy="simple"</code>让模型返回完整实体。如果模型是基于GPU训练的，那么推理时要指定<code>device=0</code>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> pipeline<br><br>ner_pipe = pipeline(<span class="hljs-string">&quot;token-classification&quot;</span>, model=model, tokenizer=tokenizer, device=<span class="hljs-number">0</span>, aggregation_strategy=<span class="hljs-string">&quot;simple&quot;</span>)<br>res = ner_pipe(<span class="hljs-string">&quot;小明在北京上班&quot;</span>)<br></code></pre></td></tr></table></figure>
 <p>最后得到的结果是这样的，可以发现词与词之间使用空格的，因为tokenizer在解码时默认会用空格连接token。</p>
-<p><img src="/images/09-基于Transformers的NER/1723209542895-6f1ffe92-0839-4b7d-bb42-c2370ad4ec1e.png" srcset="/img/loading.gif" lazyload>
+<p><img src="/images/09-基于Transformers的NER/1723209542895-6f1ffe92-0839-4b7d-bb42-c2370ad4ec1e.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
 可以通过<code>start</code>和<code>end</code>进行取词。进一步规整预测结果。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 根据start和end取实际的结果</span><br>ner_result = &#123;&#125;<br>x = <span class="hljs-string">&quot;小明在北京上班&quot;</span><br><span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> res:<br>    <span class="hljs-keyword">if</span> r[<span class="hljs-string">&quot;entity_group&quot;</span>] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> ner_result:<br>        ner_result[r[<span class="hljs-string">&quot;entity_group&quot;</span>]] = []<br>    ner_result[r[<span class="hljs-string">&quot;entity_group&quot;</span>]].append(x[r[<span class="hljs-string">&quot;start&quot;</span>]: r[<span class="hljs-string">&quot;end&quot;</span>]])<br></code></pre></td></tr></table></figure>
-<p><img src="/images/09-基于Transformers的NER/1723209494197-bc7a7183-0b38-4372-ba33-a646487b8e9e.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/09-基于Transformers的NER/1723209494197-bc7a7183-0b38-4372-ba33-a646487b8e9e.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 
                 
               </div>
@@ -648,7 +648,7 @@ word，虽然是两个单词但分词后是对应了五个位置的编码的，�
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont color_icon_love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
   

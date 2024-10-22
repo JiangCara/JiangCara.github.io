@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/juan.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/SKY.png">
+  <link rel="icon" href="/img/SKY.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jiangcara.github.io/images/03-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BTokenizer/1719995644821-77a0e9b1-347d-4c96-8b1d-4f5961e7afc2.png">
 <meta property="article:published_time" content="2024-07-26T12:40:21.000Z">
-<meta property="article:modified_time" content="2024-09-29T14:34:12.355Z">
+<meta property="article:modified_time" content="2024-10-22T09:08:04.165Z">
 <meta property="article:author" content="Jiang Cara">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jiangcara.github.io/images/03-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E4%B9%8BTokenizer/1719995644821-77a0e9b1-347d-4c96-8b1d-4f5961e7afc2.png">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"jiangcara.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"jlsU8mP3K15QuEi7NpzfVl2m-gzGzoHsz","app_key":"l5qKx7ON1ncsAxWLsWmAf17e","server_url":null,"path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -207,7 +207,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
-                <span>友链</span>
+                <span>六楼</span>
               </a>
             </li>
           
@@ -338,22 +338,22 @@ Course</a></p>
 <li>将每个标记映射到整数</li>
 <li>添加可能对模型有用的其他输入</li>
 </ul>
-<p><img src="/images/03-基础组件之Tokenizer/1719991156922-b5d170cc-4068-4558-8e71-1b01ebd25b2c.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1719991156922-b5d170cc-4068-4558-8e71-1b01ebd25b2c.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h1 id="tokenizer基本使用">Tokenizer基本使用</h1>
 <p>我们可以直接给tokenizer传入句子，随后会得到一个字典，该字典可以提供给我们的模型。剩下唯一要做的就是将输入
-ID 列表转换为张量。 <img src="/images/03-基础组件之Tokenizer/1719995644821-77a0e9b1-347d-4c96-8b1d-4f5961e7afc2.png" srcset="/img/loading.gif" lazyload></p>
+ID 列表转换为张量。 <img src="/images/03-基础组件之Tokenizer/1719995644821-77a0e9b1-347d-4c96-8b1d-4f5961e7afc2.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="加载与保存">加载与保存</h2>
 <p><code>AutoTokenizer</code>会根据传入的参数自动分配默认的tokenizer。加载的时候会用到<code>from_pretrained()</code>方法，即从预训练阶段开始加载。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer<br>sen = <span class="hljs-string">&quot;弱小的我也有大梦想!&quot;</span><br><span class="hljs-comment"># 从HuggingFace加载，输入模型名称，即可加载对于的分词器</span><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;uer/roberta-base-finetuned-dianping-chinese&quot;</span>)<br></code></pre></td></tr></table></figure> 可以看到这是一个基于Bert的模型。</p>
-<p><img src="/images/03-基础组件之Tokenizer/1720008250054-10de9259-a429-4f2e-83a8-e320d35f5417.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1720008250054-10de9259-a429-4f2e-83a8-e320d35f5417.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <p>默认的下载路径是<code>C:\Users\Administrator\.cache\huggingface\hub\</code>，也可以指定路径存储。</p>
-<p><img src="/images/03-基础组件之Tokenizer/1719995981031-d91fd65c-0c2f-4481-819b-e73040f36021.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1719995981031-d91fd65c-0c2f-4481-819b-e73040f36021.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <p>模型文件里面的snapshots文件夹里是模型有用的文件。</p>
-<p><img src="/images/03-基础组件之Tokenizer/1719995996708-1178f0f1-53a3-4b89-bd1e-2aeaf85701ae.png" srcset="/img/loading.gif" lazyload>
-<img src="/images/03-基础组件之Tokenizer/1720011478338-a0f042a7-cb5d-4a9e-b61d-960091945bec.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1719995996708-1178f0f1-53a3-4b89-bd1e-2aeaf85701ae.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
+<img src="/images/03-基础组件之Tokenizer/1720011478338-a0f042a7-cb5d-4a9e-b61d-960091945bec.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <p>使用<code>save_pretrained()</code>方法来将tokenizer保存到指定路径。./roberta_tokenizer表示将路径设置为代码文件所在文件夹的roberta_tokenizer文件夹中。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># tokenizer 保存到本地</span><br>tokenizer.save_pretrained(<span class="hljs-string">&quot;./roberta_tokenizer&quot;</span>)<br><span class="hljs-comment"># 从本地加载tokenizer</span><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;./roberta_tokenizer/&quot;</span>)<br></code></pre></td></tr></table></figure>
-<p><img src="/images/03-基础组件之Tokenizer/1720008301755-08871446-61f2-4931-8f0d-77cf93044cfd.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1720008301755-08871446-61f2-4931-8f0d-77cf93044cfd.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <blockquote>
 <p>这里记一下从<a target="_blank" rel="noopener" href="https://huggingface.co/learn/nlp-course/chapter1/4?fw=pt">官方文档</a>看到的两个英文词概念：</p>
 <ul>
@@ -367,7 +367,7 @@ ID 列表转换为张量。 <img src="/images/03-基础组件之Tokenizer/171999
 <h2 id="句子分词">句子分词</h2>
 <p>加载完tokenizer之后需要对句子进行分词，可以使用<code>tokenize()</code>方法。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">tokens = tokenizer.tokenize(sen)<br></code></pre></td></tr></table></figure> 当前选择的基于BERT的模型分词结果如下。</p>
-<p><img src="/images/03-基础组件之Tokenizer/1720008404601-0cfadb68-5ef8-42ec-9ef3-b952736f6c76.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1720008404601-0cfadb68-5ef8-42ec-9ef3-b952736f6c76.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="查看词典">查看词典</h2>
 <p>可以查看这个分词器的词典，井号我觉得可以理解为占位符，意思是这个字通常出现在一个词的第二个位置，也就是说比起这个字单独出现，它和其他字一起出现的概率更高，具体可以看搜搜subword的概念。</p>
 <blockquote>
@@ -375,24 +375,24 @@ ID 列表转换为张量。 <img src="/images/03-基础组件之Tokenizer/171999
 of Vocabulary)问题，即测试集有很多模型训练时没见过的单词。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(tokenizer.vocab)<br><span class="hljs-built_in">print</span>(tokenizer.vocab_size)<br></code></pre></td></tr></table></figure>
-<p><img src="/images/03-基础组件之Tokenizer/1720008435037-8495efde-9d8b-4f85-a6f4-cff641b5e9b2.png" srcset="/img/loading.gif" lazyload>
-<img src="/images/03-基础组件之Tokenizer/1720009355001-fb0528c2-f001-48c0-972a-24b484e966a9.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1720008435037-8495efde-9d8b-4f85-a6f4-cff641b5e9b2.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
+<img src="/images/03-基础组件之Tokenizer/1720009355001-fb0528c2-f001-48c0-972a-24b484e966a9.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="索引转换">索引转换</h2>
 <p>使用<code>convert_tokens_to_ids()</code>将分词后的token序列转换成id序列送入神经网络。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 将词序列转换为id序列</span><br>ids = tokenizer.convert_tokens_to_ids(tokens)<br><span class="hljs-comment"># 将id序列转换为token序列</span><br>tokens = tokenizer.convert_ids_to_tokens(ids)<br><span class="hljs-comment"># 将token序列转换为string</span><br>str_sen = tokenizer.convert_tokens_to_string(tokens)<br></code></pre></td></tr></table></figure></p>
-<p><img src="/images/03-基础组件之Tokenizer/1720009414913-7cdc6476-cc0d-4ee3-9016-9f1d9876c9f5.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1720009414913-7cdc6476-cc0d-4ee3-9016-9f1d9876c9f5.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <p>更简便的方法是使用<code>encode()</code>一步实现句子序列到id序列的转换。这里有两个参数，sen即输入的句子，add_special_tokens用来控制是否给id序列添加特殊符号。</p>
 <blockquote>
 <p>在BERT的分词方法中，会在id序列的前后或者中间加入一些特殊符号，如这里的[CLS]和[SEP]，前者代表一句话的开始，后者标志着一句话的结束。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 将字符串转换为id序列，又称之为编码</span><br>ids = tokenizer.encode(sen, add_special_tokens=<span class="hljs-literal">True</span>)<br><span class="hljs-comment"># 将id序列转换为字符串，又称之为解码</span><br>str_sen = tokenizer.decode(ids, skip_special_tokens=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
 <p>可以看到使用<code>encode()</code>方法会在句子前后多了101和102，其实就对应特殊符号[CLS]和[SEP]，因为add_special_tokens=True，不添加的话可以设为False。同理，解码<code>decode()</code>也可以通过这个参数选择要不要将特殊符号及进行解码。
-<img src="/images/03-基础组件之Tokenizer/1720009456448-b0728275-a923-4e77-9e03-16e0bfcfac6a.png" srcset="/img/loading.gif" lazyload></p>
+<img src="/images/03-基础组件之Tokenizer/1720009456448-b0728275-a923-4e77-9e03-16e0bfcfac6a.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="填充与截断">填充与截断</h2>
 <p>让模型处理大量数据时会涉及到数据的填充和截断，以统一每条数据长度。即短数据填充<code>padding</code>，长数据截断<code>truncation</code>。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 填充</span><br>ids = tokenizer.encode(sen, padding=<span class="hljs-string">&quot;max_length&quot;</span>, max_length=<span class="hljs-number">15</span>)<br><span class="hljs-comment"># 截断</span><br>ids = tokenizer.encode(sen, max_length=<span class="hljs-number">5</span>, truncation=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
 以下是效果展示。需要注意的是每个处理后的句子前后都至少会有两个特殊符号，每条数据以5为最大长度截断但实际上只能存放三个词。</p>
-<p><img src="/images/03-基础组件之Tokenizer/1720009463876-cdd31ecc-3bda-47f6-b05f-31f5ac89bd41.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1720009463876-cdd31ecc-3bda-47f6-b05f-31f5ac89bd41.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="其他输入部分">其他输入部分</h2>
 <p>因为存在填充，所以我们需要告诉模型哪些是填充的哪些是真实有效的输入，这就需要<code>attention_mask</code>。此外，对于BERT模型，它需要<code>token_type_ids</code>这个参数来区分哪些词属于第一句，哪些属于第二句，也就是段编码。</p>
 <blockquote>
@@ -402,19 +402,19 @@ Embedding)，详见之前的PLMs的笔记。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">ids = tokenizer.encode(sen, padding=<span class="hljs-string">&quot;max_length&quot;</span>, max_length=<span class="hljs-number">15</span>)<br>attention_mask = [<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> idx != <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span> <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> ids]<br>token_type_ids = [<span class="hljs-number">0</span>] * <span class="hljs-built_in">len</span>(ids)<br></code></pre></td></tr></table></figure>
 <p><code>attention_mask</code>就是id为0记为0否则记为1。由于这是一句话的句间文本，所以<code>token_type_ids</code>都是0，长度就是整个token的长度。</p>
-<p><img src="/images/03-基础组件之Tokenizer/1720009499879-c9d284ff-77f2-4252-a83b-26fa6b375ec1.png" srcset="/img/loading.gif" lazyload>
+<p><img src="/images/03-基础组件之Tokenizer/1720009499879-c9d284ff-77f2-4252-a83b-26fa6b375ec1.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
 <a target="_blank" rel="noopener" href="https://www.yuque.com/juanjuan-rytsj/whmr52/ehu2oqg8dwco8ozw?view=doc_embed">PLMs(GPT,
 BERT)</a></p>
 <h2 id="快速调用方式">快速调用方式</h2>
 <p>Huggingface
 Transformers提供了快捷调用方式，可以一步实现上述步骤，也就是<code>encode_plus()</code>方法。调用后返回一个dic，里面包含了id序列和<code>attention_mask</code>。除此之外，直接调用<code>tokenizer</code>（不是<code>tokenize()</code>，注意区分）也可以得到一样的效果。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">inputs = tokenizer.encode_plus(sen, padding=<span class="hljs-string">&quot;max_length&quot;</span>, max_length=<span class="hljs-number">15</span>)<br>inputs = tokenizer(sen, padding=<span class="hljs-string">&quot;max_length&quot;</span>, max_length=<span class="hljs-number">15</span>)<br></code></pre></td></tr></table></figure></p>
-<p><img src="/images/03-基础组件之Tokenizer/1720009513401-5797874b-98ce-472f-915b-2ff203038f42.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1720009513401-5797874b-98ce-472f-915b-2ff203038f42.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h2 id="处理batch数据">处理batch数据</h2>
 <p>批量处理数据也可以用同样的方法，返回的值形如注释。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">sens = [<span class="hljs-string">&quot;弱小的我也有大梦想&quot;</span>,<br>        <span class="hljs-string">&quot;有梦想谁都了不起&quot;</span>,<br>        <span class="hljs-string">&quot;追逐梦想的心，比梦想本身，更可贵&quot;</span>]<br>res = tokenizer(sens)<br><br><span class="hljs-string">&#x27;&#x27;&#x27; &#123;&#x27;input_id&#x27;		  : [[..1..],[..2..],[..3..]],</span><br><span class="hljs-string">     &#x27;token_type_ids&#x27; : [[..1..],[..2..],[..3..]],</span><br><span class="hljs-string">     &#x27;attention_mask&#x27; : [[..1..],[..2..],[..3..]]&#125;	&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure></p>
-<p><img src="/images/03-基础组件之Tokenizer/1720009548233-b0e00fe5-f059-4dea-8955-b7a4c1196add.png" srcset="/img/loading.gif" lazyload>
+<p><img src="/images/03-基础组件之Tokenizer/1720009548233-b0e00fe5-f059-4dea-8955-b7a4c1196add.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
 对比for循环与batch处理的时间，可以发现batch明显快于循环计算。</p>
-<p><img src="/images/03-基础组件之Tokenizer/1720009574961-edf651fd-2a9c-47ab-8643-b4184be2ef67.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1720009574961-edf651fd-2a9c-47ab-8643-b4184be2ef67.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h1 id="fastslow-tokenizer">Fast/Slow Tokenizer</h1>
 <ul>
 <li>FastTokenizer：基于Rust实现，速度块，有两个额外返回值<code>offsets_mapping</code>、<code>word_ids</code>。</li>
@@ -422,7 +422,7 @@ Transformers提供了快捷调用方式，可以一步实现上述步骤，也�
 </ul>
 <p>使用<code>from_pretrained()</code>方法分配tokenizer时默认分配FastTokenizer，如果要设置成SlowTokenizer需括号内增加参数<code>use_fast=False</code>。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">sen = <span class="hljs-string">&quot;弱小的我也有大Dreaming!&quot;</span><br>fast_tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;uer/roberta-base-finetuned-dianping-chinese&quot;</span>)<br>slow_tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;uer/roberta-base-finetuned-dianping-chinese&quot;</span>, use_fast=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure></p>
-<p><img src="/images/03-基础组件之Tokenizer/1720009839915-f9e8872e-e430-4371-9e89-558d639fe3ba.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1720009839915-f9e8872e-e430-4371-9e89-558d639fe3ba.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <p>FastTokenizer有个额外返回值<code>offsets_mapping</code>，使用时将需要设置return_offsets_mapping=True。随之还会返回<code>word_ids</code>，这两个值相互对应。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">inputs = fast_tokenizer(sen, return_offsets_mapping=<span class="hljs-literal">True</span>)<br><span class="hljs-built_in">print</span>(inputs.word_ids)<br></code></pre></td></tr></table></figure>
 <ul>
@@ -433,16 +433,16 @@ Transformers提供了快捷调用方式，可以一步实现上述步骤，也�
 </ul>
 <p>word_ids会记录每个词在句子中的位置，None分别对应句首句尾的特殊字符[CLS]和[SEP]，也就是offset_mapping里的(0,0)。(0,1)对应第一个字"弱"的位置，(6,7)对应第7个字"大"的位置。</p>
 <p>因为截断，所以Dreaming被分为两个数据段，所以word_ids里有两个7，对应offset_mapping的(7,12)和(12,15)，表示这两个部分合起来是一个完整的token。</p>
-<p><img src="/images/03-基础组件之Tokenizer/1720009877972-0e6e8450-a3c0-4ccc-aed4-fbfdfccf5e86.png" srcset="/img/loading.gif" lazyload>
-这里我还试了其他的例子： <img src="/images/03-基础组件之Tokenizer/1720198475404-4124eb2a-31f3-436e-be7c-f067613dc0c9.png" srcset="/img/loading.gif" lazyload>
+<p><img src="/images/03-基础组件之Tokenizer/1720009877972-0e6e8450-a3c0-4ccc-aed4-fbfdfccf5e86.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
+这里我还试了其他的例子： <img src="/images/03-基础组件之Tokenizer/1720198475404-4124eb2a-31f3-436e-be7c-f067613dc0c9.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
 这个更多的会在QA中用到，因为回答问题时需要记录答案在原始文本中开始和结束的位置。</p>
 <h1 id="特定tokenizer的加载">特定Tokenizer的加载</h1>
 <p>还可以加载特定模型的分词器（只要<a href>Huggingface
 Model</a>里有），比如这里想用<a target="_blank" rel="noopener" href="https://huggingface.co/Skywork/Skywork-13B-base/tree/main">天工</a>的分词器。
-<img src="/images/03-基础组件之Tokenizer/1720010071718-12430c74-27d0-495e-96b0-798862a56d77.png" srcset="/img/loading.gif" lazyload>
+<img src="/images/03-基础组件之Tokenizer/1720010071718-12430c74-27d0-495e-96b0-798862a56d77.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload>
 找到模型名使用from_pretrained进行加载，加载时必须添加参数<code>trust_remote_code=True</code>，不然会报错。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer<br><br><span class="hljs-comment"># 新版本的transformers（&gt;4.34），加载 THUDM/chatglm 会报错，因此这里替换为了天工的模型</span><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;Skywork/Skywork-13B-base&quot;</span>, trust_remote_code=<span class="hljs-literal">True</span>)<br>tokenizer.save_pretrained(<span class="hljs-string">&quot;skywork_tokenizer&quot;</span>)<br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;skywork_tokenizer&quot;</span>, trust_remote_code=<span class="hljs-literal">True</span>)<br>tokenizer.decode(tokenizer.encode(sen))<br></code></pre></td></tr></table></figure>
-<p><img src="/images/03-基础组件之Tokenizer/1720009967366-cd480930-ca11-4d42-9bfe-442299d46cc0.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/03-基础组件之Tokenizer/1720009967366-cd480930-ca11-4d42-9bfe-442299d46cc0.png" srcset="https://soujiz.com/wp-content/uploads/2022/08/c776fb77e7ad5.gif" lazyload></p>
 <h1 id="代码汇总">【代码汇总】</h1>
 <p>以换行为分割线，单独运行每块代码。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer<br><br>sen = <span class="hljs-string">&quot;弱小的我也有大梦想!&quot;</span><br><span class="hljs-comment"># 从HuggingFace加载，输入模型名称，即可加载对于的分词器</span><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;uer/roberta-base-finetuned-dianping-chinese&quot;</span>)<br><br><span class="hljs-comment"># tokenizer 保存到本地</span><br>tokenizer.save_pretrained(<span class="hljs-string">&quot;./roberta_tokenizer&quot;</span>)<br><span class="hljs-comment"># 从本地加载tokenizer</span><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;./roberta_tokenizer/&quot;</span>)<br><br>tokens = tokenizer.tokenize(sen)<br><span class="hljs-built_in">print</span>(tokenizer.vocab)<br><span class="hljs-built_in">print</span>(tokenizer.vocab_size)<br><br><span class="hljs-comment"># 将词序列转换为id序列</span><br>ids = tokenizer.convert_tokens_to_ids(tokens)<br><span class="hljs-comment"># 将id序列转换为token序列</span><br>tokens = tokenizer.convert_ids_to_tokens(ids)<br><span class="hljs-comment"># 将token序列转换为string</span><br>str_sen = tokenizer.convert_tokens_to_string(tokens)<br><span class="hljs-comment"># 将字符串转换为id序列，又称之为编码</span><br>ids = tokenizer.encode(sen, add_special_tokens=<span class="hljs-literal">True</span>)<br><span class="hljs-comment"># 将id序列转换为字符串，又称之为解码</span><br>str_sen = tokenizer.decode(ids, skip_special_tokens=<span class="hljs-literal">False</span>)<br><br><span class="hljs-comment"># 填充</span><br>ids = tokenizer.encode(sen, padding=<span class="hljs-string">&quot;max_length&quot;</span>, max_length=<span class="hljs-number">15</span>)<br><span class="hljs-comment"># 截断</span><br>ids = tokenizer.encode(sen, max_length=<span class="hljs-number">5</span>, truncation=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># 其他的输入</span><br>ids = tokenizer.encode(sen, padding=<span class="hljs-string">&quot;max_length&quot;</span>, max_length=<span class="hljs-number">15</span>)<br>attention_mask = [<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> idx != <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span> <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> ids]<br>token_type_ids = [<span class="hljs-number">0</span>] * <span class="hljs-built_in">len</span>(ids)<br><br><span class="hljs-comment"># 快捷调用方式</span><br>inputs = tokenizer.encode_plus(sen, padding=<span class="hljs-string">&quot;max_length&quot;</span>, max_length=<span class="hljs-number">15</span>)<br>inputs = tokenizer(sen, padding=<span class="hljs-string">&quot;max_length&quot;</span>, max_length=<span class="hljs-number">15</span>)<br><br><span class="hljs-comment"># 处理batch数据</span><br>sens = [<span class="hljs-string">&quot;弱小的我也有大梦想&quot;</span>,<br>        <span class="hljs-string">&quot;有梦想谁都了不起&quot;</span>,<br>        <span class="hljs-string">&quot;追逐梦想的心，比梦想本身，更可贵&quot;</span>]<br>res = tokenizer(sens)<br><br><span class="hljs-comment"># Fast/Slow Tokenizer</span><br>sen = <span class="hljs-string">&quot;弱小的我也有大Dreaming!&quot;</span><br>fast_tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;uer/roberta-base-finetuned-dianping-chinese&quot;</span>)<br>slow_tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;uer/roberta-base-finetuned-dianping-chinese&quot;</span>, use_fast=<span class="hljs-literal">False</span>)<br><br>inputs = fast_tokenizer(sen, return_offsets_mapping=<span class="hljs-literal">True</span>)<br><span class="hljs-built_in">print</span>(inputs.word_ids)<br><br><span class="hljs-comment"># 指定天工tokenizer的加载</span><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;Skywork/Skywork-13B-base&quot;</span>, trust_remote_code=<span class="hljs-literal">True</span>)<br>tokenizer.save_pretrained(<span class="hljs-string">&quot;skywork_tokenizer&quot;</span>)<br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;skywork_tokenizer&quot;</span>, trust_remote_code=<span class="hljs-literal">True</span>)<br>tokenizer.decode(tokenizer.encode(sen))<br></code></pre></td></tr></table></figure></p>
 
@@ -679,7 +679,7 @@ Model</a>里有），比如这里想用<a target="_blank" rel="noopener" href="h
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont color_icon_love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
   
